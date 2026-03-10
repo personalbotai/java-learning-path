@@ -153,11 +153,8 @@ async function navigateToLesson(moduleId, slug) {
         const resp = await fetch(`lessons/${slug}.html`);
         if (!resp.ok) throw new Error('Lesson not found');
         const html = await resp.text();
-        // Extract body inner content (simple)
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const content = doc.body.innerHTML;
-        document.getElementById('lesson-content').innerHTML = content;
+        // Set content (the runner will be created by runJavaLesson)
+        document.getElementById('lesson-content').innerHTML = html;
 
         // Mark as completed
         state.progress[`${moduleId}-${slug}`] = true;
@@ -165,7 +162,7 @@ async function navigateToLesson(moduleId, slug) {
         updateProgressUI();
         renderSidebar();
 
-        // Initialize CheerpJ + Monaco runner
+        // Initialize Java runtime (create editor + button)
         if (typeof runJavaLesson === 'function') {
             runJavaLesson(slug, getDefaultCode(slug));
         }
