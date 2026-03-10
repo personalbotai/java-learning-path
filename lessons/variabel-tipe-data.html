@@ -1,0 +1,77 @@
+<h1>Variabel & Tipe Data</h1>
+
+<p>Variabel adalah wadah untuk menyimpan data dalam memori. Java memiliki dua kategori tipe data: <strong>primitif</strong> (nilai langsung) dan <strong>reference</strong> (objek).</p>
+
+<h2>Tipe data primitif</h2>
+
+<p>Java memiliki 8 tipe primitif:</p>
+<ul>
+<li><code>byte</code> — 1 byte, range -128 sampai 127.</li>
+<li><code>short</code> — 2 byte, -32,768 sampai 32,767.</li>
+<li><code>int</code> — 4 byte, integer通常情况下.</li>
+<li><code>long</code> — 8 byte, tambah akhiran <code>L</code> (misal <code>1234567890123L</code>).</li>
+<li><code>float</code> — 4 byte, floating-point akhiran <code>F</code>.</li>
+<li><code>double</code> — 8 byte, presisi ganda.</li>
+<li><code>boolean</code> — <code>true</code> atau <code>false</code>.</li>
+<li><code>char</code> — 2 byte, karakter Unicode (misal <code>'A'</code>).</li>
+</ul>
+
+<h2>Deklarasi dan Inisialisasi</h2>
+
+<p>Sintaks:</p>
+<pre><code class="language-java">tipe namaVariabel = nilai;
+</code></pre>
+
+<p>Contoh:</p>
+<pre><code class="language-java">int umur = 25;
+double harga = 99.99;
+boolean aktif = true;
+char inisial = 'S';
+String nama = "Archon";  // String adalah tipe reference, bukan primitif
+</code></pre>
+
+<p><code>String</code> bukan tipe primitif, tetapi sering diperlakukan seperti primitif. Ia termasuk tipe <em>reference</em> yang menunjuk ke objek string di heap.</p>
+
+<h2>Konstanta</h2>
+
+<p>Gunakan kata kunci <code>final</code> untuk membuat variabel yang nilainya tidak dapat diubah setelah inisialisasi:</p>
+<pre><code class="language-java">final double PI = 3.14159;
+// PI = 3.14; // ERROR: cannot reassign
+</code></pre>
+
+<h2>Konversi Tipe (Casting)</h2>
+
+<p>Java melakukan konversi otomatis untuk widening (tipe kecil ke besar). Untuk narrowing (besar ke kecil), harus explicit casting:</p>
+<pre><code class="language-java">int i = 100;
+long l = i;           // otomatis (widening)
+int j = (int) l;      // manual (narrowing)
+</code></pre>
+
+<p>Untuk tipe primitive ke string atau sebaliknya, gunakan method:</p>
+<pre><code class="language-java">String s = Integer.toString(i);
+int x = Integer.parseInt("123");
+double d = Double.parseDouble("3.14");
+</code></pre>
+
+<p>Untuk tipe reference, ClassCastException dapat terjadi jika casting tidak sah. Gunakan operator <code>instanceof</code> untuk cek tipe runtime.</p>
+
+<h2>Scope Variabel</h2>
+
+<p>Variabel hanya berlaku di dalam <em>block</em> di mana dideklarasikan:</p>
+<pre><code class="language-java">if (true) {
+    int x = 10;  // x hanya berlaku di dalam block ini
+}
+// System.out.println(x); // ERROR: x not visible
+</code></pre>
+
+<p>Variabel yang dideklarasikan di dalam method disebut <em>local variable</em>. Variabel di dalam class tapi di luar method disebut <em>field</em>.</p>
+
+<h2>Best Practice</h2>
+<ul>
+<li>Gunakan nama yang deskriptif (hindari single-letter kecuali untuk index loop).</li>
+<li>Inisialisasi variabel saat deklarasi jika memungkinkan.</li>
+<li>Jangan gunakan tipe <code>float</code> untuk kalkulasi finansial; pilih <code>BigDecimal</code>.</li>
+<li>Utamakan <code>int</code> untuk bilangan bulat, <code>double</code> untuk pecahan.</li>
+</ul>
+
+<p>Setelah memahami tipe data, Anda siap mengoperasikan mereka dengan operator.</p>

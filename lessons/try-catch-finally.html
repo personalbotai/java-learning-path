@@ -1,0 +1,92 @@
+<h1>Try-Catch-Finally dan Try-with-Resources</h1>
+
+<p>Struktur penanganan exception di Java menggunakan <code>try</code>, <code>catch</code>, <code>finally</code>, dan <code>try-with-resources</code>.</p>
+
+<h2>Struktur Dasar</h2>
+
+<pre><code class="language-java">try {
+    // kode yang mungkin melempar exception
+    int result = divide(10, 0);
+    System.out.println(result);
+} catch (ArithmeticException e) {
+    // menangani exception tertentu
+    System.out.println("Pembagian dengan nol!");
+} finally {
+    // selalu dieksekusi, baik exception tertangkap atau tidak
+    System.out.println("Selesai");
+}
+</code></pre>
+
+<h2>Multiple Catch</h2>
+
+<p>Anda bisa menangkap lebih dari satu tipe exception:</p>
+
+<pre><code class="language-java">try {
+    readFile("data.txt");
+} catch (FileNotFoundException e) {
+    System.out.println("File tidak ditemukan");
+} catch (IOException e) {
+    System.out.println("I/O error");
+} finally {
+    System.out.println("Cleanup");
+}
+</code></pre>
+
+<p>Urutan catch harus dari spesifik ke umum, karena sebaliknya akan unreachable (compile error).</p>
+
+<h2>Try-with-Resources</h2>
+
+<p>Memungkinkan manajemen resource otomatis (ditutup ketika try selesai). Resource harus implements <code>AutoCloseable</code>.</p>
+
+<pre><code class="language-java">try (BufferedReader br = new BufferedReader(new FileReader("file.txt"));
+     PrintWriter out = new PrintWriter(new FileWriter("out.txt"))) {
+    String line = br.readLine();
+    out.println(line);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+// br dan out sudah ditutup otomatis
+</code></pre>
+
+<p>Dengan try-with-resources, Anda tidak perlu <code>finally</code> untuk menutup resource.</p>
+
+<h2>Suppressed Exceptions</h2>
+
+<p>Jika baik try block dan resource close melempar exception, exception dari close ditambahkan sebagai <em>suppressed</em>. Dapat diakses lewat <code>e.getSuppressed()</code>.</p>
+
+<h2>Throw dari finally</h2>
+
+<p>Menambahkan <code>throw</code> di finally dapat menyembunyikan exception dari try. Gunakan dengan hati-hati.</p>
+
+<h2>Nested Try</h2>
+
+<p>Try dapat ditumpuk:</p>
+
+<pre><code class="language-java">try {
+    // outer
+    try {
+        // inner
+    } catch (Exception e) {
+        // handle inner
+    }
+} catch (Exception e) {
+    // handle outer
+}
+</code></pre>
+
+<h2>Kesalahan Umum</h2>
+
+<ul>
+<li>Menangkap exception yang terlalu luas (catch (Exception e)) — bisa menutupi bug.</li>
+<li>Kosongkan catch block — just white-box testing suppressed exception.</li>
+<li>Lupa menutup resource jika tidak pakai try-with-resources.</li>
+</ul>
+
+<h2>Best Practice</h2>
+
+<ul>
+<li>Gunakan try-with-resources untuk semua I/O resources.</li>
+<li>Tangani hanya exception yang dapat Anda lakukan recovery.</li>
+<li>Untuk exception yang tidak dapat dipulihkan, propagasikan (throws) ke caller.</li>
+<li>Log stack trace atau wrapped exception (throw new ...(cause)).</li>
+</ul>

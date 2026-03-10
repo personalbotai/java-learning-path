@@ -1,0 +1,70 @@
+<h1>Break dan Continue</h1>
+
+<p>Dua statement untuk mengendalikan alur loop: <code>break</code> dan <code>continue</code>.</p>
+
+<h2>Break</h2>
+
+<p><code>break</code> segera mengakhiri <strong>loop</strong> atau <code>switch</code> terdekat.</p>
+
+<pre><code class="language-java">for (int i = 0; i < 10; i++) {
+    if (i == 5) {
+        break; // keluar dari loop saat i = 5
+    }
+    System.out.println(i); // print 0-4
+}
+</code></pre>
+
+<p>Dalam nested loop, break hanya keluar dari loop terdalam. Untuk keluar dari multiple loops, gunakan <em>labeled break</em>:</p>
+
+<pre><code class="language-java">outer:
+for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < 5; j++) {
+        if (i * j > 6) {
+            break outer; // keluar kedua loop
+        }
+        System.out.println(i + "," + j);
+    }
+}
+</code></pre>
+
+<h2>Continue</h2>
+
+<p><code>continue</code> melompat ke <strong>iterasi berikutnya</strong> dari loop, mengabaikan sisa kode di bawahnya.</p>
+
+<pre><code class="language-java">for (int i = 0; i < 10; i++) {
+    if (i % 2 == 0) {
+        continue; // skip angka genap
+    }
+    System.out.println(i); // print hanya ganjil
+}
+</code></pre>
+
+<p>Sama seperti break, <code>continue</code> juga bisa diberi label untuk loop luar.</p>
+
+<h2>Break dalam Switch</h2>
+
+<p>Dalam <code>switch</code>, break mencegah fall-through. Tanpa break, eksekusi akan turun ke case berikutnya.</p>
+
+<h2>Kapan Digunakan?</h2>
+
+<ul>
+<li><code>break</code>: Ketika sudah menemukan hasil yang diinginkan, atau kondisi akhir tercapai.</li>
+<li><code>continue</code>: Ketika ingin skip beberapa kondisi spesifik tapi tetap lanjut loop.</li>
+</ul>
+
+<h2>Pitfall</h2>
+
+<ul>
+<li>Kedua statement hanya berlaku pada loop atau switch. Tidak bisa digunakan di luar.</li>
+<li>Labeled break/continue sering dihindari karena mengurangi readability. Gunakan hanya jika really needed.</li>
+<li>Infinite loop with break di dalam: pastikan break juga akan tercapai.</li>
+</ul>
+
+<h2>Contoh: Filter dengan Continue</h2>
+
+<pre><code class="language-java">List&lt;Integer&gt; nums = List.of(1,2,3,4,5,6);
+for (int n : nums) {
+    if (n % 2 != 0) continue; // skip odds
+    System.out.println(n); // print evens
+}
+</code></pre>

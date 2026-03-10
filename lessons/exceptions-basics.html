@@ -1,0 +1,100 @@
+<h1>Exceptions Dasar</h1>
+
+<p>Exception adalah kondisi error yang terjadi saat runtime. Java menggunakan model unchecked exceptions (subclass <code>RuntimeException</code>) dan checked exceptions (subclass <code>Exception</code>).</p>
+
+<h2>Hierarki</h2>
+
+<pre><code>Throwable
+ ├─ Error (unchecked, serious)
+ └─ Exception
+      ├─ RuntimeException (unchecked)
+      └─ checked exceptions (seperti IOException)
+</code></pre>
+
+<p><strong>Error</strong> biasanya tidak ditangani (OutOfMemoryError, StackOverflowError).</p>
+
+<h2>Unchecked vs Checked</h2>
+
+<ul>
+<li><strong>Unchecked</strong> (RuntimeException dan Error): tidak wajib ditangani; muncul karena programming error (null pointer, index out of bounds, illegal argument).</li>
+<li><strong>Checked</strong>: compiler memaksa penanganan atau deklarasi throws. Contoh: <code>IOException</code>, <code>ClassNotFoundException</code>.</li>
+</ul>
+
+<h2>Throw Exception</h2>
+
+<p>Gunakan <code>throw</code> untuk melemparkan exception:</p>
+
+<pre><code class="language-java">if (age < 0) {
+    throw new IllegalArgumentException("Age cannot be negative");
+}
+</code></pre>
+
+<p>Bisa juga membuat custom exception dengan extends <code>Exception</code> (checked) atau <code>RuntimeException</code> (unchecked).</p>
+
+<h2>Catching dengan try-catch</h2>
+
+<pre><code class="language-java">try {
+    int result = 10 / 0;
+    System.out.println(result);
+} catch (ArithmeticException e) {
+    System.out.println("Division by zero!");
+}
+</code></pre>
+
+<p>Multiple catch blocks (dari spesifik ke umum):</p>
+
+<pre><code class="language-java">try {
+    // code
+} catch (FileNotFoundException e) {
+    // handle
+} catch (IOException e) {
+    // broader
+} catch (Exception e) {
+    // general
+}
+</code></pre>
+
+<h2>Multi-catch (Java 7+)</h2>
+
+<pre><code class="language-java">catch (IOException | SQLException e) {
+    e.printStackTrace();
+}
+</code></pre>
+
+<h2>Finally</h2>
+
+<p>Blok <code>finally</code> selalu dieksekusi setelah try/catch, biasanya untuk cleanup:</p>
+
+<pre><code class="language-java">BufferedReader br = null;
+try {
+    br = new BufferedReader(new FileReader("file.txt"));
+    // read
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    if (br != null) try { br.close(); } catch (IOException ignored) {}
+}
+</code></pre>
+
+<h2>Try-with-resources (Java 7+)</h2>
+
+<p>Resource yang implements <code>AutoCloseable</code> akan ditutup otomatis:</p>
+
+<pre><code class="language-java">try (BufferedReader br = Files.newBufferedReader(Path.of("file.txt"));
+     BufferedWriter bw = Files.newBufferedWriter(Path.of("out.txt"))) {
+    // use resources
+} catch (IOException e) {
+    e.printStackTrace();
+}
+// resources closed automatically
+</code></pre>
+
+<h2>Best Practice</h2>
+
+<ul>
+<li>Gunakan unchecked exceptions untuk programming errors (IllegalArgumentException, IllegalStateException).</li>
+<li>Untuk recoverable conditions, gunakan checked exceptions.</li>
+<li>Jangan menangkap <code>Throwable</code> atau <code>Exception</code> secara universal tanpa alasan.</li>
+<li>Log exception dengan stack trace atau re-throw.</li>
+<li>Prefer try-with-resources untuk I/O streams.</li>
+</ul>

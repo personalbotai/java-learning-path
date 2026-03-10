@@ -1,0 +1,60 @@
+<h1>Instalasi Java & IDE</h1>
+
+<p>Sebelum menulis kode Java, Anda perlu menginstal <strong>Java Development Kit (JDK)</strong>. JDK berisi compiler (<code>javac</code>), runtime (<code>java</code>), serta library standar. Versi <strong>LTS (Long-Term Support)</strong> seperti Java 17 atau Java 21 direkomendasikan untuk produksi.</p>
+
+<h2>Langkah 1: Unduh JDK</h2>
+<p>Kunjungi situs resmi <a href="https://adoptium.net" target="_blank">Adoptium Temurin</a> atau <a href="https://jdk.java.net" target="_blank">jdk.java.net</a>. Pilih distribusi untuk sistem operasi Anda (Linux, Windows, macOS).</p>
+<ul>
+<li>Untuk Linux, gunakan package manager (misal <code>apt install openjdk-21-jdk</code> di Debian/Ubuntu).</li>
+<li>Untuk Android/Termux, Anda bisa menjalankan <code>pkg install openjdk-21</code> (Namun, untuk pengembangan Java biasa, gunakan laptop/desktop).</li>
+</ul>
+
+<p>Setelah unduh, instal following petunjuk installer.</p>
+
+<h2>Langkah 2: Variabel Lingkungan</h2>
+<p>Untuk memudahkan eksekusi, atur variabel <code>JAVA_HOME</code> ke direktori instalasi JDK, dan tambahkan <code>bin</code> ke <code>PATH</code>.</p>
+<pre><code class="language-bash"># Contoh Linux/macOS (~/.bashrc atau ~/.zshrc)
+export JAVA_HOME=$HOME/opt/jdk-21
+export PATH=$JAVA_HOME/bin:$PATH
+</code></pre>
+<p>Setelah itu, restart terminal atau source file konfigurasi.</p>
+
+<h2>Langkah 3: Verifikasi Instalasi</h2>
+<p>Jalankan perintah:</p>
+<pre><code class="language-bash">java -version
+javac -version
+</code></pre>
+<p>Output yang benar menampilkan nomor versi (misal <code>openjdk 21.0.1</code>).</p>
+
+<h2>Langkah 4: Instal IDE (Integrated Development Environment)</h2>
+<p>Meskipun打下了 teks editor biasa, sebuah IDE meningkatkan produktivitas. Dua pilihan populer:</p>
+<ol>
+<li><strong>Visual Studio Code</strong> (ringan, gratis)
+  <ul>
+    <li>Download dari <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a>.</li>
+    <li>Install ekstensi <em>Extension Pack for Java</em> (Microsoft).</li>
+    <li>Ekstensi ini menyediakan IntelliSense, debugging, dan build tools.</li>
+  </ul>
+</li>
+<li><strong>IntelliJ IDEA Community Edition</strong> (kayas, free)
+  <ul>
+    <li>Download dari <a href="https://www.jetbrains.com/idea/download" target="_blank">JetBrains</a>.</li>
+    <li>Dukungan bawaan untuk Maven, Gradle, dan frameworks.</li>
+  </ul>
+</li>
+</ol>
+
+<h2>Langkah 5: Test Instalasi dengan Hello World</h2>
+<p>Buka terminal atau IDE, buat file <code>Hello.java</code> dengan konten:</p>
+<pre><code class="language-java">public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello, Java!");
+    }
+}
+</code></pre>
+<p>Kompilasi dan jalankan:</p>
+<pre><code class="language-bash">javac Hello.java   # menghasilkan Hello.class
+java Hello         # output: Hello, Java!
+</code></pre>
+
+<p>Jika muncul output tersebut, instalasi Java dan IDE sudah berhasil.</p>

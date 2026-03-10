@@ -1,0 +1,74 @@
+<h1>Hello World</h1>
+
+<p>Selamat! Anda telah mempelajari instalasi, struktur program, variabel, dan I/O. Sekarang saatnya menulis program pertama Anda: <strong>Hello World</strong>. Ini tradisi pemrograman sejak awal.</p>
+
+<h2>Kode Hello World</h2>
+
+<p>Buat file bernama <code>HelloWorld.java</code> dengan isi:</p>
+
+<pre><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+</code></pre>
+
+<p>Perlu diingat:</p>
+<ul>
+<li>Nama file harus persis sama dengan nama public class (<code>HelloWorld.java</code>).</li>
+<li>Java bersifat case-sensitive.</li>
+<li>Kode berada dalam method <code>main</code>; JVM akan memanggilnya saat program dijalankan.</li>
+</ul>
+
+<h2>Kompilasi</h2>
+
+<p>Buka terminal, navigasi ke direktori penyimpanan file, lalu jalankan:</p>
+
+<pre><code class="language-bash">javac HelloWorld.java
+</code></pre>
+
+<p>Jika tidak ada kesalahan, akan terbuat file <code>HelloWorld.class</code> (bytecode).</p>
+
+<h2>Eksekusi</h2>
+
+<p>Jalankan program dengan perintah:</p>
+
+<pre><code class="language-bash">java HelloWorld
+</code></pre>
+
+<p>Output yang diharapkan:</p>
+
+<pre><code>Hello, World!
+</code></pre>
+
+<p>Jangan tambahkan <code>.class</code> ekstensi saat menjalankan. Juga, pastikan Anda berada di direktori yang mengandung <code>.class</code> tersebut.</p>
+
+<h2>Penjelasan Kode</h2>
+
+<ul>
+<li><code>public class HelloWorld</code> — mendefinisikan class yang dapat diakses dari luar.</li>
+<li><code>public static void main(String[] args)</code> — entry point program. Kata kunci:
+  <ul>
+    <li><code>public</code>: akses dari JVM.</li>
+    <li><code>static</code>: tidak perlu instansiasi class.</li>
+    <li><code>void</code>: tidak mengembalikan nilai.</li>
+    <li><code>String[] args</code>: argumen command-line (belum digunakan).</li>
+  </ul>
+</li>
+<li><code>System.out.println(...)</code> — mencetak teks ke console, followed by newline.</li>
+</ul>
+
+<h2>Kesalahan Umum</h2>
+
+<ul>
+<li><strong>Class name tidak sama dengan file name</strong> — compiler error.</li>
+<li><strong>Tidak ada method main</strong> — program tidak dapat dijalankan.</li>
+<li><strong>Kompilasi dengan versi JDK berbeda</code> — pastikan <code>javac</code> dan <code>java</code> versinya match.</li>
+<li><strong>Path atau classpath salah</strong> — gunakan direktori saat ini atau atur <code>CLASSPATH</code> dengan benar.</li>
+</ul>
+
+<h2>Langkah Selanjutnya</h2>
+
+<p>Setelah Hello World berhasil, Anda siap mengeksplorasi dasar-dasar lainnya: variabel, tipe data, kontrol alur (if/else, loops), serta pengumpulan input dari pengguna. Modul-modul berikutnya akan membahas masing-masing topik secara mendalam.</p>
+
+<p>Selamat mengoding! Java的世界起航了.</p>

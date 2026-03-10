@@ -1,0 +1,68 @@
+<h1>Void dan Special Types</h1>
+
+<p>Java memiliki beberapa tipe khusus yang tidak umum digunakan sebagai tipe variabel, namun penting untuk dipahami.</p>
+
+<h2>Tipe void</h2>
+
+<p><code>void</code> menandakan bahwa sebuah method <strong>tidak mengembalikan nilai</strong>.void adalah bukan tipe data yang bisa digunakan untuk deklarasi variabel (kecuali sebagai parameter generik atau reflection). Contoh:</p>
+
+<pre><code class="language-java">public void greet() {
+    System.out.println("Hello");
+}
+</code></pre>
+
+<p>Anda tidak bisa menulis <code>void x = null;</code> (invalid).void hanya valid sebagai return type dari method.</p>
+
+<h2>Type null</h2>
+
+<p><code>null</code> adalah literal yang merepresentasikan <strong>tidak ada objek</strong>.null adalah jenis <code>null type</code>; variabel dengan tipe reference dapat di-assign <code>null</code>:</p>
+
+<pre><code class="language-java">String s = null;
+Integer i = null;
+Object o = null;
+</code></pre>
+
+<p>Attempting to dereference a <code>null</code> (mengakses method/field) will result in <code>NullPointerException</code> (NPE).</p>
+
+<h2>Type Nothing (bukan tipeJika Anda ingin mengekspresikan “tipe apapun” atau “kosong”, gunakan:</p>
+<ul>
+<li><code>void</code> untuk method yang tidak mengembalikan apapun.</li>
+<li><code>null</code> untuk reference yang tidak menunjuk ke objek.</li>
+<li><code>Void</code> (parameterized) untuk reflection: <code>Class&lt;Void&gt;</code>.</li>
+</ul>
+
+<h2>Special Primitive Values</h2>
+
+<p>Setiap tipe primitif memiliki nilai default dan some special values:</p>
+<ul>
+<li><code>boolean</code>: default <code>false</code>; hanya <code>true</code> atau <code>false</code>.</li>
+<li><code>char</code>: default <code>\u0000</code> (null character).</li>
+<li><code>integral types</code>: default <code>0</code>.</li>
+<li><code>float/double</code>: default <code>0.0</code>, also <code>NaN</code> (not a number) dan <code>Infinity</code> dari operasi tertentu (contoh 1.0/0.0 = Infinity).</li>
+</ul>
+
+<pre><code class="language-java">double d = 0.0 / 0.0; // NaN
+double inf = 1.0 / 0.0; // Infinity
+</code></pre>
+
+<h2>Check for NaN</h2>
+
+<p>Nilai <code>NaN</code> tidak sama dengan apa pun, bahkan dengan dirinya sendiri. Gunakan <code>Double.isNaN()</code> atau <code>Float.isNaN()</code>.</p>
+
+<pre><code class="language-java">if (Double.isNaN(d)) {
+    System.out.println("Not a number");
+}
+</code></pre>
+
+<h2>Void dalam Generics (Void Class)</h2>
+
+<p>Kelas <code>java.lang.Void</code> adalah代表 the <code>void</code> type when used as a generic parameter. Tidak dapat diinstansiasi. Sering digunakan dalam <code>Future&lt;Void&gt;</code> atau <code>Callable&lt;Void&gt;</code> ketika tugas tidak mengembalikan hasil.</p>
+
+<h2>Tips & Pitfall</h2>
+
+<ul>
+<li>Jangan comparing <code>null</code> dengan <code>==</code> ketika memeriksa apakah sebuah reference adalah null? Justru <code>== null</code> itu valid untuk memeriksa null.</li>
+<li><code>null</code> tidak dapat dipanggil method (NPE).</li>
+<li><code>void</code> bukan tipe data untuk variabel; hanya untuk return type method.</li>
+<li><code>NaN</code> tidak bisa dibandingkan dengan <code>==</code>, gunakan <code>isNaN()</code>.</li>
+</ul>
