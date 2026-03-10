@@ -71,3 +71,6 @@ const MODULES = [
         quiz: { questionCount: 10, passingScore: 70 }
     }
 ];
+
+// Expose globally for app.js
+window.MODULES = MODULES;
