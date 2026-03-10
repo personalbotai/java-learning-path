@@ -41,6 +41,33 @@ const MODULES = [
             { id: 6, title: "Throw & Throws", slug: "throw-dan-throws", duration: "15 min" }
         ],
         quiz: { questionCount: 10, passingScore: 70 }
+    },
+    {
+        id: 4,
+        title: "Object-OrientedProgramming",
+        description: "Konsep OOP: class, object, access modifiers, inheritance, abstract classes, interfaces, polymorphism.",
+        lessons: [
+            { id: 1, title: "Class Dasar", slug: "class-dasar", duration: "20 min" },
+            { id: 2, title: "Access Modifiers", slug: "access-modifiers", duration: "15 min" },
+            { id: 3, title: "Inheritance & Super", slug: "inheritance-extends-super", duration: "20 min" },
+            { id: 4, title: "Abstract Classes", slug: "abstract-classes", duration: "15 min" },
+            { id: 5, title: "Interfaces", slug: "interfaces-basic", duration: "20 min" },
+            { id: 6, title: "Polymorphism", slug: "polymorphism", duration: "15 min" }
+        ],
+        quiz: { questionCount: 10, passingScore: 70 }
+    },
+    {
+        id: 5,
+        title: "Collections Framework",
+        description: "Pengenalan Collections, List, Set, Map, Queue, dan Stream API dasar.",
+        lessons: [
+            { id: 1, title: "Intro to Collections", slug: "intro-collections", duration: "20 min" },
+            { id: 2, title: "List & ArrayList", slug: "list-dan-arraylist", duration: "20 min" },
+            { id: 3, title: "Set & HashSet", slug: "set-dan-hashset", duration: "15 min" },
+            { id: 4, title: "Map & HashMap", slug: "map-dan-hashmap", duration: "20 min" },
+            { id: 5, title: "Queue & Deque", slug: "queue-dan-deque", duration: "15 min" },
+            { id: 6, title: "Optional & Streams", slug: "optional-dan-streams-dasar", duration: "25 min" }
+        ],
+        quiz: { questionCount: 10, passingScore: 70 }
     }
-    // More modules will be added later
 ];

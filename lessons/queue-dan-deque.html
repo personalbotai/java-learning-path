@@ -1,0 +1,63 @@
+<h1>Queue dan Deque</h1>
+
+<p><code>Queue&lt;E&gt;</code> mengantrikan elemen, umumnya FIFO (first-in-first-out). <code>Deque&lt;E&gt;</code> (double-ended queue) mendukung penambahan/penghapusan di kedua ujung.</p>
+
+<h2>Implementasi Queue</h2>
+
+<ul>
+<li><code>ArrayDeque</code> —	array berbasis deque, cepat, tidak terbatas kapasitas.</li>
+<li><code>LinkedList</code> — juga mengimplementasikan <code>Deque</code>.</li>
+<li><code>PriorityQueue</code> — elemen diproses berdasarkan natural order atau Comparator (bukan FIFO).</li>
+</ul>
+
+<h2>Basic Queue Operations</h2>
+
+<pre><code class="language-java">Queue&lt;String&gt; q = new ArrayDeque&lt;&gt;();
+q.add("task1"); // or offer()
+q.add("task2");
+String head = q.peek(); // lihat elemen pertama (null jika kosong)
+String removed = q.poll(); // ambil dan hapus kepala (null jika kosong)
+// throw exceptions: element(), remove()
+</code></pre>
+
+<p>Pilih <code>offer()</code>/<code>poll()</code>/<code>peek()</code> untuk menangani null tanpa exception.</p>
+
+<h2>Deque Operations</h2>
+
+<p>Deque memungkinkan operate di both ends:</p>
+
+<pre><code class="language-java">Deque&lt;String&gt; deque = new ArrayDeque&lt;&gt;();
+deque.addFirst("a");
+deque.addLast("b");
+String first = deque.removeFirst();
+String last = deque.removeLast();
+deque.offerFirst("x");
+deque.offerLast("y");
+String peekF = deque.peekFirst();
+String peekL = deque.peekLast();
+</code></pre>
+
+<h2>Use Cases</h2>
+
+<ul>
+<li><code>Queue</code>: antrian tugas, BFS di graph.</li>
+<li><code>Deque</code>: stack (LIFO) menggunakan <code>push()</code>/<code>pop()</code> 또한 deque operations, atau sliding window.</li>
+</ul>
+
+<h2>PriorityQueue</h2>
+
+<p>Tidak FIFO; elemen diambil according to priority (natural order atau custom Comparator).</p>
+
+<pre><code class="language-java">Queue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+pq.add(3); pq.add(1); pq.add(2);
+System.out.println(pq.poll()); // 1
+System.out.println(pq.poll()); // 2
+</code></pre>
+
+<h2>Best Practice</h2>
+
+<ul>
+<li>Gunakan <code>ArrayDeque</code> sebagai default Queue/Deque (lebih cepat dari <code>LinkedList</code>).</li>
+<li>Pilih <code>PriorityQueue</code> jika perlu prioritizing elements.</li>
+<li>Choose methods sesuai safety: <code>offer()</code> dan <code>poll()</code> over <code>add()</code> dan <code>remove()</code> untuk handling full/empty gracefully.</li>
+</ul>
