@@ -90,3 +90,24 @@ List&lt;String&gt; result = names.stream()
 <li>Streams dirancang untuk functional style; hindari mutasi state di lambda.</li>
 <li>Choose sequential vs parallel berdasarkan data size dan operation characteristic.</li>
 </ul>
+<div class="code-runner" style="margin-top:2rem;padding:1rem;background:#1f2937;border-radius:0.5rem;">
+  <h3 style="color:#60a5fa;margin-bottom:0.5rem;">Latihan: Cobalah kode Java berikut</h3>
+  <div id="editor-optional-dan-streams-dasar" class="code-editor" style="height:400px;border:1px solid #374151;border-radius:0.5rem;overflow:hidden;margin-bottom:1rem;"></div>
+  <button id="run-btn-optional-dan-streams-dasar" class="run-button" style="background:#2563eb;color:white;border:none;padding:0.5rem 1rem;border-radius:0.375rem;cursor:pointer;font-weight:bold;">▶ Run Java</button>
+  <div id="output-optional-dan-streams-dasar" class="output-box" style="background:#111827;color:#e5e7eb;padding:0.75rem;border-radius:0.375rem;margin-top:0.5rem;font-family:monospace;white-space:pre-wrap;max-height:200px;overflow:auto;display:none;"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/cheerpj@latest/cheerpj.js"></script>
+<script src="../lesson-runner.js"></script>
+<script>
+  const defaultCode = `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, Java!");
+    }
+}`;
+  window.addEventListener('load', function() {
+    if (typeof runJavaLesson === 'function') {
+      runJavaLesson('optional-dan-streams-dasar', defaultCode);
+    }
+  });
+</script>
