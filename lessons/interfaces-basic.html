@@ -1,0 +1,86 @@
+<h1>Interfaces Dasar</h1>
+
+<p><strong>Interface</strong> adalah kontrak yang mendefinisikan method abstract (sebelum Java 8) yang harus diimplementasikan oleh class. Sejak Java 8, interface dapat memiliki <code>default</code> dan <code>static</code> methods.</p>
+
+<h2>Definisi Interface</h2>
+
+<pre><code class="language-java">public interface Drawable {
+    void draw(); // implicitly public abstract
+}
+</code></pre>
+
+<p>Implementasi:</p>
+
+<pre><code class="language-java">public class Circle implements Drawable {
+    @Override
+    public void draw() {
+        System.out.println("Drawing circle");
+    }
+}
+</code></pre>
+
+<p>Class dapat implements multiple interfaces:</p>
+
+<pre><code class="language-java">class MyClass implements Runnable, Serializable, Closeable { ... }
+</code></pre>
+
+<h2>Default Methods (Java 8+)</h2>
+
+<p>Interface bisa memiliki concrete method menggunakan <code>default</code>keyword:</p>
+
+<pre><code class="language-java">public interface Logger {
+    void log(String msg);
+    default void logInfo(String msg) {
+        log("[INFO] " + msg);
+    }
+}
+</code></pre>
+
+<p>Class yang implements <code>Logger</code> dapat mengambil alih <code>logInfo</code> atau menggunakan default.</p>
+
+<h2>Static Methods di Interface</h2>
+
+<p>Static methods also belong to interface, dipanggil via <code>InterfaceName.method()</code>:</p>
+
+<pre><code class="language-java">public interface MathUtil {
+    static int square(int x) { return x*x; }
+}
+int y = MathUtil.square(5);
+</code></pre>
+
+<h2>Constant Fields</h2>
+
+<p>Fields dalam interface secara otomatis <code>public static final</code>:</p>
+
+<pre><code class="language-java">public interface Status {
+    int OK = 200; // constant
+}
+</code></pre>
+
+<h2>Basic vs. Inheritance Differences</h2>
+
+<ul>
+<li>Interface mendukung multiple inheritance of type (class bisa implements banyak interface).</li>
+<li>Abstract class bisa memiliki state; interface cannot have instance fields (sebelum Java 8, bisa static final).</li>
+<li>Methods in interface are public by default (cannot be protected or private). Default methods are public.</li>
+</ul>
+
+<h2>Functional Interfaces</h2>
+
+<p>Interface dengan tepat satu abstract method disebut <em>functional interface</em>. Dapat digunakan dengan lambda expressions.</p>
+
+<pre><code class="language-java">@FunctionalInterface
+interface Predicate<T> {
+    boolean test(T t);
+    // default methods also allowed, but only one abstract
+}
+</code></pre>
+
+<h2>Best Practice</h2>
+
+<ul>
+<li>Use interfaces to define contracts and enable polymorphic behavior.</li>
+<li>Prefer interface over abstract class for maximum flexibility.</li>
+<li>Use default methods to evolve interfaces without breaking existing implementations.</li>
+<li>Keep interfaces small and cohesive (Interface Segregation Principle).</li>
+</ul>

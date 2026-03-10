@@ -1,0 +1,80 @@
+<h1>Polymorphism (Polimorfisme)</h1>
+
+<p>Polymorphism memungkinkan sebuah entity (seperti method atau object) memiliki banyak bentuk. Dalam Java, polymorphism muncul melalui:</p>
+<ul>
+<li><strong>Method overriding</strong> (runtime polymorphism).</li>
+<li><strong>Method overloading</strong> (compile-time polymorphism).</li>
+<li>Reference type vs. actual object type.</li>
+</ul>
+
+<h2>Method Overriding</h2>
+
+<p>Subclass memberikan implementasi spesifik untuk method yang sudah didefinisikan di superclass. Dipanggil berdasarkan actual object type (dynamic dispatch).</p>
+
+<pre><code class="language-java">class Animal {
+    void speak() { System.out.println("Animal sound"); }
+}
+class Dog extends Animal {
+    @Override
+    void speak() { System.out.println("Woof"); }
+}
+class Cat extends Animal {
+    @Override
+    void speak() { System.out.println("Meow"); }
+}
+
+Animal a1 = new Dog();
+Animal a2 = new Cat();
+a1.speak(); // Woof (actual objectDog)
+a2.speak(); // Meow
+</code></pre>
+
+<h2>Method Overloading</h2>
+
+<p>Multiple methods dengan nama sama tapi parameter list berbeda (tipe/quantity). Overloading terjadi di dalam satu class.</p>
+
+<pre><code class="language-java">class Calculator {
+    int add(int a, int b) { return a+b; }
+    double add(double a, double b) { return a+b; }
+    int add(int a, int b, int c) { return a+b+c; }
+}
+</code></pre>
+
+<p>Compiler memilih method berdasarkan compile-time tipe argumen.</p>
+
+<h2>Reference Type vs Object Type</h2>
+
+<p>Sebuah reference dinyatakan dengan tipe tertentu, namun dapat menunjuk ke instance subclass.</p>
+
+<pre><code class="language-java">List<String> list = new ArrayList<>(); // List (interface) reference, ArrayList object.
+</code></pre>
+
+<p>Method calls (instance methods) menggunakan actual object type. Fields tidak polymorphic (field access bersifat compile-time).</p>
+
+<h2>Polymorphic Parameters</h2>
+
+<p>Method dapat menerima parameter supertype, lalu menggunakan polymorphism di dalamnya:</p>
+
+<pre><code class="language-java">void paintAll(List<Shape> shapes) {
+    for (Shape s : shapes) {
+        s.draw(); // draw sesuai actual shape (Circle, Rect, ...)
+    }
+}
+</code></pre>
+
+<h2>抽象类与接口的多态性</h2>
+
+<p>Anda dapat menggunakan abstract class atau interface sebagai reference type:</p>
+
+<pre><code class="language-java">Runnable r = new MyTask(); // interface
+Object obj = new String("hi"); // Object is superclass of all
+</code></pre>
+
+<h2>Best Practice</h2>
+
+<ul>
+<li>Favor polymorphism dengan menggunakan supertype reference (contoh: <code>List list = new ArrayList()</code>).</li>
+<li>Override annotation wajib untuk method overriding.</li>
+<li>Hindari polymorphic field access; gunakan getters.</li>
+<li>Design abstraksi yang sesuai agar fleksibel.</li>
+</ul>

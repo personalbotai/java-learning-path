@@ -1,0 +1,70 @@
+<h1>Map dan HashMap</h1>
+
+<p><code>Map&lt;K,V&gt;</code> adalah koleksi pasangan key-value. Tidak extends <code>Collection</code>. Implementasi utama: <code>HashMap</code>.</p>
+
+<h2>Basic Operations</h2>
+
+<pre><code class="language-java">Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+map.put("Alice", 25);
+map.put("Bob", 30);
+map.put("Alice", 26); // replaces previous value for "Alice"
+Integer age = map.get("Alice"); // 26
+boolean hasBob = map.containsKey("Bob");
+boolean hasValue = map.containsValue(30);
+int size = map.size();
+map.remove("Bob");
+</code></pre>
+
+<h2>Iterasi</h2>
+
+<p>Three common ways:</p>
+
+<pre><code class="language-java">// Entry set
+for (Map.Entry&lt;String, Integer&gt; e : map.entrySet()) {
+    System.out.println(e.getKey() + " -> " + e.getValue());
+}
+
+// Key set
+for (String key : map.keySet()) {
+    System.out.println(key + " -> " + map.get(key));
+}
+
+// Values only
+for (Integer v : map.values()) {
+    System.out.println(v);
+}
+</code></pre>
+
+<h2>Hashtable vs HashMap</h2>
+
+<ul>
+<li><code>Hashtable</code> synchronized (thread-safe), tidak allow null key/value.</li>
+<li><code>HashMap</code> tidak synchronized, allow one null key, multiple null values.</li>
+</ul>
+
+<h2>Sorted Map: TreeMap</h2>
+
+<p>Urutan by natural order of keys atau custom Comparator.</p>
+
+<pre><code class="language-java">Map&lt;String, Integer&gt; sorted = new TreeMap&lt;&gt;(Map.of("b",2,"a",1));
+System.out.println(sorted); // {a=1, b=2}
+</code></pre>
+
+<h2>Immutable Map (Java 9+)</h2>
+
+<pre><code class="language-java">Map&lt;String, Integer&gt; immutable = Map.of("x",1, "y",2);
+// immutable.put("z",3); // UnsupportedOperationException
+</code></pre>
+
+<h2>hashCode() dan equals() for Keys</h2>
+
+<p>Keys dalam HashMap harus memiliki <code>hashCode()</code> dan <code>equals()</code> yang konsisten. Keys yang immutable disarankan (misal String, Integer).</p>
+
+<h2>Best Practice</h2>
+
+<ul>
+<li>Gunakan <code>Map</code> interface untuk reference, <code>HashMap</code> untuk implementasi default.</li>
+<li>Jika urutan penting (insertion order), gunakan <code>LinkedHashMap</code>.</li>
+<li>Jika perlu sorted order, gunakan <code>TreeMap</code>.</li>
+<li>Hindari null keys jika possible; gunakan <code>getOrDefault()</code> atau <code>computeIfAbsent()</code>.</li>
+</ul>

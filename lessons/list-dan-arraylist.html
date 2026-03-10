@@ -1,0 +1,75 @@
+<h1>List dan ArrayList</h1>
+
+<p><code>List&lt;E&gt;</code> adalah interface untuk koleksi urutan yang diperbolehkan duplikat dan akses by index. Implementasi paling populer adalah <code>ArrayList</code>.</p>
+
+<h2>ArrayList</h2>
+
+<p>Berbasis array dinamis. Kapasitas otomatis tumbuh saat elemen ditambahkan di luar kapasitas saat ini.</p>
+
+<pre><code class="language-java">List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("Alice");
+list.add("Bob");
+list.add(0, "Before"); // insert di indeks 0
+String first = list.get(0); // "Before"
+list.remove("Bob"); // remove by object
+list.remove(1); // remove by index
+int size = list.size(); // jumlah elemen
+boolean contains = list.contains("Alice");
+</code></pre>
+
+<h2>Iterasi List</h2>
+
+<p>Beberapa cara:</p>
+
+<pre><code class="language-java">// for loop dengan index
+for (int i = 0; i < list.size(); i++) {
+    System.out.println(list.get(i));
+}
+
+// enhanced for-loop
+for (String s : list) {
+    System.out.println(s);
+}
+
+// iterator
+Iterator&lt;String&gt; it = list.iterator();
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+
+// forEach (Java 8+)
+list.forEach(s -> System.out.println(s));
+</code></pre>
+
+<h2>List yang Tidak Termodifikasi</h2>
+
+<p>Anda bisa membuat list yang tidak bisa diubah:</p>
+
+<pre><code class="language-java">List&lt;String&gt; immutable = List.of("a", "b", "c");
+// immutable.add("d"); // UnsupportedOperationException
+</code></pre>
+
+<h2>Konversi Array ↔ List</h2>
+
+<pre><code class="language-java">String[] arr = {"a","b","c"};
+List&lt;String&gt; list = Arrays.asList(arr); // fixed-size list
+// list.add("d"); // UnsupportedOperationException
+List&lt;String&gt; mutable = new ArrayList&lt;&gt;(Arrays.asList(arr));
+String[] back = mutable.toArray(new String[0]);
+</code></pre>
+
+<h2>Performance</h2>
+
+<ul>
+<li><code>get(i)</code> O(1) untuk ArrayList.</li>
+<li><code>add()</code> di akhir jarang mengakibatkan resize (amortized O(1)).</li>
+<li><code>add(0, ...)</code> atau <code>remove(0)</code> cause shifting (O(n)).</li>
+</ul>
+
+<h2>Best Practice</h2>
+
+<ul>
+<li>Gunakan interface <code>List</code> sebagai tipe reference, <code>ArrayList</code> sebagai implementasi default untuk random access.</li>
+<li>Hindari modifying list (add/remove) selama iterasi dengan for-each; gunakan <code>Iterator.remove()</code> atau <code>removeIf()</code>.</li>
+<li>Pre-size ArrayList jika ukuran roughly known: <code>new ArrayList&lt;&gt;(expectedSize)</code> mencegah多次resize.</li>
+</ul>
