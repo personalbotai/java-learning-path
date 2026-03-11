@@ -106,16 +106,55 @@
             // RequireJS for Monaco
             await loadRequireJS();
             console.log('[Runner] RequireJS ready');
-            // Wait for JDK.js to be available
-            await waitForJDK(8000);
-            console.log('[Runner] JDK.js ready');
+
+            // Load JDK.js from various sources
+            const JDK_SOURCES = [
+                '/vendor/jdk.min.js', // local (preferred)
+                'https://cdn.jsdelivr.net/npm/jdk.js@0.3.2/dist/jdk.min.js',
+                'https://unpkg.com/jdk.js@0.3.2/dist/jdk.min.js',
+                'https://raw.githubusercontent.com/marcfasel/jdk.js/v0.3.2/dist/jdk.min.js'
+            ];
+            let loaded = false;
+            for (const src of JDK_SOURCES) {
+                try {
+                    console.log(`[Runner] Attempting to load JDK.js from: ${src}`);
+                    await loadScript(src);
+                    // Wait for Java object
+                    await waitForJDK(5000);
+                    loaded = true;
+                    break;
+                } catch (e) {
+                    console.warn(`[Runner] Failed to load from ${src}:`, e.message);
+                }
+            }
+            if (!loaded) {
+                throw new Error('JDK.js tidak dapat dimuat dari semua sumber. Lihat instruksi di bawah.');
+            }
             runtimeReady = true;
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
         } catch (e) {
             console.error('[Runner] Failed to load dependencies:', e);
-            statusDiv.textContent = 'Error: Tidak dapat memuat JDK.js. Cek ad-blocker, firewall, atau gunakan VPN.';
+            runtimeReady = false;
             runBtn.disabled = true;
+            statusDiv.textContent = 'Runtime tidak dapat dimuat.';
+            // Show detailed help in output box
+            outputDiv.style.display = 'block';
+            outputDiv.innerHTML = `
+<strong>Java Runtime tidak dapat dimuat.</strong><br><br>
+Instruksi pemecahan masalah:<br>
+1. Pastikan koneksi internet aktif.<br>
+2. Matikan ad-blocker yang mungkin memblokir domain:<br>
+   - cdn.jsdelivr.net<br>
+   - unpkg.com<br>
+   - raw.githubusercontent.com<br>
+3. Coba gunakan VPN atau jaringan lain.<br>
+4. Jika reboot tidak membantu, <strong>download JDK.js manual</strong> dan letakkan di folder <code>vendor/</code> repo:<br>
+   <a href="https://github.com/marcfasel/jdk.js/releases/download/v0.3.2/jdk.min.js" target="_blank" style="color:#22c55e;text-decoration:underline;">Download jdk.min.js (v0.3.2)</a><br>
+   Simpan sebagai <code>vendor/jdk.min.js</code> di repo Java Learning Path, lalu push dan build ulang.<br>
+5. Setelah perubahan, <strong>hard refresh</strong> halaman (Ctrl+Shift+R).<br><br>
+Error detail: ${e.message}
+`;
             return;
         }
 
@@ -144,16 +183,11 @@
             if (typeof Java === 'undefined' || !Java.runJava) {
                 statusDiv.textContent = 'Error: JDK.js tidak tersedia.';
                 outputDiv.style.display = 'block';
-                outputDiv.textContent = `JDK.js runtime tidak dapat dimuat.
-
-Instruksi perbaikan:
-1. Nonaktifkan ad-blocker (extension atau browser settings)
-2. Cek firewall/proxy yang memblokir CDN
-3. Coba gunakan VPN jika di jaringan terblokir
-4. Setelah perubahan, REFRESH halaman ini.
-
-Jika masalah tetap, hubungi administrator jaringan.`;
-                console.error('[Runner] Run attempted but JDK.js not available');
+                outputDiv.innerHTML = `
+<strong>Runtime tidak tersedia saat Run.</strong><br>
+Mohon ikuti instruksi di atas untuk mengatasi masalah loading JDK.js.<br>
+Setelah diperbaiki, reload halaman.
+`;
                 return;
             }
             if (!editorInitialized) {
@@ -203,6 +237,7 @@ Jika masalah tetap, hubungi administrator jaringan.`;
                 reject(new Error('JDK.js tidak tersedia'));
                 return;
             }
+            const start = Date.now();
             const timeout = setTimeout(() => {
                 reject(new Error('Timeout setelah 10 detik'));
             }, 10000);
@@ -213,10 +248,9 @@ Jika masalah tetap, hubungi administrator jaringan.`;
                     onStderr: text => output.err += text,
                     onComplete: () => {
                         clearTimeout(timeout);
-                        resolve({ output: output.out, error: output.err, duration: Date.now() - (start || Date.now()) });
+                        resolve({ output: output.out, error: output.err, duration: Date.now() - start });
                     }
                 });
-                const start = Date.now();
             } catch (e) {
                 clearTimeout(timeout);
                 reject(e);
