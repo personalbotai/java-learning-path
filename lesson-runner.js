@@ -1,4 +1,4 @@
-// lesson-runner.js - Java runtime using JDK.js + Monaco
+// lesson-runner.js - Java runtime using CheerpJ (official loader) + Monaco
 (function() {
     console.log('[Runner] Initializing...');
 
@@ -10,9 +10,8 @@
     function loadScript(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
-                const isLoaded = src.includes('jdk') ? typeof Java !== 'undefined' : typeof require !== 'undefined';
-                if (isLoaded) return resolve();
-                return setTimeout(() => resolve(), 100);
+                // Already added, just wait a tick
+                return setTimeout(resolve, 100);
             }
             const s = document.createElement('script');
             s.src = src;
@@ -35,17 +34,17 @@
         });
     }
 
-    function waitForJDK(timeout = 5000) {
+    function waitForCheerpJ(timeout = 10000) {
         return new Promise((resolve, reject) => {
             const start = Date.now();
             function check() {
-                if (typeof Java !== 'undefined' && Java.runJava) {
-                    console.log('[Runner] JDK.js ready');
+                if (typeof CheerpJ !== 'undefined' && CheerpJ.compileString && CheerpJ.runMain) {
+                    console.log('[Runner] CheerpJ ready');
                     resolve();
                 } else if (Date.now() - start > timeout) {
-                    reject(new Error(`JDK.js tidak dimuat setelah ${timeout}ms`));
+                    reject(new Error(`CheerpJ tidak dimuat setelah ${timeout}ms`));
                 } else {
-                    setTimeout(check, 100);
+                    setTimeout(check, 200);
                 }
             }
             check();
@@ -82,7 +81,7 @@
             </div>
             <div id="editor-${slug}" class="code-editor" style="height:400px;border:1px solid #475569;border-radius:0.5rem;overflow:hidden;margin-bottom:1rem;"></div>
             <div id="output-${slug}" class="output-box" style="background:#020617;color:#e2e8f0;padding:0.75rem;border-radius:0.5rem;font-family:JetBrains Mono, monospace;white-space:pre-wrap;max-height:200px;overflow:auto;display:none;border:1px solid #1e293b;"></div>
-            <div id="status-${slug}" class="mt-2 text-sm" style="color: #94a3b8;">Memuat runtime...</div>
+            <div id="status-${slug}" class="mt-2 text-sm" style="color: #94a3b8;">Memuat runtime CheerpJ...</div>
         `;
         container.appendChild(wrapper);
 
@@ -107,53 +106,30 @@
             await loadRequireJS();
             console.log('[Runner] RequireJS ready');
 
-            // Load JDK.js from various sources
-            const JDK_SOURCES = [
-                '/vendor/jdk.min.js', // local (preferred)
-                'https://cdn.jsdelivr.net/npm/jdk.js@0.3.2/dist/jdk.min.js',
-                'https://unpkg.com/jdk.js@0.3.2/dist/jdk.min.js',
-                'https://raw.githubusercontent.com/marcfasel/jdk.js/v0.3.2/dist/jdk.min.js'
-            ];
-            let loaded = false;
-            for (const src of JDK_SOURCES) {
-                try {
-                    console.log(`[Runner] Attempting to load JDK.js from: ${src}`);
-                    await loadScript(src);
-                    // Wait for Java object
-                    await waitForJDK(5000);
-                    loaded = true;
-                    break;
-                } catch (e) {
-                    console.warn(`[Runner] Failed to load from ${src}:`, e.message);
-                }
-            }
-            if (!loaded) {
-                throw new Error('JDK.js tidak dapat dimuat dari semua sumber. Lihat instruksi di bawah.');
-            }
+            // Wait for CheerpJ loader to finish (it sets window.CheerpJ)
+            await waitForCheerpJ(15000); // 15 seconds timeout for CheerpJ loader
+            console.log('[Runner] CheerpJ runtime ready');
             runtimeReady = true;
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
         } catch (e) {
-            console.error('[Runner] Failed to load dependencies:', e);
+            console.error('[Runner] Failed to load CheerpJ:', e);
             runtimeReady = false;
             runBtn.disabled = true;
-            statusDiv.textContent = 'Runtime tidak dapat dimuat.';
-            // Show detailed help in output box
+            statusDiv.textContent = 'Runtime CheerpJ tidak dapat dimuat.';
             outputDiv.style.display = 'block';
             outputDiv.innerHTML = `
-<strong>Java Runtime tidak dapat dimuat.</strong><br><br>
-Instruksi pemecahan masalah:<br>
-1. Pastikan koneksi internet aktif.<br>
-2. Matikan ad-blocker yang mungkin memblokir domain:<br>
-   - cdn.jsdelivr.net<br>
-   - unpkg.com<br>
-   - raw.githubusercontent.com<br>
-3. Coba gunakan VPN atau jaringan lain.<br>
-4. Jika reboot tidak membantu, <strong>download JDK.js manual</strong> dan letakkan di folder <code>vendor/</code> repo:<br>
-   <a href="https://github.com/marcfasel/jdk.js/releases/download/v0.3.2/jdk.min.js" target="_blank" style="color:#22c55e;text-decoration:underline;">Download jdk.min.js (v0.3.2)</a><br>
-   Simpan sebagai <code>vendor/jdk.min.js</code> di repo Java Learning Path, lalu push dan build ulang.<br>
-5. Setelah perubahan, <strong>hard refresh</strong> halaman (Ctrl+Shift+R).<br><br>
-Error detail: ${e.message}
+<strong>CheerpJ Runtime Error</strong><br><br>
+Tidak dapat memuat CheerpJ dari loader. Possible causes:<br>
+1. Ad-blocker memblokir cjrtnc.leaningtech.com<br>
+2. Network/firewall memblokir domain loader.<br>
+3. Browser compatibility issue.<br><br>
+Please try:<br>
+- Disable ad-blocker for this site<br>
+- Use VPN if network blocks the loader<br>
+- Try a different browser (Chrome/Firefox)<br>
+- Check console (F12) for detailed errors.<br><br>
+Error: ${e.message}
 `;
             return;
         }
@@ -180,14 +156,15 @@ Error detail: ${e.message}
 
         // Button handlers
         runBtn.onclick = async () => {
-            if (typeof Java === 'undefined' || !Java.runJava) {
-                statusDiv.textContent = 'Error: JDK.js tidak tersedia.';
+            if (typeof CheerpJ === 'undefined' || !CheerpJ.compileString || !CheerpJ.runMain) {
+                statusDiv.textContent = 'Error: CheerpJ tidak tersedia.';
                 outputDiv.style.display = 'block';
                 outputDiv.innerHTML = `
-<strong>Runtime tidak tersedia saat Run.</strong><br>
-Mohon ikuti instruksi di atas untuk mengatasi masalah loading JDK.js.<br>
-Setelah diperbaiki, reload halaman.
+<strong>CheerpJ tidak tersedia saat Run.</strong><br>
+Runtime CheerpJ belum siap. Coba refresh halaman atau periksa koneksi.<br>
+Jika masalah berlanjut, matikan ad-blocker atau gunakan VPN.
 `;
+                console.error('[Runner] Run attempted but CheerpJ not available');
                 return;
             }
             if (!editorInitialized) {
@@ -200,7 +177,7 @@ Setelah diperbaiki, reload halaman.
             statusDiv.textContent = 'Mengompilasi...';
 
             try {
-                const result = await runJava(code);
+                const result = await runCheerpJ(code);
                 if (result.error) {
                     outputDiv.textContent = `Error:\n${result.error}`;
                     statusDiv.textContent = 'Gagal mengompilasi.';
@@ -231,10 +208,10 @@ Setelah diperbaiki, reload halaman.
 }`;
     }
 
-    function runJava(code) {
+    function runCheerpJ(code) {
         return new Promise((resolve, reject) => {
-            if (typeof Java === 'undefined' || !Java.runJava) {
-                reject(new Error('JDK.js tidak tersedia'));
+            if (typeof CheerpJ === 'undefined' || !CheerpJ.compileString) {
+                reject(new Error('CheerpJ tidak tersedia'));
                 return;
             }
             const start = Date.now();
@@ -243,13 +220,16 @@ Setelah diperbaiki, reload halaman.
             }, 10000);
             const output = { out: '', err: '' };
             try {
-                Java.runJava(code, {
-                    onOutput: text => output.out += text,
-                    onStderr: text => output.err += text,
-                    onComplete: () => {
-                        clearTimeout(timeout);
-                        resolve({ output: output.out, error: output.err, duration: Date.now() - start });
-                    }
+                CheerpJ.compileString(code, 'Main', function(classBytes) {
+                    clearTimeout(timeout);
+                    const startRun = Date.now();
+                    CheerpJ.runMain('Main', [], {
+                        output: text => output.out += text,
+                        error: text => output.err += text,
+                        done: () => {
+                            resolve({ output: output.out, error: output.err, duration: Date.now() - startRun });
+                        }
+                    });
                 });
             } catch (e) {
                 clearTimeout(timeout);
