@@ -1,75 +1,57 @@
 // Global state
-let state = {
-    progress: {},
-    theme: 'dark'
-};
+let state = { progress: {}, theme: 'dark' };
 let currentLesson = null; // { moduleId, slug }
+let currentQuiz = null; // { moduleId, slug, questions: [] }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Load persisted state
     state.progress = JSON.parse(localStorage.getItem('java-progress') || '{}');
     state.theme = localStorage.getItem('theme') || 'dark';
 
-    // Apply theme early
+    // Apply theme
     document.documentElement.setAttribute('data-theme', state.theme);
     if (state.theme === 'dark') document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
 
-    // Wait for modules global
     if (!window.MODULES) {
         showStatus('Modul belum dimuat. Cek koneksi.', 'error');
         return;
     }
 
-    // Initialize theme toggle
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-
-    // Sidebar toggle (mobile)
-    document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
-    document.getElementById('sidebar-overlay').addEventListener('click', closeSidebar);
-
-    // Start button
-    document.getElementById('start-btn').addEventListener('click', () => {
+    // Event listeners
+    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+    document.getElementById('sidebar-toggle')?.addEventListener('click', toggleSidebar);
+    document.getElementById('sidebar-overlay')?.addEventListener('click', closeSidebar);
+    document.getElementById('start-btn')?.addEventListener('click', () => {
         const first = window.MODULES[0].lessons[0];
         navigateToLesson(window.MODULES[0].id, first.slug);
     });
+    document.getElementById('back-to-home')?.addEventListener('click', showHome);
 
-    // Back to home
-    const backBtn = document.getElementById('back-to-home');
-    if (backBtn) backBtn.addEventListener('click', showHome);
-
-    // Tab switching
-    const tabLesson = document.getElementById('tab-lesson');
-    const tabQuiz = document.getElementById('tab-quiz');
-    if (tabLesson) tabLesson.addEventListener('click', () => switchTab('lesson'));
-    if (tabQuiz) tabQuiz.addEventListener('click', () => {
+    // Tabs
+    document.getElementById('tab-lesson')?.addEventListener('click', () => switchTab('lesson'));
+    document.getElementById('tab-quiz')?.addEventListener('click', () => {
         if (currentLesson) loadQuiz(currentLesson.moduleId, currentLesson.slug);
         switchTab('quiz');
     });
 
     // Quiz actions
-    const submitBtn = document.getElementById('quiz-submit');
-    const resetBtn = document.getElementById('quiz-reset');
-    if (submitBtn) submitBtn.addEventListener('click', handleQuizSubmit);
-    if (resetBtn) resetBtn.addEventListener('click', () => {
+    document.getElementById('quiz-submit')?.addEventListener('click', handleQuizSubmit);
+    document.getElementById('quiz-reset')?.addEventListener('click', () => {
         if (currentLesson) loadQuiz(currentLesson.moduleId, currentLesson.slug);
     });
 
-    // Render sidebar & stats
     renderSidebar();
     updateStats();
     updateProgressUI();
 
-    // Route handling
     window.addEventListener('hashchange', handleRoute);
-    handleRoute(); // initial route
+    handleRoute();
 });
 
 function toggleTheme() {
     const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
     localStorage.setItem('theme', newTheme);
-    // Update Monaco theme if editor exists
     if (window.monacoEditor) {
         monacoEditor.updateOptions({ theme: newTheme === 'dark' ? 'vs-dark' : 'vs' });
     }
@@ -78,12 +60,12 @@ function toggleTheme() {
 function toggleSidebar() {
     const sb = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
-    sb.classList.toggle('-translate-x-full');
-    overlay.classList.toggle('hidden');
+    sb?.classList.toggle('-translate-x-full');
+    overlay?.classList.toggle('hidden');
 }
 function closeSidebar() {
-    document.getElementById('sidebar').classList.add('-translate-x-full');
-    document.getElementById('sidebar-overlay').classList.add('hidden');
+    document.getElementById('sidebar')?.classList.add('-translate-x-full');
+    document.getElementById('sidebar-overlay')?.classList.add('hidden');
 }
 
 function renderSidebar() {
@@ -116,20 +98,15 @@ function updateStats() {
     const totalQuizzes = window.MODULES.filter(m => m.quiz).length;
     const totalTime = window.MODULES.reduce((sum, m) => sum + m.lessons.reduce((s, l) => s + parseInt(l.duration, 10) || 0, 0), 0);
 
-    // Hero cards
-    const elLesson = document.getElementById('home-lesson-count');
-    if (elLesson) elLesson.textContent = totalLessons;
-    const elQuiz = document.getElementById('home-quiz-count');
-    if (elQuiz) elQuiz.textContent = totalQuizzes;
-    const elTime = document.getElementById('home-time-count');
-    if (elTime) elTime.textContent = totalTime;
+    document.getElementById('home-lesson-count')!.textContent = totalLessons;
+    document.getElementById('home-quiz-count')!.textContent = totalQuizzes;
+    document.getElementById('home-time-count')!.textContent = totalTime;
 
-    // Sidebar totals
     const statLessons = document.getElementById('stat-lessons');
-    if (statLessons) statLessons.textContent = totalLessons;
     const statQuizzes = document.getElementById('stat-quizzes');
-    if (statQuizzes) statQuizzes.textContent = totalQuizzes;
     const statTime = document.getElementById('stat-time');
+    if (statLessons) statLessons.textContent = totalLessons;
+    if (statQuizzes) statQuizzes.textContent = totalQuizzes;
     if (statTime) statTime.textContent = totalTime + ' menit';
 }
 
@@ -139,12 +116,10 @@ function updateProgressUI() {
     const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
     const pctEl = document.getElementById('progress-percent');
-    if (pctEl) pctEl.textContent = `${percent}%`;
-
     const bar = document.getElementById('progress-bar');
+    if (pctEl) pctEl.textContent = `${percent}%`;
     if (bar) bar.style.width = `${percent}%`;
 
-    // Also update stat-lessons to show completed/total
     const statLessons = document.getElementById('stat-lessons');
     if (statLessons) statLessons.textContent = `${completed}/${total}`;
 }
@@ -170,23 +145,49 @@ function showHome() {
     const lesson = document.getElementById('lesson-view');
     if (hero) hero.classList.remove('hidden');
     if (lesson) lesson.classList.add('hidden');
-    // Re-render to update progress styling
     renderSidebar();
     updateStats();
 }
 
+async function navigateToLesson(moduleId, slug) {
+    const module = window.MODULES.find(m => m.id === moduleId);
+    if (!module) return showHome();
 
+    const lesson = module.lessons.find(l => l.slug === slug);
+    if (!lesson) return showHome();
 
-function getDefaultCode(slug) {
-    return `public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello, Java!");
+    currentLesson = { moduleId, slug };
+
+    const hero = document.getElementById('hero-view');
+    const lessonView = document.getElementById('lesson-view');
+    if (hero) hero.classList.add('hidden');
+    if (lessonView) lessonView.classList.remove('hidden');
+    switchTab('lesson');
+
+    try {
+        const resp = await fetch(`lessons/${slug}.html`);
+        if (!resp.ok) throw new Error('Pelajaran tidak ditemukan');
+        const html = await resp.text();
+        document.getElementById('lesson-content').innerHTML = html;
+
+        state.progress[`${moduleId}-${slug}`] = true;
+        localStorage.setItem('java-progress', JSON.stringify(state.progress));
+        updateProgressUI();
+        renderSidebar();
+
+        if (typeof runJavaLesson === 'function') {
+            runJavaLesson(slug, getDefaultCode(slug));
+        }
+    } catch (e) {
+        showStatus(`Error memuat pelajaran: ${e.message}`, 'error');
     }
-}`;
 }
 
-// Quiz state
-let currentQuiz = null; // { moduleId, slug, questions: [] }
+function getDefaultCode(slug) {
+    return 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Java!");\n    }\n}';
+}
+
+// --- Quiz ---
 
 async function loadQuiz(moduleId, slug) {
     try {
@@ -195,7 +196,6 @@ async function loadQuiz(moduleId, slug) {
         const data = await resp.json();
         currentQuiz = { moduleId, slug, questions: data.quiz || [] };
         renderQuiz(currentQuiz.questions);
-        // Switch to quiz tab
         switchTab('quiz');
     } catch (e) {
         showStatus(`Error memuat kuis: ${e.message}`, 'error');
@@ -218,7 +218,6 @@ function renderQuiz(questions) {
             </div>
         </div>
     `).join('');
-    // Hide result, show questions
     const resultEl = document.getElementById('quiz-result');
     if (resultEl) resultEl.classList.add('hidden');
 }
@@ -229,22 +228,18 @@ function handleQuizSubmit() {
     let correct = 0;
     questions.forEach((q, idx) => {
         const selected = document.querySelector(`input[name="q-${idx}"]:checked`);
-        if (selected && parseInt(selected.value) === q.answer) {
-            correct++;
-        }
+        if (selected && parseInt(selected.value) === q.answer) correct++;
     });
     const total = questions.length;
     const percent = Math.round((correct / total) * 100);
-    const passingScore = questions[0]?.explanation ? 70 : 0; // fallback if missing
+    const passingScore = questions[0]?.explanation ? 70 : 0;
     const status = percent >= passingScore ? 'lulus' : 'tidak lulus';
 
-    // Save progress: mark quiz completed
     const key = `${currentQuiz.moduleId}-quiz-${currentQuiz.slug}`;
     state.progress[key] = { correct, total, percent, status, timestamp: Date.now() };
     localStorage.setItem('java-progress', JSON.stringify(state.progress));
     updateProgressUI();
 
-    // Show result
     const resultEl = document.getElementById('quiz-result');
     if (resultEl) {
         const colorClass = status === 'lulus' ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300';
@@ -265,19 +260,19 @@ function switchTab(tab) {
     const quizContent = document.getElementById('quiz-content');
 
     if (tab === 'lesson') {
-        if (lessonTab) lessonTab.classList.add('border-red-600', 'text-red-600');
-        if (lessonTab) lessonTab.classList.remove('border-transparent', 'text-gray-500');
-        if (quizTab) quizTab.classList.remove('border-red-600', 'text-red-600');
-        if (quizTab) quizTab.classList.add('border-transparent', 'text-gray-500');
-        if (lessonContent) lessonContent.classList.remove('hidden');
-        if (quizContent) quizContent.classList.add('hidden');
+        lessonTab?.classList.add('border-red-600', 'text-red-600');
+        lessonTab?.classList.remove('border-transparent', 'text-gray-500');
+        quizTab?.classList.remove('border-red-600', 'text-red-600');
+        quizTab?.classList.add('border-transparent', 'text-gray-500');
+        lessonContent?.classList.remove('hidden');
+        quizContent?.classList.add('hidden');
     } else {
-        if (quizTab) quizTab.classList.add('border-red-600', 'text-red-600');
-        if (quizTab) quizTab.classList.remove('border-transparent', 'text-gray-500');
-        if (lessonTab) lessonTab.classList.remove('border-red-600', 'text-red-600');
-        if (lessonTab) lessonTab.classList.add('border-transparent', 'text-gray-500');
-        if (quizContent) quizContent.classList.remove('hidden');
-        if (lessonContent) lessonContent.classList.add('hidden');
+        quizTab?.classList.add('border-red-600', 'text-red-600');
+        quizTab?.classList.remove('border-transparent', 'text-gray-500');
+        lessonTab?.classList.remove('border-red-600', 'text-red-600');
+        lessonTab?.classList.add('border-transparent', 'text-gray-500');
+        quizContent?.classList.remove('hidden');
+        lessonContent?.classList.add('hidden');
     }
 }
 
