@@ -2,35 +2,20 @@
 (function() {
     console.log('[Runner] Initializing...');
 
-    const REQUIRERJS_CDNS = [
-        'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js',
-        'https://unpkg.com/requirejs@2.3.6/require.js'
-    ];
-
     function loadScript(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
-                // Already added, just wait a tick
-                return setTimeout(resolve, 100);
+                // Check if CheerpJ is available
+                if (src.includes('cheerpj') && typeof CheerpJ !== 'undefined') {
+                    return resolve();
+                }
+                return setTimeout(() => resolve(), 100);
             }
             const s = document.createElement('script');
             s.src = src;
             s.onload = () => resolve();
             s.onerror = () => reject(new Error(`Failed to load ${src}`));
             document.head.appendChild(s);
-        });
-    }
-
-    function loadRequireJS() {
-        return new Promise((resolve, reject) => {
-            if (typeof require !== 'undefined') return resolve();
-            loadScript(REQUIRERJS_CDNS[0])
-                .then(() => resolve())
-                .catch(() => {
-                    loadScript(REQUIRERJS_CDNS[1])
-                        .then(() => resolve())
-                        .catch(reject);
-                });
         });
     }
 
@@ -81,7 +66,7 @@
             </div>
             <div id="editor-${slug}" class="code-editor" style="height:400px;border:1px solid #475569;border-radius:0.5rem;overflow:hidden;margin-bottom:1rem;"></div>
             <div id="output-${slug}" class="output-box" style="background:#020617;color:#e2e8f0;padding:0.75rem;border-radius:0.5rem;font-family:JetBrains Mono, monospace;white-space:pre-wrap;max-height:200px;overflow:auto;display:none;border:1px solid #1e293b;"></div>
-            <div id="status-${slug}" class="mt-2 text-sm" style="color: #94a3b8;">Memuat runtime CheerpJ...</div>
+            <div id="status-${slug}" class="mt-2 text-sm" style="color: #94a3b8;">Memuat runtime...</div>
         `;
         container.appendChild(wrapper);
 
@@ -100,37 +85,33 @@
         let editorInstance = null;
         let runtimeReady = false;
 
-        // Load dependencies
+        // Load RequireJS for Monaco
         try {
-            // RequireJS for Monaco
-            await loadRequireJS();
-            console.log('[Runner] RequireJS ready');
-
-            // Wait for CheerpJ loader to finish (it sets window.CheerpJ)
-            await waitForCheerpJ(15000); // 15 seconds timeout for CheerpJ loader
-            console.log('[Runner] CheerpJ runtime ready');
+            // Load RequireJS if not present
+            if (typeof require === 'undefined') {
+                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js');
+                console.log('[Runner] RequireJS ready');
+            }
+            // Wait for CheerpJ loader to initialize (loader.js already in page)
+            await waitForCheerpJ(12000);
             runtimeReady = true;
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
+            console.log('[Runner] CheerpJ runtime ready');
         } catch (e) {
             console.error('[Runner] Failed to load CheerpJ:', e);
-            runtimeReady = false;
-            runBtn.disabled = true;
-            statusDiv.textContent = 'Runtime CheerpJ tidak dapat dimuat.';
+            statusDiv.textContent = 'Error: Tidak dapat memuat CheerpJ runtime.';
             outputDiv.style.display = 'block';
             outputDiv.innerHTML = `
-<strong>CheerpJ Runtime Error</strong><br><br>
-Tidak dapat memuat CheerpJ dari loader. Possible causes:<br>
-1. Ad-blocker memblokir cjrtnc.leaningtech.com<br>
-2. Network/firewall memblokir domain loader.<br>
-3. Browser compatibility issue.<br><br>
-Please try:<br>
-- Disable ad-blocker for this site<br>
-- Use VPN if network blocks the loader<br>
-- Try a different browser (Chrome/Firefox)<br>
-- Check console (F12) for detailed errors.<br><br>
+<strong>CheerpJ runtime tidak dapat dimuat.</strong><br><br>
+Instruksi:<br>
+1. Periksa koneksi internet.<br>
+2. Matikan ad-blocker yang memblokir cjrtnc.leaningtech.com.<br>
+3. Coba gunakan VPN atau jaringan lain.<br>
+4. Refresh halaman (Ctrl+Shift+R).<br><br>
 Error: ${e.message}
 `;
+            runBtn.disabled = true;
             return;
         }
 
@@ -160,11 +141,10 @@ Error: ${e.message}
                 statusDiv.textContent = 'Error: CheerpJ tidak tersedia.';
                 outputDiv.style.display = 'block';
                 outputDiv.innerHTML = `
-<strong>CheerpJ tidak tersedia saat Run.</strong><br>
-Runtime CheerpJ belum siap. Coba refresh halaman atau periksa koneksi.<br>
-Jika masalah berlanjut, matikan ad-blocker atau gunakan VPN.
+<strong>Runtime tidak tersedia saat Run.</strong><br>
+Pastikan CheerpJ loader berhasil dimuat. Coba refresh halaman.<br>
+Jika masalah berlanjut, periksa koneksi atau matikan ad-blocker.
 `;
-                console.error('[Runner] Run attempted but CheerpJ not available');
                 return;
             }
             if (!editorInitialized) {
