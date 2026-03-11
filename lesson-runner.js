@@ -5,8 +5,11 @@
     function loadScript(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
-                // Check if CheerpJ is available
+                // Check if required global is present based on src
                 if (src.includes('cheerpj') && typeof CheerpJ !== 'undefined') {
+                    return resolve();
+                }
+                if (src.includes('require') && typeof require !== 'undefined') {
                     return resolve();
                 }
                 return setTimeout(() => resolve(), 100);
@@ -19,7 +22,7 @@
         });
     }
 
-    function waitForCheerpJ(timeout = 10000) {
+    function waitForCheerpJ(timeout = 15000) {
         return new Promise((resolve, reject) => {
             const start = Date.now();
             function check() {
@@ -33,6 +36,53 @@
                 }
             }
             check();
+        });
+    }
+
+    function loadRequireJSWithFallback() {
+        return new Promise((resolve, reject) => {
+            if (typeof require !== 'undefined') return resolve();
+            const CDNS = [
+                'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js',
+                'https://unpkg.com/requirejs@2.3.6/require.js',
+                'https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.js'
+            ];
+            let idx = 0;
+            function tryLoad() {
+                if (idx >= CDNS.length) return reject(new Error('RequireJS tidak dapat dimuat dari semua CDN'));
+                const src = CDNS[idx++];
+                console.log(`[Runner] Loading RequireJS from ${src}`);
+                loadScript(src).then(resolve).catch(() => {
+                    console.warn(`[Runner] Failed to load RequireJS from ${src}, trying next...`);
+                    tryLoad();
+                });
+            }
+            tryLoad();
+        });
+    }
+
+    function loadMonacoWithFallback() {
+        return new Promise((resolve, reject) => {
+            const CDNS = [
+                'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs',
+                'https://unpkg.com/monaco-editor@0.44.0/min/vs',
+                'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs'
+            ];
+            let idx = 0;
+            function tryLoad() {
+                if (idx >= CDNS.length) return reject(new Error('Monaco tidak dapat dimuat dari semua CDN'));
+                const base = CDNS[idx++];
+                console.log(`[Runner] Configuring Monaco path: ${base}`);
+                require.config({ paths: { 'vs': base }});
+                require(['vs/editor/editor.main'], function() {
+                    console.log('[Runner] Monaco loaded');
+                    resolve();
+                }, function(err) {
+                    console.warn(`[Runner] Monaco load failed from ${base}:`, err);
+                    tryLoad();
+                });
+            }
+            tryLoad();
         });
     }
 
@@ -85,39 +135,51 @@
         let editorInstance = null;
         let runtimeReady = false;
 
-        // Load RequireJS for Monaco
+        // Load dependencies
         try {
-            // Load RequireJS if not present
-            if (typeof require === 'undefined') {
-                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js');
-                console.log('[Runner] RequireJS ready');
-            }
-            // Wait for CheerpJ loader to initialize (loader.js already in page)
-            await waitForCheerpJ(12000);
+            // RequireJS with fallback
+            await loadRequireJSWithFallback();
+            console.log('[Runner] RequireJS ready');
+            // Wait for CheerpJ loader from official CDN
+            await waitForCheerpJ(15000);
+            console.log('[Runner] CheerpJ ready');
             runtimeReady = true;
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
-            console.log('[Runner] CheerpJ runtime ready');
         } catch (e) {
-            console.error('[Runner] Failed to load CheerpJ:', e);
-            statusDiv.textContent = 'Error: Tidak dapat memuat CheerpJ runtime.';
+            console.error('[Runner] Failed to load dependencies:', e);
+            runtimeReady = false;
+            runBtn.disabled = true;
+            statusDiv.textContent = 'Runtime tidak dapat dimuat.';
             outputDiv.style.display = 'block';
             outputDiv.innerHTML = `
-<strong>CheerpJ runtime tidak dapat dimuat.</strong><br><br>
-Instruksi:<br>
+<strong>Runtime tidak dapat dimuat.</strong><br><br>
+Instruksi pemecahan masalah:<br>
 1. Periksa koneksi internet.<br>
-2. Matikan ad-blocker yang memblokir cjrtnc.leaningtech.com.<br>
+2. Matikan ad‑blocker yang memblokir domain:<br>
+   - cjrtnc.leaningtech.com (CheerpJ loader)<br>
+   -cdnjs.cloudflare.com / unpkg.com / cdn.jsdelivr.net (Monaco & RequireJS)<br>
 3. Coba gunakan VPN atau jaringan lain.<br>
 4. Refresh halaman (Ctrl+Shift+R).<br><br>
-Error: ${e.message}
+Detail error: ${e.message}
 `;
+            return;
+        }
+
+        // Load Monaco with fallback
+        try {
+            await loadMonacoWithFallback();
+        } catch (e) {
+            console.error('[Runner] Monaco failed:', e);
+            statusDiv.textContent = 'Editor gagal dimuat.';
+            outputDiv.style.display = 'block';
+            outputDiv.innerHTML = `Editor Monaco tidak dapat dimuat.<br>${e.message}<br>Coba refresh atau gunakan jaringan lain.`;
             runBtn.disabled = true;
             return;
         }
 
-        // Configure Monaco
-        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' }});
-        require(['vs/editor/editor.main'], function() {
+        // Create editor instance
+        try {
             const isDark = document.documentElement.classList.contains('dark');
             editorInstance = monaco.editor.create(editorDiv, {
                 value: initialCode || defaultCode(),
@@ -133,7 +195,11 @@ Error: ${e.message}
             statusDiv.textContent = 'Editor siap. Klik Run untuk menjalankan.';
             runBtn.disabled = false;
             console.log('[Runner] Editor ready');
-        });
+        } catch (e) {
+            console.error('[Runner] Editor create failed:', e);
+            statusDiv.textContent = 'Gagal membuat editor.';
+            runBtn.disabled = true;
+        }
 
         // Button handlers
         runBtn.onclick = async () => {
@@ -143,7 +209,7 @@ Error: ${e.message}
                 outputDiv.innerHTML = `
 <strong>Runtime tidak tersedia saat Run.</strong><br>
 Pastikan CheerpJ loader berhasil dimuat. Coba refresh halaman.<br>
-Jika masalah berlanjut, periksa koneksi atau matikan ad-blocker.
+Jika masalah berlanjut, periksa koneksi atau matikan ad‑blocker.
 `;
                 return;
             }
