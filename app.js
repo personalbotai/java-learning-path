@@ -1,49 +1,76 @@
 // Global state
 let state = { progress: {}, theme: 'dark' };
-let currentLesson = null; // { moduleId, slug }
-let currentQuiz = null; // { moduleId, slug, questions: [] }
+let currentLesson = null;
+let currentQuiz = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-    state.progress = JSON.parse(localStorage.getItem('java-progress') || '{}');
-    state.theme = localStorage.getItem('theme') || 'dark';
+    console.log('[Archon] DOMContentLoaded');
+    console.log('[Archon] window.MODULES:', window.MODULES ? 'present' : 'undefined');
+    if (window.MODULES) console.log('[Archon] MODULES count:', window.MODULES.length);
+
+    // Load state
+    try {
+        state.progress = JSON.parse(localStorage.getItem('java-progress') || '{}');
+        state.theme = localStorage.getItem('theme') || 'dark';
+        console.log('[Archon] State loaded:', { theme: state.theme, progressEntries: Object.keys(state.progress).length });
+    } catch (e) {
+        console.error('[Archon] State parse error:', e);
+    }
 
     // Apply theme
     document.documentElement.setAttribute('data-theme', state.theme);
     if (state.theme === 'dark') document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
 
-    if (!window.MODULES) {
+    // Ensure MODULES is ready
+    if (!window.MODULES || window.MODULES.length === 0) {
+        console.error('[Archon] MODULES empty or not set');
         showStatus('Modul belum dimuat. Cek koneksi.', 'error');
         return;
     }
 
     // Event listeners
-    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
-    document.getElementById('sidebar-toggle')?.addEventListener('click', toggleSidebar);
-    document.getElementById('sidebar-overlay')?.addEventListener('click', closeSidebar);
-    document.getElementById('start-btn')?.addEventListener('click', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+
+    const overlay = document.getElementById('sidebar-overlay');
+    if (overlay) overlay.addEventListener('click', closeSidebar);
+
+    const startBtn = document.getElementById('start-btn');
+    if (startBtn) startBtn.addEventListener('click', () => {
         const first = window.MODULES[0].lessons[0];
         navigateToLesson(window.MODULES[0].id, first.slug);
     });
-    document.getElementById('back-to-home')?.addEventListener('click', showHome);
+
+    const backBtn = document.getElementById('back-to-home');
+    if (backBtn) backBtn.addEventListener('click', showHome);
 
     // Tabs
-    document.getElementById('tab-lesson')?.addEventListener('click', () => switchTab('lesson'));
-    document.getElementById('tab-quiz')?.addEventListener('click', () => {
+    const tabLesson = document.getElementById('tab-lesson');
+    const tabQuiz = document.getElementById('tab-quiz');
+    if (tabLesson) tabLesson.addEventListener('click', () => switchTab('lesson'));
+    if (tabQuiz) tabQuiz.addEventListener('click', () => {
         if (currentLesson) loadQuiz(currentLesson.moduleId, currentLesson.slug);
         switchTab('quiz');
     });
 
     // Quiz actions
-    document.getElementById('quiz-submit')?.addEventListener('click', handleQuizSubmit);
-    document.getElementById('quiz-reset')?.addEventListener('click', () => {
+    const submitBtn = document.getElementById('quiz-submit');
+    const resetBtn = document.getElementById('quiz-reset');
+    if (submitBtn) submitBtn.addEventListener('click', handleQuizSubmit);
+    if (resetBtn) resetBtn.addEventListener('click', () => {
         if (currentLesson) loadQuiz(currentLesson.moduleId, currentLesson.slug);
     });
 
+    // Initial render
     renderSidebar();
     updateStats();
     updateProgressUI();
 
+    // Route handling
     window.addEventListener('hashchange', handleRoute);
     handleRoute();
 });
@@ -52,20 +79,20 @@ function toggleTheme() {
     const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
     localStorage.setItem('theme', newTheme);
-    if (window.monacoEditor) {
-        monacoEditor.updateOptions({ theme: newTheme === 'dark' ? 'vs-dark' : 'vs' });
-    }
+    if (window.monacoEditor) monacoEditor.updateOptions({ theme: newTheme === 'dark' ? 'vs-dark' : 'vs' });
 }
 
 function toggleSidebar() {
     const sb = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
-    sb?.classList.toggle('-translate-x-full');
-    overlay?.classList.toggle('hidden');
+    if (sb) sb.classList.toggle('-translate-x-full');
+    if (overlay) overlay.classList.toggle('hidden');
 }
 function closeSidebar() {
-    document.getElementById('sidebar')?.classList.add('-translate-x-full');
-    document.getElementById('sidebar-overlay')?.classList.add('hidden');
+    const sb = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sb) sb.classList.add('-translate-x-full');
+    if (overlay) overlay.classList.add('hidden');
 }
 
 function renderSidebar() {
@@ -93,14 +120,22 @@ function renderSidebar() {
 }
 
 function updateStats() {
-    if (!window.MODULES.length) return;
+    if (!window.MODULES?.length) {
+        console.warn('[Archon] updateStats called but MODULES empty');
+        return;
+    }
     const totalLessons = window.MODULES.reduce((sum, m) => sum + m.lessons.length, 0);
     const totalQuizzes = window.MODULES.filter(m => m.quiz).length;
     const totalTime = window.MODULES.reduce((sum, m) => sum + m.lessons.reduce((s, l) => s + parseInt(l.duration, 10) || 0, 0), 0);
 
-    document.getElementById('home-lesson-count')!.textContent = totalLessons;
-    document.getElementById('home-quiz-count')!.textContent = totalQuizzes;
-    document.getElementById('home-time-count')!.textContent = totalTime;
+    console.log('[Archon] Updating stats:', { totalLessons, totalQuizzes, totalTime });
+
+    const elLesson = document.getElementById('home-lesson-count');
+    const elQuiz = document.getElementById('home-quiz-count');
+    const elTime = document.getElementById('home-time-count');
+    if (elLesson) elLesson.textContent = totalLessons;
+    if (elQuiz) elQuiz.textContent = totalQuizzes;
+    if (elTime) elTime.textContent = totalTime;
 
     const statLessons = document.getElementById('stat-lessons');
     const statQuizzes = document.getElementById('stat-quizzes');
@@ -112,7 +147,7 @@ function updateStats() {
 
 function updateProgressUI() {
     const completed = Object.keys(state.progress).length;
-    const total = window.MODULES.reduce((sum, m) => sum + m.lessons.length, 0);
+    const total = window.MODULES?.reduce((sum, m) => sum + m.lessons.length, 0) || 0;
     const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
     const pctEl = document.getElementById('progress-percent');
@@ -150,11 +185,17 @@ function showHome() {
 }
 
 async function navigateToLesson(moduleId, slug) {
+    console.log('[Archon] navigateToLesson:', { moduleId, slug });
     const module = window.MODULES.find(m => m.id === moduleId);
-    if (!module) return showHome();
-
+    if (!module) {
+        console.warn('[Archon] Module not found:', moduleId);
+        return showHome();
+    }
     const lesson = module.lessons.find(l => l.slug === slug);
-    if (!lesson) return showHome();
+    if (!lesson) {
+        console.warn('[Archon] Lesson not found:', slug);
+        return showHome();
+    }
 
     currentLesson = { moduleId, slug };
 
@@ -179,6 +220,7 @@ async function navigateToLesson(moduleId, slug) {
             runJavaLesson(slug, getDefaultCode(slug));
         }
     } catch (e) {
+        console.error('[Archon] navigateToLesson error:', e);
         showStatus(`Error memuat pelajaran: ${e.message}`, 'error');
     }
 }
@@ -190,6 +232,7 @@ function getDefaultCode(slug) {
 // --- Quiz ---
 
 async function loadQuiz(moduleId, slug) {
+    console.log('[Archon] loadQuiz:', { moduleId, slug });
     try {
         const resp = await fetch(`quizzes/${slug}.json`);
         if (!resp.ok) throw new Error('Quiz tidak ditemukan');
@@ -198,6 +241,7 @@ async function loadQuiz(moduleId, slug) {
         renderQuiz(currentQuiz.questions);
         switchTab('quiz');
     } catch (e) {
+        console.error('[Archon] loadQuiz error:', e);
         showStatus(`Error memuat kuis: ${e.message}`, 'error');
     }
 }
