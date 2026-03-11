@@ -1,10 +1,13 @@
-// Java Learning Path SPA
+// Global state
+let state = {
+    progress: {},
+    theme: 'dark'
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
-    // State
-    const state = {
-        progress: JSON.parse(localStorage.getItem('java-progress') || '{}'),
-        theme: localStorage.getItem('theme') || 'dark'
-    };
+    // Load persisted state
+    state.progress = JSON.parse(localStorage.getItem('java-progress') || '{}');
+    state.theme = localStorage.getItem('theme') || 'dark';
 
     // Apply theme early
     document.documentElement.setAttribute('data-theme', state.theme);
