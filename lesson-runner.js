@@ -80,7 +80,7 @@
         return new Promise((resolve, reject) => {
             const start = Date.now();
             function check() {
-                if (typeof CheerpJ !== 'undefined') {
+                if (typeof CheerpJ !== 'undefined' && CheerpJ.compileString && CheerpJ.runMain) {
                     console.log('[Runner] CheerpJ ready');
                     resolve();
                 } else if (Date.now() - start > timeout) {
@@ -140,6 +140,7 @@
 
         let editorInitialized = false;
         let editorInstance = null;
+        let runtimeReady = false;
 
         // Load dependencies
         try {
@@ -149,6 +150,7 @@
             // CheerpJ with extensive retry
             await loadCheerpJWithRetry(5);
             console.log('[Runner] CheerpJ ready');
+            runtimeReady = true;
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
         } catch (e) {
@@ -178,8 +180,14 @@
             console.log('[Runner] Editor ready');
         });
 
-        // Button handlers
+        // Button handlers with double-check
         runBtn.onclick = async () => {
+            // Double-check CheerpJ availability at click time
+            if (typeof CheerpJ === 'undefined' || !CheerpJ.compileString || !CheerpJ.runMain) {
+                statusDiv.textContent = 'Error: CheerpJ tidak tersedia. Coba refresh halaman.';
+                console.error('[Runner] Run attempted but CheerpJ not available');
+                return;
+            }
             if (!editorInitialized) {
                 statusDiv.textContent = 'Editor belum siap...';
                 return;
@@ -223,8 +231,8 @@
 
     function runCheerpJ(code) {
         return new Promise((resolve, reject) => {
-            if (typeof CheerpJ === 'undefined') {
-                reject(new Error('CheerpJ belum tersedia'));
+            if (typeof CheerpJ === 'undefined' || !CheerpJ.compileString) {
+                reject(new Error('CheerpJ tidak tersedia. Pastikan runtime dimuat dengan benar.'));
                 return;
             }
             const timeout = setTimeout(() => {
