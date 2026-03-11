@@ -4,14 +4,33 @@
 
     function loadScript(src) {
         return new Promise((resolve, reject) => {
+            // If script already in document, assume loaded (but check window for global)
             if (document.querySelector(`script[src="${src}"]`)) {
-                return resolve();
+                // Still wait a tick to ensure execution
+                return setTimeout(resolve, 100);
             }
             const s = document.createElement('script');
             s.src = src;
             s.onload = () => resolve();
             s.onerror = (e) => reject(e);
             document.head.appendChild(s);
+        });
+    }
+
+    function waitForCheerpJ(timeout = 5000) {
+        return new Promise((resolve, reject) => {
+            const start = Date.now();
+            function check() {
+                if (typeof CheerpJ !== 'undefined') {
+                    console.log('[Runner] CheerpJ ready');
+                    resolve();
+                } else if (Date.now() - start > timeout) {
+                    reject(new Error('CheerpJ tidak dimuat setelah ' + timeout + 'ms'));
+                } else {
+                    setTimeout(check, 100);
+                }
+            }
+            check();
         });
     }
 
@@ -36,7 +55,7 @@
             <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
                 <h3 class="m-0 text-lg font-semibold text-sky-400">Latihan: Cobalah kode Java berikut</h3>
                 <div class="flex items-center gap-2">
-                    <button id="run-${slug}" class="run-btn px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-2 transition">
+                    <button id="run-${slug}" class="run-btn px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-2 transition" ${!initialCode ? 'disabled' : ''}>
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
                         Run Java
                     </button>
@@ -45,7 +64,7 @@
             </div>
             <div id="editor-${slug}" class="code-editor" style="height:400px;border:1px solid #475569;border-radius:0.5rem;overflow:hidden;margin-bottom:1rem;"></div>
             <div id="output-${slug}" class="output-box" style="background:#020617;color:#e2e8f0;padding:0.75rem;border-radius:0.5rem;font-family:JetBrains Mono, monospace;white-space:pre-wrap;max-height:200px;overflow:auto;display:none;border:1px solid #1e293b;"></div>
-            <div id="status-${slug}" class="mt-2 text-sm" style="color: #94a3b8;"></div>
+            <div id="status-${slug}" class="mt-2 text-sm" style="color: #94a3b8;">Memuat runtime...</div>
         `;
         container.appendChild(wrapper);
 
@@ -62,15 +81,25 @@
 
         let editorInitialized = false;
         let editorInstance = null;
+        let dependenciesReady = false;
 
-        // Load dependencies
+        // Load dependencies: RequireJS (for Monaco) and ensure CheerpJ
         try {
-            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js');
-            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/cheerpj/2.2.5/cheerpj.min.js');
-            console.log('[Runner] Dependencies loaded');
+            // Load RequireJS if missing
+            if (typeof require === 'undefined') {
+                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js');
+                console.log('[Runner] RequireJS loaded');
+            }
+            // CheerpJ should be in page via <script>, but wait for it
+            await waitForCheerpJ(8000);
+            dependenciesReady = true;
+            statusDiv.textContent = 'Runtime siap.';
+            runBtn.disabled = false;
+            console.log('[Runner] Dependencies ready');
         } catch (e) {
             console.error('[Runner] Failed to load dependencies:', e);
-            statusDiv.textContent = 'Error memuat runtime Java. Cek koneksi internet.';
+            statusDiv.textContent = 'Error memuat runtime Java. Periksa koneksi.';
+            runBtn.disabled = true;
             return;
         }
 
@@ -90,6 +119,8 @@
             });
             editorInitialized = true;
             statusDiv.textContent = 'Editor siap. Klik Run untuk menjalankan.';
+            runBtn.disabled = false;
+            console.log('[Runner] Editor ready');
         });
 
         // Button handlers
@@ -137,6 +168,10 @@
 
     function runCheerpJ(code) {
         return new Promise((resolve, reject) => {
+            if (typeof CheerpJ === 'undefined') {
+                reject(new Error('CheerpJ belum tersedia'));
+                return;
+            }
             const timeout = setTimeout(() => {
                 reject(new Error('Timeout setelah 10 detik'));
             }, 10000);
