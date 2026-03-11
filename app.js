@@ -5,14 +5,11 @@ let currentQuiz = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('[Archon] DOMContentLoaded');
-    console.log('[Archon] window.MODULES:', window.MODULES ? 'present' : 'undefined');
-    if (window.MODULES) console.log('[Archon] MODULES count:', window.MODULES.length);
-
+    
     // Load state
     try {
         state.progress = JSON.parse(localStorage.getItem('java-progress') || '{}');
         state.theme = localStorage.getItem('theme') || 'dark';
-        console.log('[Archon] State loaded:', { theme: state.theme, progressEntries: Object.keys(state.progress).length });
     } catch (e) {
         console.error('[Archon] State parse error:', e);
     }
@@ -22,55 +19,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (state.theme === 'dark') document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
 
-    // Ensure MODULES is ready
+    // Ensure MODULES is available (fallback: parse from inline JSON if not set)
     if (!window.MODULES || window.MODULES.length === 0) {
-        console.error('[Archon] MODULES empty or not set');
-        showStatus('Modul belum dimuat. Cek koneksi.', 'error');
-        return;
+        console.warn('[Archon] MODULES not set, attempting fallback parse...');
+        const scriptEl = document.getElementById('modules-data');
+        if (scriptEl) {
+            try {
+                window.MODULES = JSON.parse(scriptEl.textContent);
+                console.log('[Archon] Fallback parse succeeded:', window.MODULES.length, 'modules');
+            } catch (e) {
+                console.error('[Archon] Fallback parse failed:', e);
+                showStatus('Gagal memuat data modul.', 'error');
+                return;
+            }
+        } else {
+            console.error('[Archon] modules-data element not found');
+            showStatus('Data modul tidak ditemukan.', 'error');
+            return;
+        }
     }
 
+    console.log('[Archon] Proceeding with MODULES:', window.MODULES.length);
+
     // Event listeners
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
-
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
-
-    const overlay = document.getElementById('sidebar-overlay');
-    if (overlay) overlay.addEventListener('click', closeSidebar);
-
-    const startBtn = document.getElementById('start-btn');
-    if (startBtn) startBtn.addEventListener('click', () => {
+    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+    document.getElementById('sidebar-toggle')?.addEventListener('click', toggleSidebar);
+    document.getElementById('sidebar-overlay')?.addEventListener('click', closeSidebar);
+    document.getElementById('start-btn')?.addEventListener('click', () => {
         const first = window.MODULES[0].lessons[0];
         navigateToLesson(window.MODULES[0].id, first.slug);
     });
-
     const backBtn = document.getElementById('back-to-home');
     if (backBtn) backBtn.addEventListener('click', showHome);
 
     // Tabs
-    const tabLesson = document.getElementById('tab-lesson');
-    const tabQuiz = document.getElementById('tab-quiz');
-    if (tabLesson) tabLesson.addEventListener('click', () => switchTab('lesson'));
-    if (tabQuiz) tabQuiz.addEventListener('click', () => {
+    document.getElementById('tab-lesson')?.addEventListener('click', () => switchTab('lesson'));
+    document.getElementById('tab-quiz')?.addEventListener('click', () => {
         if (currentLesson) loadQuiz(currentLesson.moduleId, currentLesson.slug);
         switchTab('quiz');
     });
 
     // Quiz actions
-    const submitBtn = document.getElementById('quiz-submit');
-    const resetBtn = document.getElementById('quiz-reset');
-    if (submitBtn) submitBtn.addEventListener('click', handleQuizSubmit);
-    if (resetBtn) resetBtn.addEventListener('click', () => {
+    document.getElementById('quiz-submit')?.addEventListener('click', handleQuizSubmit);
+    document.getElementById('quiz-reset')?.addEventListener('click', () => {
         if (currentLesson) loadQuiz(currentLesson.moduleId, currentLesson.slug);
     });
 
-    // Initial render
+    // Initial
     renderSidebar();
     updateStats();
     updateProgressUI();
 
-    // Route handling
     window.addEventListener('hashchange', handleRoute);
     handleRoute();
 });
@@ -83,16 +82,12 @@ function toggleTheme() {
 }
 
 function toggleSidebar() {
-    const sb = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    if (sb) sb.classList.toggle('-translate-x-full');
-    if (overlay) overlay.classList.toggle('hidden');
+    document.getElementById('sidebar')?.classList.toggle('-translate-x-full');
+    document.getElementById('sidebar-overlay')?.classList.toggle('hidden');
 }
 function closeSidebar() {
-    const sb = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    if (sb) sb.classList.add('-translate-x-full');
-    if (overlay) overlay.classList.add('hidden');
+    document.getElementById('sidebar')?.classList.add('-translate-x-full');
+    document.getElementById('sidebar-overlay')?.classList.add('hidden');
 }
 
 function renderSidebar() {
@@ -121,7 +116,7 @@ function renderSidebar() {
 
 function updateStats() {
     if (!window.MODULES?.length) {
-        console.warn('[Archon] updateStats called but MODULES empty');
+        console.warn('[Archon] updateStats: MODULES empty');
         return;
     }
     const totalLessons = window.MODULES.reduce((sum, m) => sum + m.lessons.length, 0);
