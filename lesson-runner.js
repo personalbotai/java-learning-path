@@ -1,24 +1,26 @@
-// lesson-runner.js - Java runtime dengan CheerpJ + Monaco
+// lesson-runner.js - Java runtime dengan CheerpJ + Monaco (multiple fallbacks)
 (function() {
     console.log('[Runner] Initializing...');
 
     const CHEERPJ_CDNS = [
         'https://cdn.jsdelivr.net/npm/cheerpj@2.2.5/dist/cheerpj.min.js',
         'https://unpkg.com/cheerpj@2.2.5/dist/cheerpj.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/cheerpj/2.2.5/cheerpj.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/cheerpj/2.2.5/cheerpj.min.js',
+        'https://raw.githubusercontent.com/cheerpj/cheerpj/master/dist/cheerpj.min.js',
+        'https://github.com/cheerpj/cheerpj/releases/download/v2.2.5/cheerpj.min.js'
     ];
     const REQUIRERJS_CDNS = [
         'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js',
-        'https://unpkg.com/requirejs@2.3.6/require.js'
+        'https://unpkg.com/requirejs@2.3.6/require.js',
+        'https://cdnjs.com/ajax/libs/require.js/2.3.6/require.min.js'
     ];
 
     function loadScript(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
-                // Already added, but check global
                 const isLoaded = src.includes('cheerpj') ? typeof CheerpJ !== 'undefined' : typeof require !== 'undefined';
                 if (isLoaded) return resolve();
-                return setTimeout(() => resolve(), 100); // wait for execution
+                return setTimeout(() => resolve(), 100);
             }
             const s = document.createElement('script');
             s.src = src;
@@ -28,12 +30,12 @@
         });
     }
 
-    function loadCheerpJWithRetry(maxAttempts = 3) {
+    function loadCheerpJWithRetry(maxAttempts = 5) {
         return new Promise((resolve, reject) => {
             let attempt = 0;
             function tryLoad() {
                 if (attempt >= maxAttempts) {
-                    reject(new Error('CheerpJ tidak dapat dimuat dari semua CDN'));
+                    reject(new Error('CheerpJ tidak dapat dimuat dari semua CDN. Cek ad-blocker, firewall, atau gunakan VPN.'));
                     return;
                 }
                 attempt++;
@@ -41,16 +43,15 @@
                 console.log(`[Runner] Loading CheerpJ from ${src} (attempt ${attempt})`);
                 loadScript(src)
                     .then(() => {
-                        // Wait for global CheerpJ
                         waitForCheerpJ(5000)
-                            .then(resolve)
+                            .then(() => resolve())
                             .catch(() => {
-                                console.warn(`[Runner] CheerpJ from ${src} loaded but not ready, trying next...`);
+                                console.warn(`[Runner] CheerpJ dari ${src} belum siap, coba CDN berikutnya...`);
                                 tryLoad();
                             });
                     })
                     .catch(() => {
-                        console.warn(`[Runner] Failed to load CheerpJ from ${src}, trying next...`);
+                        console.warn(`[Runner] Gagal memuat CheerpJ dari ${src}, mencoba CDN berikutnya...`);
                         tryLoad();
                     });
             }
@@ -61,14 +62,16 @@
     function loadRequireJS() {
         return new Promise((resolve, reject) => {
             if (typeof require !== 'undefined') return resolve();
-            // Try first CDN
             loadScript(REQUIRERJS_CDNS[0])
                 .then(() => resolve())
                 .catch(() => {
-                    // Try second
                     loadScript(REQUIRERJS_CDNS[1])
                         .then(() => resolve())
-                        .catch(reject);
+                        .catch(() => {
+                            loadScript(REQUIRERJS_CDNS[2])
+                                .then(() => resolve())
+                                .catch(reject);
+                        });
                 });
         });
     }
@@ -98,7 +101,7 @@
             return;
         }
 
-        // Remove existing runner for this slug
+        // Remove existing runner
         const existing = document.getElementById(`runner-${slug}`);
         if (existing) existing.remove();
 
@@ -140,17 +143,17 @@
 
         // Load dependencies
         try {
-            // RequireJS for Monaco
+            // RequireJS
             await loadRequireJS();
             console.log('[Runner] RequireJS ready');
-            // CheerpJ with retry
-            await loadCheerpJWithRetry(3);
+            // CheerpJ with extensive retry
+            await loadCheerpJWithRetry(5);
             console.log('[Runner] CheerpJ ready');
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
         } catch (e) {
             console.error('[Runner] Failed to load dependencies:', e);
-            statusDiv.textContent = 'Error: Tidak dapat memuat runtime Java. Cek koneksi atau refresh halaman.';
+            statusDiv.textContent = 'Error: Tidak dapat memuat runtime Java. Cek ad-blocker, firewall, atau gunakan VPN.';
             runBtn.disabled = true;
             return;
         }
