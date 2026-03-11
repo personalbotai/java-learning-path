@@ -202,7 +202,17 @@
         runBtn.onclick = async () => {
             // Double-check CheerpJ availability at click time
             if (typeof CheerpJ === 'undefined' || !CheerpJ.compileString || !CheerpJ.runMain) {
-                statusDiv.textContent = 'Error: CheerpJ tidak tersedia. Coba refresh halaman.';
+                statusDiv.textContent = 'Error: CheerpJ tidak tersedia. Ikuti instruksi di atas.';
+                outputDiv.style.display = 'block';
+                outputDiv.textContent = `CheerpJ runtime tidak dapat dimuat.
+
+Instruksi perbaikan:
+1. Nonaktifkan ad-blocker (extension atau browser settings)
+2. Cek firewall/proxy yang memblokir CDN
+3. Coba gunakan VPN jika di jaringan terblokir
+4. Setelah perubahan, REFRESH halaman ini.
+
+Jika masalah tetap, hubungi administrator jaringan.`;
                 console.error('[Runner] Run attempted but CheerpJ not available');
                 return;
             }
