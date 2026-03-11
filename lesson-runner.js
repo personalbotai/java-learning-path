@@ -1,42 +1,16 @@
-// lesson-runner.js - Java runtime dengan CheerpJ + Monaco (multiple fallbacks)
+// lesson-runner.js - Java runtime using JDK.js + Monaco
 (function() {
     console.log('[Runner] Initializing...');
 
-    // Ensure CheerpJ stub exists even if external scripts fail
-    if (typeof CheerpJ === 'undefined') {
-        console.warn('[Runner] CheerpJ not present, installing stub...');
-        window.CheerpJ = {
-            compileString: function(code, className, callback) {
-                console.error('[CheerpJ Stub] Cannot compile: CheerpJ runtime not available.');
-                setTimeout(() => callback(null), 100);
-            },
-            runMain: function(className, args, callbacks) {
-                console.error('[CheerpJ Stub] Cannot run: CheerpJ runtime not available.');
-                if (callbacks && callbacks.error) {
-                    callbacks.error('CheerpJ tidak dapat dimuat. Mohon matikan ad-blocker, cek firewall, atau gunakan VPN. Setelah itu, refresh halaman.');
-                }
-                if (callbacks && callbacks.done) callbacks.done();
-            }
-        };
-    }
-
-    const CHEERPJ_CDNS = [
-        'https://cdn.jsdelivr.net/npm/cheerpj@2.2.5/dist/cheerpj.min.js',
-        'https://unpkg.com/cheerpj@2.2.5/dist/cheerpj.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/cheerpj/2.2.5/cheerpj.min.js',
-        'https://raw.githubusercontent.com/cheerpj/cheerpj/master/dist/cheerpj.min.js',
-        'https://github.com/cheerpj/cheerpj/releases/download/v2.2.5/cheerpj.min.js'
-    ];
     const REQUIRERJS_CDNS = [
         'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js',
-        'https://unpkg.com/requirejs@2.3.6/require.js',
-        'https://cdnjs.com/ajax/libs/require.js/2.3.6/require.min.js'
+        'https://unpkg.com/requirejs@2.3.6/require.js'
     ];
 
     function loadScript(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
-                const isLoaded = src.includes('cheerpj') ? typeof CheerpJ !== 'undefined' : typeof require !== 'undefined';
+                const isLoaded = src.includes('jdk') ? typeof Java !== 'undefined' : typeof require !== 'undefined';
                 if (isLoaded) return resolve();
                 return setTimeout(() => resolve(), 100);
             }
@@ -48,35 +22,6 @@
         });
     }
 
-    function loadCheerpJWithRetry(maxAttempts = 5) {
-        return new Promise((resolve, reject) => {
-            let attempt = 0;
-            function tryLoad() {
-                if (attempt >= maxAttempts) {
-                    reject(new Error('CheerpJ tidak dapat dimuat dari semua CDN. Cek ad-blocker, firewall, atau gunakan VPN.'));
-                    return;
-                }
-                attempt++;
-                const src = CHEERPJ_CDNS[attempt - 1];
-                console.log(`[Runner] Loading CheerpJ from ${src} (attempt ${attempt})`);
-                loadScript(src)
-                    .then(() => {
-                        waitForCheerpJ(5000)
-                            .then(() => resolve())
-                            .catch(() => {
-                                console.warn(`[Runner] CheerpJ dari ${src} belum siap, coba CDN berikutnya...`);
-                                tryLoad();
-                            });
-                    })
-                    .catch(() => {
-                        console.warn(`[Runner] Gagal memuat CheerpJ dari ${src}, mencoba CDN berikutnya...`);
-                        tryLoad();
-                    });
-            }
-            tryLoad();
-        });
-    }
-
     function loadRequireJS() {
         return new Promise((resolve, reject) => {
             if (typeof require !== 'undefined') return resolve();
@@ -85,24 +30,20 @@
                 .catch(() => {
                     loadScript(REQUIRERJS_CDNS[1])
                         .then(() => resolve())
-                        .catch(() => {
-                            loadScript(REQUIRERJS_CDNS[2])
-                                .then(() => resolve())
-                                .catch(reject);
-                        });
+                        .catch(reject);
                 });
         });
     }
 
-    function waitForCheerpJ(timeout = 5000) {
+    function waitForJDK(timeout = 5000) {
         return new Promise((resolve, reject) => {
             const start = Date.now();
             function check() {
-                if (typeof CheerpJ !== 'undefined' && CheerpJ.compileString && CheerpJ.runMain) {
-                    console.log('[Runner] CheerpJ ready');
+                if (typeof Java !== 'undefined' && Java.runJava) {
+                    console.log('[Runner] JDK.js ready');
                     resolve();
                 } else if (Date.now() - start > timeout) {
-                    reject(new Error(`CheerpJ tidak dimuat setelah ${timeout}ms`));
+                    reject(new Error(`JDK.js tidak dimuat setelah ${timeout}ms`));
                 } else {
                     setTimeout(check, 100);
                 }
@@ -162,18 +103,18 @@
 
         // Load dependencies
         try {
-            // RequireJS
+            // RequireJS for Monaco
             await loadRequireJS();
             console.log('[Runner] RequireJS ready');
-            // CheerpJ with extensive retry
-            await loadCheerpJWithRetry(5);
-            console.log('[Runner] CheerpJ ready');
+            // Wait for JDK.js to be available
+            await waitForJDK(8000);
+            console.log('[Runner] JDK.js ready');
             runtimeReady = true;
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
         } catch (e) {
             console.error('[Runner] Failed to load dependencies:', e);
-            statusDiv.textContent = 'Error: Tidak dapat memuat runtime Java. Cek ad-blocker, firewall, atau gunakan VPN.';
+            statusDiv.textContent = 'Error: Tidak dapat memuat JDK.js. Cek ad-blocker, firewall, atau gunakan VPN.';
             runBtn.disabled = true;
             return;
         }
@@ -198,13 +139,12 @@
             console.log('[Runner] Editor ready');
         });
 
-        // Button handlers with double-check
+        // Button handlers
         runBtn.onclick = async () => {
-            // Double-check CheerpJ availability at click time
-            if (typeof CheerpJ === 'undefined' || !CheerpJ.compileString || !CheerpJ.runMain) {
-                statusDiv.textContent = 'Error: CheerpJ tidak tersedia. Ikuti instruksi di atas.';
+            if (typeof Java === 'undefined' || !Java.runJava) {
+                statusDiv.textContent = 'Error: JDK.js tidak tersedia.';
                 outputDiv.style.display = 'block';
-                outputDiv.textContent = `CheerpJ runtime tidak dapat dimuat.
+                outputDiv.textContent = `JDK.js runtime tidak dapat dimuat.
 
 Instruksi perbaikan:
 1. Nonaktifkan ad-blocker (extension atau browser settings)
@@ -213,7 +153,7 @@ Instruksi perbaikan:
 4. Setelah perubahan, REFRESH halaman ini.
 
 Jika masalah tetap, hubungi administrator jaringan.`;
-                console.error('[Runner] Run attempted but CheerpJ not available');
+                console.error('[Runner] Run attempted but JDK.js not available');
                 return;
             }
             if (!editorInitialized) {
@@ -226,7 +166,7 @@ Jika masalah tetap, hubungi administrator jaringan.`;
             statusDiv.textContent = 'Mengompilasi...';
 
             try {
-                const result = await runCheerpJ(code);
+                const result = await runJava(code);
                 if (result.error) {
                     outputDiv.textContent = `Error:\n${result.error}`;
                     statusDiv.textContent = 'Gagal mengompilasi.';
@@ -257,29 +197,26 @@ Jika masalah tetap, hubungi administrator jaringan.`;
 }`;
     }
 
-    function runCheerpJ(code) {
+    function runJava(code) {
         return new Promise((resolve, reject) => {
-            if (typeof CheerpJ === 'undefined' || !CheerpJ.compileString) {
-                reject(new Error('CheerpJ tidak tersedia. Pastikan runtime dimuat dengan benar.'));
+            if (typeof Java === 'undefined' || !Java.runJava) {
+                reject(new Error('JDK.js tidak tersedia'));
                 return;
             }
             const timeout = setTimeout(() => {
                 reject(new Error('Timeout setelah 10 detik'));
             }, 10000);
-
             const output = { out: '', err: '' };
             try {
-                CheerpJ.compileString(code, 'Main', function(classBytes) {
-                    clearTimeout(timeout);
-                    const start = Date.now();
-                    CheerpJ.runMain('Main', [], {
-                        output: text => output.out += text,
-                        error: text => output.err += text,
-                        done: () => {
-                            resolve({ output: output.out, error: output.err, duration: Date.now() - start });
-                        }
-                    });
+                Java.runJava(code, {
+                    onOutput: text => output.out += text,
+                    onStderr: text => output.err += text,
+                    onComplete: () => {
+                        clearTimeout(timeout);
+                        resolve({ output: output.out, error: output.err, duration: Date.now() - (start || Date.now()) });
+                    }
                 });
+                const start = Date.now();
             } catch (e) {
                 clearTimeout(timeout);
                 reject(e);
