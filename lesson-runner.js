@@ -2,15 +2,15 @@
 (function() {
     console.log('[Runner] Initializing...');
 
-    function loadScript(src, callback) {
+    function loadScript(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
-                return callback();
+                return resolve();
             }
             const s = document.createElement('script');
             s.src = src;
-            s.onload = () => { callback(); resolve(); };
-            s.onerror = (e) => { reject(e); };
+            s.onload = () => resolve();
+            s.onerror = (e) => reject(e);
             document.head.appendChild(s);
         });
     }
@@ -55,7 +55,11 @@
         const runBtn = document.getElementById(`run-${slug}`);
         const resetBtn = document.getElementById(`reset-${slug}`);
 
-        // Set initial code after editor is ready
+        if (!editorDiv || !outputDiv || !runBtn) {
+            console.error('[Runner] Runner UI elements missing');
+            return;
+        }
+
         let editorInitialized = false;
         let editorInstance = null;
 
@@ -100,8 +104,7 @@
             statusDiv.textContent = 'Mengompilasi...';
 
             try {
-                // Wrap compile+run in Promise for timeout
-                const result = await runCheerpJ(code, slug);
+                const result = await runCheerpJ(code);
                 if (result.error) {
                     outputDiv.textContent = `Error:\n${result.error}`;
                     statusDiv.textContent = 'Gagal mengompilasi.';
@@ -111,7 +114,7 @@
                 }
             } catch (e) {
                 outputDiv.textContent = `Exception: ${e.message}`;
-                statusDiv.textContent = 'ErrorRuntime.';
+                statusDiv.textContent = 'Error runtime.';
             }
         };
 
@@ -132,7 +135,7 @@
 }`;
     }
 
-    function runCheerpJ(code, slug) {
+    function runCheerpJ(code) {
         return new Promise((resolve, reject) => {
             const timeout = setTimeout(() => {
                 reject(new Error('Timeout setelah 10 detik'));
@@ -147,11 +150,7 @@
                         output: text => output.out += text,
                         error: text => output.err += text,
                         done: () => {
-                            resolve({
-                                output: output.out,
-                                error: output.err,
-                                duration: Date.now() - start
-                            });
+                            resolve({ output: output.out, error: output.err, duration: Date.now() - start });
                         }
                     });
                 });
