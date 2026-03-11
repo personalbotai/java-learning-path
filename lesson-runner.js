@@ -2,6 +2,24 @@
 (function() {
     console.log('[Runner] Initializing...');
 
+    // Ensure CheerpJ stub exists even if external scripts fail
+    if (typeof CheerpJ === 'undefined') {
+        console.warn('[Runner] CheerpJ not present, installing stub...');
+        window.CheerpJ = {
+            compileString: function(code, className, callback) {
+                console.error('[CheerpJ Stub] Cannot compile: CheerpJ runtime not available.');
+                setTimeout(() => callback(null), 100);
+            },
+            runMain: function(className, args, callbacks) {
+                console.error('[CheerpJ Stub] Cannot run: CheerpJ runtime not available.');
+                if (callbacks && callbacks.error) {
+                    callbacks.error('CheerpJ tidak dapat dimuat. Mohon matikan ad-blocker, cek firewall, atau gunakan VPN. Setelah itu, refresh halaman.');
+                }
+                if (callbacks && callbacks.done) callbacks.done();
+            }
+        };
+    }
+
     const CHEERPJ_CDNS = [
         'https://cdn.jsdelivr.net/npm/cheerpj@2.2.5/dist/cheerpj.min.js',
         'https://unpkg.com/cheerpj@2.2.5/dist/cheerpj.min.js',
