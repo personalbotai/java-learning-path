@@ -1,217 +1,113 @@
-/* Custom Styles */
+/* Custom Styles - Java Learning Path */
 :root {
     --sidebar-width: 288px;
+    --primary: #ef4444;
+    --primary-dark: #b91c1c;
 }
 
-/* Monaco Editor Container */
-.monaco-container {
-    border: 1px solid #374151;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    margin: 1rem 0;
+/* Prose overrides (typography) */
+.prose {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: inherit;
 }
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #1f2937;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #4b5563;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #6b7280;
-}
-
-/* Lesson Content */
-.lesson-content {
-    line-height: 1.7;
-}
-
-.lesson-content h1 {
-    font-size: 2rem;
+.prose h1, .prose h2, .prose h3, .prose h4 {
+    color: inherit;
     font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #60a5fa;
+    margin-top: 1.75em;
+    margin-bottom: 0.75em;
 }
-
-.lesson-content h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    color: #93c5fd;
-}
-
-.lesson-content h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: #bfdbfe;
-}
-
-.lesson-content p {
-    margin-bottom: 1rem;
-}
-
-.lesson-content ul, .lesson-content ol {
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-}
-
-.lesson-content li {
-    margin-bottom: 0.5rem;
-}
-
-.lesson-content code {
-    background: #1f2937;
+.prose h1 { font-size: 2.25rem; }
+.prose h2 { font-size: 1.75rem; }
+.prose h3 { font-size: 1.35rem; }
+.prose p { margin-bottom: 1.25em; }
+.prose ul, .prose ol { margin-bottom: 1.25em; padding-left: 1.75em; }
+.prose li { margin-bottom: 0.5em; }
+.prose code {
+    background: rgba(0,0,0,0.1);
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
-    font-family: 'Courier New', monospace;
-    font-size: 0.875rem;
-    color: #fbbf24;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.9em;
+    color: var(--primary);
 }
-
-.lesson-content pre {
-    background: #1f2937;
+.dark .prose code {
+    background: rgba(255,255,255,0.1);
+    color: #f87171;
+}
+.prose pre {
+    background: #1e293b;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     overflow-x: auto;
-    margin: 1rem 0;
+    margin: 1.5em 0;
 }
-
-.lesson-content pre code {
+.prose pre code {
     background: none;
     padding: 0;
-    color: #e5e7eb;
+    color: #e2e8f0;
+}
+.prose a {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 500;
+}
+.prose a:hover {
+    color: var(--primary-dark);
 }
 
-/* Quiz */
-.quiz-question {
-    margin-bottom: 2rem;
-}
-
-.quiz-option {
-    display: block;
-    padding: 0.75rem 1rem;
-    margin: 0.5rem 0;
-    background: #374151;
-    border: 2px solid #4b5563;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.quiz-option:hover {
-    background: #4b5563;
-    border-color: #6b7280;
-}
-
-.quiz-option.selected {
-    border-color: #3b82f6;
-    background: #1e3a8a;
-}
-
-.quiz-option.correct {
-    border-color: #10b981;
-    background: #064e3b;
-}
-
-.quiz-option.incorrect {
-    border-color: #ef4444;
-    background: #7f1d1d;
-}
-
-/* Achievements */
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-.achievement-show {
-    animation: slideIn 0.5s ease-out;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    #sidebar {
-        width: 260px;
-    }
-}
-
-@media (max-width: 640px) {
-    #sidebar {
-        width: 240px;
-    }
-}
-
-/* Module Cards */
-.modules-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+/* Monaco editor container */
+.code-runner {
     margin-top: 2rem;
-}
-
-.module-card {
-    background: #1f2937;
-    border: 1px solid #374151;
+    padding: 1.25rem;
+    background: #0f172a;
     border-radius: 0.75rem;
-    padding: 1.5rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #334155;
 }
-
-.module-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-}
-
-.module-card h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: #60a5fa;
-}
-
-.module-card p {
-    color: #9ca3af;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-.module-card .meta {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin-bottom: 1rem;
-}
-
-.module-card button {
-    background: #3b82f6;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
+.code-editor {
+    height: 400px;
     border-radius: 0.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+.output-box {
+    background: #020617;
+    color: #e2e8f0;
+    padding: 0.875rem;
+    border-radius: 0.5rem;
+    margin-top: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: pre-wrap;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
 }
 
-.module-card button:hover {
-    background: #2563eb;
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.dark ::-webkit-scrollbar-thumb { background: #475569; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Status message */
+#status-message {
+    font-size: 0.875rem;
+}
+
+/* Transitions */
+#sidebar, #sidebar-overlay, .prose, .code-runner, button, a {
+    transition: all 0.2s ease;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+    .prose h1 { font-size: 1.75rem; }
+    .prose h2 { font-size: 1.4rem; }
+    .code-editor { height: 300px; }
+}
+
+/* Print */
+@media print {
+    #sidebar, #sidebar-overlay, .code-runner { display: none; }
 }

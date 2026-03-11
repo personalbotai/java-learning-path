@@ -22,25 +22,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize theme toggle
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-    // Reset progress button optional
-    const resetBtn = document.getElementById('reset-progress');
-    if (resetBtn) resetBtn.addEventListener('click', resetProgress);
+
+    // Sidebar toggle (mobile)
     document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
     document.getElementById('sidebar-overlay').addEventListener('click', closeSidebar);
+
+    // Start button
     document.getElementById('start-btn').addEventListener('click', () => {
         const first = window.MODULES[0].lessons[0];
         navigateToLesson(window.MODULES[0].id, first.slug);
     });
-    document.getElementById('back-to-home').addEventListener('click', showHome);
 
-    // Render sidebar
+    // Back to home
+    const backBtn = document.getElementById('back-to-home');
+    if (backBtn) backBtn.addEventListener('click', showHome);
+
+    // Render sidebar & stats
     renderSidebar();
     updateStats();
     updateProgressUI();
 
     // Route handling
     window.addEventListener('hashchange', handleRoute);
-    handleRoute(); // initial
+    handleRoute(); // initial route
 });
 
 function toggleTheme() {
@@ -53,18 +57,11 @@ function toggleTheme() {
     }
 }
 
-function resetProgress() {
-    if (confirm('Reset progres belajar?')) {
-        localStorage.removeItem('java-progress');
-        state.progress = {};
-        updateProgressUI();
-        showHome();
-    }
-}
-
 function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('-translate-x-full');
-    document.getElementById('sidebar-overlay').classList.toggle('hidden');
+    const sb = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sb.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
 }
 function closeSidebar() {
     document.getElementById('sidebar').classList.add('-translate-x-full');
@@ -73,48 +70,65 @@ function closeSidebar() {
 
 function renderSidebar() {
     const nav = document.getElementById('module-nav');
+    if (!nav) return;
     nav.innerHTML = window.MODULES.map(m => `
-        <div class="mb-4">
-            <h3 class="text-gray-400 text-xs uppercase font-bold mb-2">Modul ${m.id}: ${m.title}</h3>
+        <div class="mb-5">
+            <h3 class="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold mb-2">
+                Modul ${m.id}: ${m.title}
+            </h3>
             <ul class="space-y-1">
-                ${m.lessons.map(l => `
-                    <li>
-                        <a href="#module/${m.id}/lesson/${l.slug}" class="block px-2 py-1 rounded hover:bg-gray-700 ${isLessonCompleted(m.id, l.slug) ? 'bg-green-900 text-green-200' : 'text-gray-300'}">
-                            ${l.title}
-                        </a>
-                    </li>
-                `).join('')}
+                ${m.lessons.map(l => {
+                    const completed = state.progress[`${m.id}-${l.slug}`] ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' : 'text-gray-700 dark:text-gray-300';
+                    return `
+                        <li>
+                            <a href="#module/${m.id}/lesson/${l.slug}" class="block px-3 py-1.5 rounded-lg text-sm ${completed} hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                                ${l.title}
+                            </a>
+                        </li>
+                    `;
+                }).join('')}
             </ul>
         </div>
     `).join('');
 }
 
-function isLessonCompleted(moduleId, slug) {
-    return state.progress[`${moduleId}-${slug}`] === true;
-}
-
 function updateStats() {
+    if (!window.MODULES.length) return;
     const totalLessons = window.MODULES.reduce((sum, m) => sum + m.lessons.length, 0);
     const totalQuizzes = window.MODULES.filter(m => m.quiz).length;
     const totalTime = window.MODULES.reduce((sum, m) => sum + m.lessons.reduce((s, l) => s + parseInt(l.duration, 10) || 0, 0), 0);
 
-    // Hero stats
-    document.getElementById('home-lesson-count').textContent = totalLessons;
-    document.getElementById('home-quiz-count').textContent = totalQuizzes;
-    document.getElementById('home-time-count').textContent = totalTime;
+    // Hero cards
+    const elLesson = document.getElementById('home-lesson-count');
+    if (elLesson) elLesson.textContent = totalLessons;
+    const elQuiz = document.getElementById('home-quiz-count');
+    if (elQuiz) elQuiz.textContent = totalQuizzes;
+    const elTime = document.getElementById('home-time-count');
+    if (elTime) elTime.textContent = totalTime;
 
-    // Sidebar stats (static totals)
-    document.getElementById('stat-lessons').textContent = `0/${totalLessons}`;
-    document.getElementById('stat-quizzes').textContent = `0/${totalQuizzes}`;
-    document.getElementById('stat-time').textContent = totalTime + ' menit';
+    // Sidebar totals
+    const statLessons = document.getElementById('stat-lessons');
+    if (statLessons) statLessons.textContent = totalLessons;
+    const statQuizzes = document.getElementById('stat-quizzes');
+    if (statQuizzes) statQuizzes.textContent = totalQuizzes;
+    const statTime = document.getElementById('stat-time');
+    if (statTime) statTime.textContent = totalTime + ' menit';
 }
 
 function updateProgressUI() {
     const completed = Object.keys(state.progress).length;
     const total = window.MODULES.reduce((sum, m) => sum + m.lessons.length, 0);
-    const percent = Math.round((completed / total) * 100);
-    document.getElementById('progress-percent').textContent = `${percent}%`;
-    document.getElementById('stat-lessons').textContent = `${completed}/${total}`;
+    const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+    const pctEl = document.getElementById('progress-percent');
+    if (pctEl) pctEl.textContent = `${percent}%`;
+
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.style.width = `${percent}%`;
+
+    // Also update stat-lessons to show completed/total
+    const statLessons = document.getElementById('stat-lessons');
+    if (statLessons) statLessons.textContent = `${completed}/${total}`;
 }
 
 function handleRoute() {
@@ -134,8 +148,11 @@ function handleRoute() {
 }
 
 function showHome() {
-    document.getElementById('hero-view').classList.remove('hidden');
-    document.getElementById('lesson-view').classList.add('hidden');
+    const hero = document.getElementById('hero-view');
+    const lesson = document.getElementById('lesson-view');
+    if (hero) hero.classList.remove('hidden');
+    if (lesson) lesson.classList.add('hidden');
+    // Re-render to update progress styling
     renderSidebar();
     updateStats();
 }
@@ -148,16 +165,16 @@ async function navigateToLesson(moduleId, slug) {
     if (!lesson) return showHome();
 
     // Show lesson view
-    document.getElementById('hero-view').classList.add('hidden');
+    const hero = document.getElementById('hero-view');
     const lessonView = document.getElementById('lesson-view');
-    lessonView.classList.remove('hidden');
+    if (hero) hero.classList.add('hidden');
+    if (lessonView) lessonView.classList.remove('hidden');
 
     // Load lesson HTML fragment
     try {
         const resp = await fetch(`lessons/${slug}.html`);
-        if (!resp.ok) throw new Error('Lesson not found');
+        if (!resp.ok) throw new Error('Pelajaran tidak ditemukan');
         const html = await resp.text();
-        // Set content (the runner will be created by runJavaLesson)
         document.getElementById('lesson-content').innerHTML = html;
 
         // Mark as completed
@@ -176,7 +193,6 @@ async function navigateToLesson(moduleId, slug) {
 }
 
 function getDefaultCode(slug) {
-    // Provide a sensible default based on topic
     return `public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, Java!");
@@ -186,7 +202,9 @@ function getDefaultCode(slug) {
 
 function showStatus(msg, type = 'info') {
     const el = document.getElementById('status-message');
-    el.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'info-circle'} mr-2"></i> ${msg}`;
+    if (!el) return;
+    const icon = type === 'error' ? 'exclamation-triangle' : 'info-circle';
+    el.innerHTML = `<i class="fas fa-${icon} mr-2"></i> ${msg}`;
     el.classList.remove('hidden');
     setTimeout(() => el.classList.add('hidden'), 5000);
 }

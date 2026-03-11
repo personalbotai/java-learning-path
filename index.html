@@ -7,7 +7,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- Force refresh on each deploy -->
     <script>
         (function() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -17,75 +16,192 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { darkMode: 'class' }
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css?v=20260311">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-white text-gray-900 font-sans dark:bg-gray-900 dark:text-gray-100">
-    <nav class="bg-gray-800 border-b border-gray-700 fixed top-0 left-0 right-0 z-50">
+<body class="bg-gray-50 text-gray-900 font-sans dark:bg-gray-900 dark:text-gray-100 antialiased">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50 dark:bg-gray-800 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-4">
-                    <button id="sidebar-toggle" class="lg:hidden text-gray-400 hover:text-white"><i class="fas fa-bars text-xl"></i></button>
-                    <div class="flex items-center gap-2">
-                        <i class="fab fa-java text-2xl text-red-400"></i>
-                        <span class="font-bold text-xl">Java Path</span>
+                    <button id="sidebar-toggle" class="lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center">
+                            <i class="fab fa-java text-white text-sm"></i>
+                        </div>
+                        <span class="font-semibold text-lg tracking-tight">Java Path</span>
                     </div>
                 </div>
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="#" id="nav-home" class="text-gray-300 hover:text-white">Beranda</a>
-                    <a href="#" id="nav-modules" class="text-gray-300 hover:text-white">Modul</a>
-                    <a href="#" id="nav-progress" class="text-gray-300 hover:text-white">Progress</a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#" id="nav-home" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 font-medium transition">Beranda</a>
+                    <a href="#" id="nav-modules" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 font-medium transition">Modul</a>
+                    <a href="#" id="nav-progress" class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 font-medium transition">Progress</a>
                 </div>
                 <div class="flex items-center gap-3">
-                    <div id="progress-summary" class="text-sm text-gray-400 hidden sm:block"><i class="fas fa-chart-line mr-1"></i><span id="progress-percent">0%</span></div>
-                    <button id="theme-toggle" class="text-gray-400 hover:text-yellow-400" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+                    <div class="hidden sm:block text-sm text-gray-500 dark:text-gray-400">
+                        <span id="progress-percent">0%</span> selesai
+                    </div>
+                    <button id="theme-toggle" class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 transition" title="Toggle Tema">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div id="status-message" class="fixed top-20 right-4 bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg shadow-lg z-50 hidden"></div>
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300"></div>
+    <!-- Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 lg:hidden"></div>
 
-    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-64 bg-gray-800 border-r border-gray-700 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto pt-4 pb-20">
-        <div class="px-4">
-            <div class="mb-6"><span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-900 text-red-200"><i class="fab fa-java mr-2"></i>Java</span></div>
-            <nav id="module-nav"></nav>
-            <div class="mt-8 pt-4 border-t border-gray-700 text-xs text-gray-500">
-                <div class="flex justify-between mb-2"><span>Pelajaran</span><span id="stat-lessons">0/30</span></div>
-                <div class="flex justify-between mb-2"><span>Kuis</span><span id="stat-quizzes">0/5</span></div>
-                <div class="flex justify-between"><span>Waktu</span><span id="stat-time">525 menit</span></div>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-72 bg-white border-r border-gray-200 shadow-xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto pt-20 pb-32 lg:pt-16 lg:pb-8 dark:bg-gray-800 dark:border-gray-700">
+        <div class="px-4 lg:px-3">
+            <!-- Header -->
+            <div class="mb-6">
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300">
+                        <i class="fab fa-java mr-1.5"></i>Java
+                    </span>
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400">30 pelajaran</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Belajar dari nol hingga mahir</p>
+            </div>
+
+            <!-- Module Navigation -->
+            <nav id="module-nav" class="space-y-4"></nav>
+
+            <!-- Footer Stats -->
+            <div class="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <div class="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Pelajaran</div>
+                        <div class="font-semibold"><span id="stat-lessons">0</span>/30</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Kuis</div>
+                        <div class="font-semibold"><span id="stat-quizzes">0</span>/5</div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="flex justify-between text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">
+                        <span>Progress</span>
+                        <span id="progress-pct">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div id="progress-bar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </aside>
 
-    <main class="flex pt-16">
-        <div class="flex-1 p-6 lg:ml-0">
-            <section id="hero-view" class="max-w-4xl mx-auto">
-                <div class="hero bg-gradient-to-r from-red-900 to-gray-900 text-white rounded-xl p-8 mb-8">
-                    <h1 class="text-3xl font-bold mb-4">Belajar Java dari Nol</h1>
-                    <p class="text-lg mb-6">Kuasai pemrograman berorientasi objek, koleksi, dan.build aplikasi dengan Java. Termasuk editor kode langsung di browser (CheerpJ).</p>
-                    <button id="start-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded">Mulai Belajar</button>
+    <!-- Main Content -->
+    <main class="flex pt-16 lg:pl-0">
+        <div class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+            <!-- Hero / Welcome -->
+            <section id="hero-view" class="mb-8">
+                <div class="bg-gradient-to-br from-red-500 via-red-600 to-red-700 rounded-2xl p-6 sm:p-10 text-white shadow-lg">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 backdrop-blur mb-3">
+                            <i class="fas fa-fire mr-1.5"></i>Pemrograman
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-bold mb-3 leading-tight">Belajar Java dari Nol</h1>
+                        <p class="text-red-100 text-sm sm:text-base mb-6 leading-relaxed">
+                            Kuasai pemrograman berorientasi objek, koleksi, dan membangun aplikasi dengan Java. Editor kode langsung di browser (CheerpJ) untuk praktik segera.
+                        </p>
+                        <button id="start-btn" class="inline-flex items-center px-5 py-2.5 bg-white text-red-700 font-semibold rounded-lg shadow hover:bg-red-50 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-700 focus:ring-white">
+                            <i class="fas fa-play mr-2"></i> Mulai Belajar
+                        </button>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-gray-800 rounded-lg p-4"><h3 class="font-bold text-xl mb-2" id="home-lesson-count">0</h3><p class="text-gray-400">Pelajaran</p></div>
-                    <div class="bg-gray-800 rounded-lg p-4"><h3 class="font-bold text-xl mb-2" id="home-quiz-count">0</h3><p class="text-gray-400">Kuis</p></div>
-                    <div class="bg-gray-800 rounded-lg p-4"><h3 class="font-bold text-xl mb-2" id="home-time-count">525</h3><p class="text-gray-400">Menit</p></div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 -mt-6 relative z-10 px-2">
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold" id="home-lesson-count">0</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">Pelajaran</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold" id="home-quiz-count">0</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">Kuis</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold" id="home-time-count">0</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">Menit</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section id="lesson-view" class="max-w-4xl mx-auto hidden">
-                <button id="back-to-home" class="mb-4 text-gray-400 hover:text-white"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Beranda</button>
-                <div id="lesson-content" class="prose prose-invert max-w-none"></div>
+            <!-- Lesson View -->
+            <section id="lesson-view" class="hidden">
+                <button id="back-to-home" class="mb-4 inline-flex items-center text-sm text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 font-medium transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali ke Beranda
+                </button>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <div id="lesson-content" class="prose prose-gray max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-red-600 dark:prose-a:text-red-400"></div>
+                </div>
             </section>
         </div>
     </main>
 
-    <footer class="py-4 text-center text-gray-500 text-sm"><p>&copy; 2025–2026 Archon. All rights reserved.</p></footer>
+    <!-- Footer -->
+    <footer class="py-6 text-center text-gray-500 text-sm dark:text-gray-400">
+        <p>&copy; 2025–2026 Archon. All rights reserved.</p>
+    </footer>
 
-    <!-- Inline MODULES (single-line JSON, no escaped slashes) -->
+    <!-- Inline MODULES -->
     <script type="application/json" id="modules-data">[{"id":1,"title":"Dasar-Dasar Java","description":"Pengenalan Java, instalasi JDK dan IDE, struktur program, variabel, tipe data, serta input/output dasar.","lessons":[{"id":1,"title":"Apa itu Java?","slug":"apa-itu-java","duration":"15 min"},{"id":2,"title":"Instalasi Java & IDE","slug":"instalasi-java","duration":"20 min"},{"id":3,"title":"Struktur Program Java","slug":"struktur-program","duration":"15 min"},{"id":4,"title":"Variabel & Tipe Data","slug":"variabel-tipe-data","duration":"20 min"},{"id":5,"title":"Input & Output","slug":"input-output","duration":"15 min"},{"id":6,"title":"Hello World","slug":"hello-world","duration":"10 min"}],"quiz":{"questionCount":10,"passingScore":70}},{"id":2,"title":"Tipe Data & Operators","description":"Eksplorasi tipe data primitif, wrapper classes, array, enum, casting, dan type inference.","lessons":[{"id":1,"title":"Wrapper Classes","slug":"wrapper-classes","duration":"15 min"},{"id":2,"title":"Array","slug":"arrays","duration":"20 min"},{"id":3,"title":"Enum dan Constants","slug":"enum-dan-constants","duration":"15 min"},{"id":4,"title":"Void & Special Types","slug":"void-dan-special-types","duration":"15 min"},{"id":5,"title":"Type Casting","slug":"type-casting","duration":"20 min"},{"id":6,"title":"Type Inference","slug":"type-inference","duration":"15 min"}],"quiz":{"questionCount":10,"passingScore":70}},{"id":3,"title":"Kontrol Alur","description":"Kontrol alur program: if-else, switch, loops (for, while, do-while), break, continue, exceptions, dan try-catch.","lessons":[{"id":1,"title":"If-Else dan Switch","slug":"if-else-dan-switch","duration":"20 min"},{"id":2,"title":"Loop Dasar","slug":"loops-basic","duration":"20 min"},{"id":3,"title":"Break & Continue","slug":"break-continue","duration":"15 min"},{"id":4,"title":"Exceptions Basics","slug":"exceptions-basics","duration":"20 min"},{"id":5,"title":"Try-Catch-Finally","slug":"try-catch-finally","duration":"20 min"},{"id":6,"title":"Throw & Throws","slug":"throw-dan-throws","duration":"15 min"}],"quiz":{"questionCount":10,"passingScore":70}},{"id":4,"title":"Object-Oriented Programming","description":"Konsep OOP: class, object, access modifiers, inheritance, abstract classes, interfaces, polymorphism.","lessons":[{"id":1,"title":"Class Dasar","slug":"class-dasar","duration":"20 min"},{"id":2,"title":"Access Modifiers","slug":"access-modifiers","duration":"15 min"},{"id":3,"title":"Inheritance & Super","slug":"inheritance-extends-super","duration":"20 min"},{"id":4,"title":"Abstract Classes","slug":"abstract-classes","duration":"15 min"},{"id":5,"title":"Interfaces","slug":"interfaces-basic","duration":"20 min"},{"id":6,"title":"Polymorphism","slug":"polymorphism","duration":"15 min"}],"quiz":{"questionCount":10,"passingScore":70}},{"id":5,"title":"Collections Framework","description":"Pengenalan Collections, List, Set, Map, Queue, dan Stream API dasar.","lessons":[{"id":1,"title":"Intro to Collections","slug":"intro-collections","duration":"20 min"},{"id":2,"title":"List & ArrayList","slug":"list-dan-arraylist","duration":"20 min"},{"id":3,"title":"Set & HashSet","slug":"set-dan-hashset","duration":"15 min"},{"id":4,"title":"Map & HashMap","slug":"map-dan-hashmap","duration":"20 min"},{"id":5,"title":"Queue & Deque","slug":"queue-dan-deque","duration":"15 min"},{"id":6,"title":"Optional & Streams","slug":"optional-dan-streams-dasar","duration":"25 min"}],"quiz":{"questionCount":10,"passingScore":70}}]</script>
     <script>
       try {
