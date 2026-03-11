@@ -1,17 +1,12 @@
-// lesson-runner.js - Java runtime using CheerpJ (official loader) + Monaco
+// lesson-runner.js - Java runtime using CheerpJ (official loader + direct fallback) + Monaco
 (function() {
     console.log('[Runner] Initializing...');
 
     function loadScript(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
-                // Check if required global is present based on src
-                if (src.includes('cheerpj') && typeof CheerpJ !== 'undefined') {
-                    return resolve();
-                }
-                if (src.includes('require') && typeof require !== 'undefined') {
-                    return resolve();
-                }
+                if (src.includes('cheerpj') && typeof CheerpJ !== 'undefined') return resolve();
+                if (src.includes('require') && typeof require !== 'undefined') return resolve();
                 return setTimeout(() => resolve(), 100);
             }
             const s = document.createElement('script');
@@ -86,6 +81,39 @@
         });
     }
 
+    function loadCheerpJDirectWithFallback() {
+        return new Promise((resolve, reject) => {
+            const CDNS = [
+                'https://cdn.jsdelivr.net/npm/cheerpj@2.2.5/dist/cheerpj.min.js',
+                'https://unpkg.com/cheerpj@2.2.5/dist/cheerpj.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/cheerpj/2.2.5/cheerpj.min.js'
+            ];
+            let idx = 0;
+            function tryLoad() {
+                if (idx >= CDNS.length) reject(new Error('CheerpJ direct tidak dapat dimuat dari semua CDN'));
+                else {
+                    const src = CDNS[idx++];
+                    console.log(`[Runner] Fallback: loading CheerpJ directly from ${src}`);
+                    loadScript(src).then(() => {
+                        // Wait a bit for CheerpJ to initialize
+                        setTimeout(() => {
+                            if (typeof CheerpJ !== 'undefined' && CheerpJ.compileString) {
+                                resolve();
+                            } else {
+                                console.warn('[Runner] CheerpJ loaded but not ready, retrying...');
+                                setTimeout(tryLoad, 500);
+                            }
+                        }, 1000);
+                    }).catch(() => {
+                        console.warn(`[Runner] Failed to load CheerpJ directly from ${src}, trying next...`);
+                        tryLoad();
+                    });
+                }
+            }
+            tryLoad();
+        });
+    }
+
     window.runJavaLesson = async function(slug, initialCode) {
         console.log('[Runner] runJavaLesson', slug);
         const container = document.getElementById('lesson-content');
@@ -140,9 +168,18 @@
             // RequireJS with fallback
             await loadRequireJSWithFallback();
             console.log('[Runner] RequireJS ready');
-            // Wait for CheerpJ loader from official CDN
-            await waitForCheerpJ(15000);
-            console.log('[Runner] CheerpJ ready');
+
+            // First, wait for CheerpJ loader from official CDN (already in page)
+            try {
+                await waitForCheerpJ(15000);
+                console.log('[Runner] CheerpJ loader ready');
+            } catch (e) {
+                console.warn('[Runner] CheerpJ loader failed, trying direct load...', e);
+                // Fallback: load CheerpJ directly from CDNs
+                await loadCheerpJDirectWithFallback();
+                console.log('[Runner] CheerpJ direct loaded');
+            }
+
             runtimeReady = true;
             statusDiv.textContent = 'Runtime siap.';
             runBtn.disabled = false;
@@ -153,15 +190,17 @@
             statusDiv.textContent = 'Runtime tidak dapat dimuat.';
             outputDiv.style.display = 'block';
             outputDiv.innerHTML = `
-<strong>Runtime tidak dapat dimuat.</strong><br><br>
+<strong>CheerpJ runtime tidak dapat dimuat.</strong><br><br>
 Instruksi pemecahan masalah:<br>
 1. Periksa koneksi internet.<br>
 2. Matikan ad‑blocker yang memblokir domain:<br>
-   - cjrtnc.leaningtech.com (CheerpJ loader)<br>
-   -cdnjs.cloudflare.com / unpkg.com / cdn.jsdelivr.net (Monaco & RequireJS)<br>
+   - cjrtnc.leaningtech.com<br>
+   - cdn.jsdelivr.net<br>
+   - unpkg.com<br>
+   - cdnjs.cloudflare.com<br>
 3. Coba gunakan VPN atau jaringan lain.<br>
 4. Refresh halaman (Ctrl+Shift+R).<br><br>
-Detail error: ${e.message}
+Error detail: ${e.message}
 `;
             return;
         }
@@ -229,7 +268,7 @@ Jika masalah berlanjut, periksa koneksi atau matikan ad‑blocker.
                     statusDiv.textContent = 'Gagal mengompilasi.';
                 } else {
                     outputDiv.textContent = result.output || '(No output)';
-                    statusDiv.textContent = `Selesai dalam ${result.duration}ms`;
+                    statusDiv.status = `Selesai dalam ${result.duration}ms`;
                 }
             } catch (e) {
                 outputDiv.textContent = `Exception: ${e.message}`;
