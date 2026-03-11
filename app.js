@@ -19,12 +19,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize theme toggle
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-    document.getElementById('reset-progress').addEventListener('click', resetProgress);
+    // Reset progress button optional
+    const resetBtn = document.getElementById('reset-progress');
+    if (resetBtn) resetBtn.addEventListener('click', resetProgress);
     document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
     document.getElementById('sidebar-overlay').addEventListener('click', closeSidebar);
     document.getElementById('start-btn').addEventListener('click', () => {
         const first = window.MODULES[0].lessons[0];
-        navigateToLesson(0, first.slug);
+        navigateToLesson(window.MODULES[0].id, first.slug);
     });
     document.getElementById('back-to-home').addEventListener('click', showHome);
 
@@ -93,13 +95,12 @@ function updateStats() {
     const totalQuizzes = window.MODULES.filter(m => m.quiz).length;
     const totalTime = window.MODULES.reduce((sum, m) => sum + m.lessons.reduce((s, l) => s + parseInt(l.duration, 10) || 0, 0), 0);
 
-    document.getElementById('total-lessons').textContent = totalLessons;
-    document.getElementById('total-quizzes').textContent = totalQuizzes;
-    document.getElementById('total-time').textContent = totalTime + ' menit';
-
+    // Hero stats
     document.getElementById('home-lesson-count').textContent = totalLessons;
     document.getElementById('home-quiz-count').textContent = totalQuizzes;
     document.getElementById('home-time-count').textContent = totalTime;
+
+    // Sidebar stats (static totals)
     document.getElementById('stat-lessons').textContent = `0/${totalLessons}`;
     document.getElementById('stat-quizzes').textContent = `0/${totalQuizzes}`;
     document.getElementById('stat-time').textContent = totalTime + ' menit';
