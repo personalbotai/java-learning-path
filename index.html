@@ -87,8 +87,11 @@
     </script>
     <script>
       try {
-        window.MODULES = JSON.parse(document.getElementById('modules-data').textContent);
+        const raw = document.getElementById('modules-data').textContent;
+        window.MODULES = JSON.parse(raw);
+        console.log('[Archon] MODULES loaded:', window.MODULES.length, 'modules');
       } catch (e) {
+        console.error('[Archon] MODULES parse error:', e);
         window.MODULES = [];
       }
     </script>
