@@ -3,7 +3,7 @@ const lessons = [
     {
         "id": 1,
         "title": "1. Abstract Classes",
-        "description": "<p><strong>Abstract Classes</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Abstract Classes</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Abstract Classes!\");\n    }\n}",
         "expectedOutput": "Belajar Abstract Classes!",
         "hint": "Pelajari abstract classes di Java.",
@@ -21,7 +21,7 @@ const lessons = [
     {
         "id": 2,
         "title": "2. Access Modifiers",
-        "description": "<p><strong>Access Modifiers</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Access Modifiers</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Access Modifiers!\");\n    }\n}",
         "expectedOutput": "Belajar Access Modifiers!",
         "hint": "Pelajari access modifiers di Java.",
@@ -39,7 +39,7 @@ const lessons = [
     {
         "id": 3,
         "title": "3. Apa itu Java?",
-        "description": "<p><strong>Apa itu Java?</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Apa itu Java?</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main { public static void main(String[] args) { System.out.println(\"Java adalah bahasa OOP!\"); } }",
         "expectedOutput": "Java adalah bahasa OOP!",
         "hint": "Java = bahasa OOP, platform-independent.",
@@ -57,7 +57,7 @@ const lessons = [
     {
         "id": 4,
         "title": "4. Arrays",
-        "description": "<p><strong>Arrays</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Arrays</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "import java.util.Arrays;\nclass Main {\n    public static void main(String[] args) {\n        int[] angka = {5, 2, 8, 1, 9};\n        Arrays.sort(angka);\n        System.out.println(Arrays.toString(angka));\n        System.out.println(\"Length: \" + angka.length);\n    }\n}",
         "expectedOutput": "[1, 2, 5, 8, 9]\nLength: 5",
         "hint": "Array fixed-size. Arrays.sort() untuk urutkan.",
@@ -75,7 +75,7 @@ const lessons = [
     {
         "id": 5,
         "title": "5. Break Continue",
-        "description": "<p><strong>Break Continue</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Break Continue</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Break Continue!\");\n    }\n}",
         "expectedOutput": "Belajar Break Continue!",
         "hint": "Pelajari break continue di Java.",
@@ -93,7 +93,7 @@ const lessons = [
     {
         "id": 6,
         "title": "6. Class Dasar",
-        "description": "<p><strong>Class Dasar</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Class Dasar</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class User {\n    String nama;\n    User(String nama) { this.nama = nama; }\n    void sapa() { System.out.println(\"Halo, \" + nama + \"!\"); }\n}\nclass Main {\n    public static void main(String[] args) {\n        User u = new User(\"Archon\");\n        u.sapa();\n    }\n}",
         "expectedOutput": "Halo, Archon!",
         "hint": "Class = blueprint. Object = instance dari class.",
@@ -111,7 +111,7 @@ const lessons = [
     {
         "id": 7,
         "title": "7. Enum Dan Constants",
-        "description": "<p><strong>Enum Dan Constants</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Enum Dan Constants</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Enum Dan Constants!\");\n    }\n}",
         "expectedOutput": "Belajar Enum Dan Constants!",
         "hint": "Pelajari enum dan constants di Java.",
@@ -129,7 +129,7 @@ const lessons = [
     {
         "id": 8,
         "title": "8. Exceptions Basics",
-        "description": "<p><strong>Exceptions Basics</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Exceptions Basics</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Exceptions Basics!\");\n    }\n}",
         "expectedOutput": "Belajar Exceptions Basics!",
         "hint": "Pelajari exceptions basics di Java.",
@@ -147,7 +147,7 @@ const lessons = [
     {
         "id": 9,
         "title": "9. Hello World",
-        "description": "<p><strong>Hello World</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Hello World</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}",
         "expectedOutput": "Hello, World!",
         "hint": "main() = entry point. System.out.println() = print.",
@@ -165,7 +165,7 @@ const lessons = [
     {
         "id": 10,
         "title": "10. If/Else dan Switch",
-        "description": "<p><strong>If/Else dan Switch</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>If/Else dan Switch</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        int umur = 20;\n        if (umur >= 18) {\n            System.out.println(\"Dewasa\");\n        } else {\n            System.out.println(\"Anak-anak\");\n        }\n    }\n}",
         "expectedOutput": "Dewasa",
         "hint": "if/else untuk percabangan, switch untuk multiple cases.",
@@ -183,7 +183,7 @@ const lessons = [
     {
         "id": 11,
         "title": "11. Inheritance",
-        "description": "<p><strong>Inheritance</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Inheritance</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Animal {\n    String nama;\n    Animal(String nama) { this.nama = nama; }\n    void speak() { System.out.println(nama + \" bersuara\"); }\n}\nclass Dog extends Animal {\n    Dog(String nama) { super(nama); }\n    void speak() { System.out.println(nama + \" menggonggong!\"); }\n}\nclass Main {\n    public static void main(String[] args) {\n        Dog d = new Dog(\"Buddy\");\n        d.speak();\n    }\n}",
         "expectedOutput": "Buddy menggonggong!",
         "hint": "extends = inheritance. super() = parent constructor.",
@@ -201,7 +201,7 @@ const lessons = [
     {
         "id": 12,
         "title": "12. Input Output",
-        "description": "<p><strong>Input Output</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Input Output</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Input Output!\");\n    }\n}",
         "expectedOutput": "Belajar Input Output!",
         "hint": "Pelajari input output di Java.",
@@ -219,7 +219,7 @@ const lessons = [
     {
         "id": 13,
         "title": "13. Instalasi Java",
-        "description": "<p><strong>Instalasi Java</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Instalasi Java</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "// Install JDK dari oracle.com atau openjdk.org\n// javac Main.java && java Main\nSystem.out.println(\"Java siap digunakan!\");",
         "expectedOutput": "Java siap digunakan!",
         "hint": "Install JDK, gunakan javac untuk compile.",
@@ -237,7 +237,7 @@ const lessons = [
     {
         "id": 14,
         "title": "14. Interfaces Basic",
-        "description": "<p><strong>Interfaces Basic</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Interfaces Basic</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Interfaces Basic!\");\n    }\n}",
         "expectedOutput": "Belajar Interfaces Basic!",
         "hint": "Pelajari interfaces basic di Java.",
@@ -255,7 +255,7 @@ const lessons = [
     {
         "id": 15,
         "title": "15. Intro Collections",
-        "description": "<p><strong>Intro Collections</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Intro Collections</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Intro Collections!\");\n    }\n}",
         "expectedOutput": "Belajar Intro Collections!",
         "hint": "Pelajari intro collections di Java.",
@@ -273,7 +273,7 @@ const lessons = [
     {
         "id": 16,
         "title": "16. List Dan Arraylist",
-        "description": "<p><strong>List Dan Arraylist</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>List Dan Arraylist</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar List Dan Arraylist!\");\n    }\n}",
         "expectedOutput": "Belajar List Dan Arraylist!",
         "hint": "Pelajari list dan arraylist di Java.",
@@ -291,7 +291,7 @@ const lessons = [
     {
         "id": 17,
         "title": "17. Loops Basic",
-        "description": "<p><strong>Loops Basic</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Loops Basic</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Loops Basic!\");\n    }\n}",
         "expectedOutput": "Belajar Loops Basic!",
         "hint": "Pelajari loops basic di Java.",
@@ -309,7 +309,7 @@ const lessons = [
     {
         "id": 18,
         "title": "18. Map Dan Hashmap",
-        "description": "<p><strong>Map Dan Hashmap</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Map Dan Hashmap</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Map Dan Hashmap!\");\n    }\n}",
         "expectedOutput": "Belajar Map Dan Hashmap!",
         "hint": "Pelajari map dan hashmap di Java.",
@@ -327,7 +327,7 @@ const lessons = [
     {
         "id": 19,
         "title": "19. Optional Dan Streams Dasar",
-        "description": "<p><strong>Optional Dan Streams Dasar</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Optional Dan Streams Dasar</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Optional Dan Streams Dasar!\");\n    }\n}",
         "expectedOutput": "Belajar Optional Dan Streams Dasar!",
         "hint": "Pelajari optional dan streams dasar di Java.",
@@ -345,7 +345,7 @@ const lessons = [
     {
         "id": 20,
         "title": "20. Polymorphism",
-        "description": "<p><strong>Polymorphism</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Polymorphism</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Polymorphism!\");\n    }\n}",
         "expectedOutput": "Belajar Polymorphism!",
         "hint": "Pelajari polymorphism di Java.",
@@ -363,7 +363,7 @@ const lessons = [
     {
         "id": 21,
         "title": "21. Queue Dan Deque",
-        "description": "<p><strong>Queue Dan Deque</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Queue Dan Deque</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Queue Dan Deque!\");\n    }\n}",
         "expectedOutput": "Belajar Queue Dan Deque!",
         "hint": "Pelajari queue dan deque di Java.",
@@ -381,7 +381,7 @@ const lessons = [
     {
         "id": 22,
         "title": "22. Set Dan Hashset",
-        "description": "<p><strong>Set Dan Hashset</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Set Dan Hashset</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Set Dan Hashset!\");\n    }\n}",
         "expectedOutput": "Belajar Set Dan Hashset!",
         "hint": "Pelajari set dan hashset di Java.",
@@ -399,7 +399,7 @@ const lessons = [
     {
         "id": 23,
         "title": "23. Struktur Program",
-        "description": "<p><strong>Struktur Program</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Struktur Program</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Struktur Program!\");\n    }\n}",
         "expectedOutput": "Belajar Struktur Program!",
         "hint": "Pelajari struktur program di Java.",
@@ -417,7 +417,7 @@ const lessons = [
     {
         "id": 24,
         "title": "24. Throw Dan Throws",
-        "description": "<p><strong>Throw Dan Throws</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Throw Dan Throws</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Throw Dan Throws!\");\n    }\n}",
         "expectedOutput": "Belajar Throw Dan Throws!",
         "hint": "Pelajari throw dan throws di Java.",
@@ -435,7 +435,7 @@ const lessons = [
     {
         "id": 25,
         "title": "25. Try Catch Finally",
-        "description": "<p><strong>Try Catch Finally</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Try Catch Finally</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Try Catch Finally!\");\n    }\n}",
         "expectedOutput": "Belajar Try Catch Finally!",
         "hint": "Pelajari try catch finally di Java.",
@@ -453,7 +453,7 @@ const lessons = [
     {
         "id": 26,
         "title": "26. Type Casting",
-        "description": "<p><strong>Type Casting</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Type Casting</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Type Casting!\");\n    }\n}",
         "expectedOutput": "Belajar Type Casting!",
         "hint": "Pelajari type casting di Java.",
@@ -471,7 +471,7 @@ const lessons = [
     {
         "id": 27,
         "title": "27. Type Inference",
-        "description": "<p><strong>Type Inference</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Type Inference</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Type Inference!\");\n    }\n}",
         "expectedOutput": "Belajar Type Inference!",
         "hint": "Pelajari type inference di Java.",
@@ -489,7 +489,7 @@ const lessons = [
     {
         "id": 28,
         "title": "28. Variabel Tipe Data",
-        "description": "<p><strong>Variabel Tipe Data</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Variabel Tipe Data</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Variabel Tipe Data!\");\n    }\n}",
         "expectedOutput": "Belajar Variabel Tipe Data!",
         "hint": "Pelajari variabel tipe data di Java.",
@@ -507,7 +507,7 @@ const lessons = [
     {
         "id": 29,
         "title": "29. Void Dan Special Types",
-        "description": "<p><strong>Void Dan Special Types</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Void Dan Special Types</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Void Dan Special Types!\");\n    }\n}",
         "expectedOutput": "Belajar Void Dan Special Types!",
         "hint": "Pelajari void dan special types di Java.",
@@ -525,7 +525,7 @@ const lessons = [
     {
         "id": 30,
         "title": "30. Wrapper Classes",
-        "description": "<p><strong>Wrapper Classes</strong> adalah konsep penting dalam Java.</p>",
+        "description": "<p><strong>Wrapper Classes</strong> adalah materi penting dalam pemrograman Java.</p><h4>Konsep Utama:</h4><ul><li>Sintaks Java dan cara kerja JVM</li><li>Object-Oriented Programming principles</li><li>Type safety dan compile-time checking</li></ul><h4>Praktik:</h4><ul><li>Tulis kode di editor interaktif</li><li>Jalankan dan lihat output</li><li>Quiz untuk menguji pemahaman</li></ul>",
         "defaultCode": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Belajar Wrapper Classes!\");\n    }\n}",
         "expectedOutput": "Belajar Wrapper Classes!",
         "hint": "Pelajari wrapper classes di Java.",
