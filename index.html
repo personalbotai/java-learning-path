@@ -132,7 +132,6 @@
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/"></script>
     <script src="app.js"></script>
 
 
@@ -193,12 +192,9 @@ class SimplePythonRuntime {
 }
 
 // Pyodide loader with fallback
-let pyodide = null;
-let pyodideReady = false;
 let simplePython = null;
 
 async function initPyodide() {
-    if (pyodideReady) return;
     
     const output = document.getElementById('output');
     const runBtn = document.querySelector('.btn-run');
@@ -210,8 +206,6 @@ async function initPyodide() {
         
         // Check if loadPyodide exists
         if (typeof loadPyodide === 'function') {
-            pyodide = await loadPyodide();
-            pyodideReady = true;
             output.innerHTML = '<span class="text-green-400">✅ Python (Pyodide) ready!</span>';
         } else {
             throw new Error('Pyodide not loaded');
@@ -220,7 +214,6 @@ async function initPyodide() {
         // Fallback to simple Python
         console.warn('Pyodide failed, using simple runtime:', e);
         simplePython = new SimplePythonRuntime();
-        pyodideReady = true; // Mark as ready (using fallback)
         output.innerHTML = '<span class="text-orange-400">✅ Python (simple mode) ready! (basic print support)</span>';
     }
     
@@ -228,7 +221,6 @@ async function initPyodide() {
 }
 
 async function runCode() {
-    if (!pyodideReady) await initPyodide();
     
     const code = document.getElementById('code-editor').value;
     const output = document.getElementById('output');
@@ -237,11 +229,7 @@ async function runCode() {
     try {
         let result = '';
         
-        if (pyodide) {
             // Use Pyodide
-            pyodide.runPython(`import sys\nfrom io import StringIO\nsys.stdout = StringIO()`);
-            pyodide.runPython(code);
-            result = pyodide.runPython(`sys.stdout.getvalue()`);
         } else if (simplePython) {
             // Use simple fallback
             result = simplePython.run(code);
