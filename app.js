@@ -759,10 +759,11 @@ async function loadLesson(index) {
 async function runCode() {
     const output = document.getElementById("output");
     const validation = document.getElementById("validation-msg");
-    const expected = lessons[currentLesson].expectedOutput;
-    output.innerHTML = '<span class="text-green-400">' + escapeHtml(expected) + '</span>';
-    validation.className = 'mt-4 p-3 rounded bg-blue-900/50 border border-blue-500 text-blue-300';
-    validation.innerHTML = 'ℹ️ Java cannot run in browser. Showing expected output.';
+    const lesson = lessons[currentLesson];
+    // Java can't run in browser - show expected output
+    output.innerHTML = '<span class="text-green-400">' + escapeHtml(lesson.expectedOutput) + '</span>';
+    validation.className = "mt-4 p-3 rounded bg-blue-900/50 border border-blue-500 text-blue-300";
+    validation.innerHTML = '<i class="fas fa-info-circle mr-2"></i>Java tidak bisa dijalankan di browser. Menampilkan output yang diharapkan.';
 }
 
 function resetCode() { document.getElementById('code-editor').value = lessons[currentLesson].defaultCode; }
