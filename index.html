@@ -3,152 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Learning Path - Interactive Tutorial</title>
+    <title>Java Learning Path - Course</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .code-editor {
-            font-family: 'Fira Code', 'Consolas', monospace;
-            tab-size: 4;
-            background: #1e1e1e;
-            color: #d4d4d4;
-        }
-        .code-editor:focus {
-            outline: none;
-            border-color: #3b82f6;
-        }
-        .lesson-active {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-        }
-        .terminal-output {
-            background: #0a0a0a;
-            color: #22c55e;
-            font-family: 'Fira Code', monospace;
-        }
-        .progress-bar {
-            transition: width 0.5s ease-in-out;
-        }
+        * { box-sizing: border-box; }
+        body { background: #1c1d1f; color: #d1d7dc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .sidebar { width: 340px; background: #1c1d1f; border-right: 1px solid #3e4143; height: 100vh; overflow-y: auto; }
+        .section-header { background: #2d2f31; padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #3e4143; }
+        .section-header:hover { background: #3e4143; }
+        .section-title { font-weight: 600; font-size: 14px; color: #f7f9fa; }
+        .section-meta { font-size: 12px; color: #9da5b1; margin-top: 2px; }
+        .lesson-item { display: flex; align-items: center; padding: 10px 16px 10px 24px; border-bottom: 1px solid #2d2f31; cursor: pointer; transition: background 0.1s; }
+        .lesson-item:hover { background: #2d2f31; }
+        .lesson-item.active { background: #3e4143; border-left: 3px solid #f89820; }
+        .lesson-item.completed { opacity: 0.7; }
+        .lesson-icon { width: 20px; margin-right: 12px; text-align: center; flex-shrink: 0; }
+        .lesson-icon.playing { color: #f89820; }
+        .lesson-icon.completed { color: #e67e22; }
+        .lesson-title { font-size: 13px; flex: 1; line-height: 1.4; }
+        .lesson-duration { font-size: 11px; color: #9da5b1; margin-left: 8px; }
+        .content-area { flex: 1; overflow-y: auto; height: 100vh; }
+        .video-placeholder { background: #000; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; }
+        .lesson-content { max-width: 800px; margin: 0 auto; padding: 32px 24px; }
+        .lesson-content h1 { font-size: 28px; font-weight: 700; color: #f7f9fa; margin-bottom: 16px; }
+        .lesson-content h2 { font-size: 22px; font-weight: 600; color: #f7f9fa; margin: 32px 0 12px; border-bottom: 1px solid #3e4143; padding-bottom: 8px; }
+        .lesson-content h3 { font-size: 18px; font-weight: 600; color: #f7f9fa; margin: 24px 0 8px; }
+        .lesson-content h4 { font-size: 16px; font-weight: 600; color: #e0e0e0; margin: 16px 0 8px; }
+        .lesson-content p { font-size: 15px; line-height: 1.7; margin-bottom: 12px; color: #b0b0b0; }
+        .lesson-content ul, .lesson-content ol { margin: 12px 0; padding-left: 24px; }
+        .lesson-content li { font-size: 14px; line-height: 1.6; margin-bottom: 6px; color: #c0c0c0; }
+        .lesson-content code { background: #2d2f31; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #e06c75; }
+        .lesson-content pre { background: #2d2f31; padding: 16px; border-radius: 6px; overflow-x: auto; margin: 16px 0; border: 1px solid #3e4143; }
+        .lesson-content pre code { background: none; padding: 0; color: #d1d7dc; }
+        .lesson-content strong { color: #f7f9fa; }
+        .lesson-content a { color: #f89820; text-decoration: none; }
+        .lesson-content a:hover { text-decoration: underline; }
+        .lesson-content img { max-width: 100%; border-radius: 6px; margin: 12px 0; }
+        .code-section { background: #1c1d1f; border-top: 1px solid #3e4143; padding: 16px; }
+        .code-editor { width: 100%; height: 200px; background: #1e1e1e; color: #d4d4d4; border: 1px solid #3e4143; border-radius: 6px; padding: 12px; font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px; resize: vertical; }
+        .code-editor:focus { outline: none; border-color: #f89820; }
+        .output-area { width: 100%; height: 120px; background: #0a0a0a; color: #22c55e; border: 1px solid #3e4143; border-radius: 6px; padding: 12px; font-family: 'Fira Code', monospace; font-size: 13px; overflow: auto; margin-top: 8px; }
+        .btn-run { background: #f89820; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; }
+        .btn-run:hover { background: #9130d9; }
+        .btn-reset { background: #3e4143; color: #d1d7dc; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-left: 8px; }
+        .btn-reset:hover { background: #4e5153; }
+        .quiz-section { background: #2d2f31; border-radius: 8px; padding: 20px; margin: 24px 0; }
+        .quiz-title { font-size: 16px; font-weight: 600; color: #f7f9fa; margin-bottom: 12px; }
+        .quiz-option { display: flex; align-items: flex-start; padding: 10px 12px; margin: 6px 0; background: #1c1d1f; border: 1px solid #3e4143; border-radius: 6px; cursor: pointer; }
+        .quiz-option:hover { border-color: #f89820; }
+        .quiz-option input { margin-right: 10px; margin-top: 3px; }
+        .quiz-option label { font-size: 14px; cursor: pointer; }
+        .progress-bar { height: 4px; background: #3e4143; border-radius: 2px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; background: #f89820; transition: width 0.3s; }
+        .header-bar { background: #2d2f31; border-bottom: 1px solid #3e4143; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .course-title { font-size: 16px; font-weight: 600; color: #f7f9fa; }
+        .course-progress { font-size: 13px; color: #9da5b1; }
+        .nav-buttons { display: flex; gap: 8px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #3e4143; }
+        .btn-nav { padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; border: none; }
+        .btn-prev { background: #3e4143; color: #d1d7dc; }
+        .btn-next { background: #f89820; color: white; font-weight: 600; }
+        .btn-complete { background: #e67e22; color: white; padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; margin-left: auto; }
+        .btn-complete:hover { background: #6b3ae0; }
+        .btn-completed { background: #1e7e34; color: white; padding: 10px 20px; border-radius: 6px; border: none; cursor: default; margin-left: auto; }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <i class="fab fa-java text-orange-500 text-3xl"></i>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-                        Java Learning Path
-                    </h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="text-sm text-gray-400">
-                        Progress: <span id="progress-text">0%</span>
-                    </div>
-                    <div class="w-48 bg-gray-700 rounded-full h-2.5 overflow-hidden">
-                        <div id="progress-bar" class="progress-bar bg-gradient-to-r from-green-400 to-cyan-400 h-2.5 rounded-full" style="width: 0%"></div>
-                    </div>
-                    <button onclick="resetProgress()" class="px-3 py-1 text-xs bg-gray-700 hover:bg-gray-600 rounded transition">
-                        Reset
-                    </button>
+<body>
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="sidebar flex-shrink-0">
+            <div class="header-bar">
+                <div>
+                    <div class="course-title"><i class="fab fa-java mr-2 text-orange-400"></i>Java Learning Path</div>
+                    <div class="course-progress" id="course-progress">0% complete</div>
+                    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
                 </div>
             </div>
-        </div>
-    </header>
+            <div id="lessons-nav">
+                <!-- Modules rendered here -->
+            </div>
+        </aside>
 
-    <div class="container mx-auto px-4 py-6">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <!-- Sidebar - Lessons List -->
-            <aside class="lg:col-span-1">
-                <div class="bg-gray-800 rounded-lg p-4 sticky top-24">
-                    <h2 class="text-lg font-semibold mb-4 flex items-center">
-                        <i class="fas fa-list-ul mr-2 text-blue-400"></i>
-                        Modul Belajar
-                    </h2>
-                    <nav id="lessons-nav" class="space-y-2">
-                        <!-- Lessons will be populated by JS -->
-                    </nav>
+        <!-- Main Content -->
+        <main class="content-area">
+            <div id="lesson-header" style="background: #2d2f31; padding: 16px 24px; border-bottom: 1px solid #3e4143;">
+                <div class="text-xs text-gray-500 mb-1" id="breadcrumb">Module 1</div>
+                <h1 id="lesson-title" style="font-size: 20px; font-weight: 600; color: #f7f9fa; margin: 0;">Select a lesson</h1>
+            </div>
+            
+            <!-- Lesson Content -->
+            <div class="lesson-content" id="lesson-content">
+                <p class="text-gray-500">Select a lesson from the sidebar to begin.</p>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="code-section" id="code-section" style="max-width: 800px; margin: 0 auto;">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-semibold text-gray-300"><i class="fas fa-code mr-2"></i>Code Editor</span>
+                    <div>
+                        <button class="btn-run" onclick="runCode()"><i class="fas fa-play mr-2"></i>Run</button>
+                        <button class="btn-reset" onclick="resetCode()">Reset</button>
+                    </div>
                 </div>
-            </aside>
-
-            <!-- Main Content Area -->
-            <main class="lg:col-span-3 space-y-6">
-                <!-- Current Lesson -->
-                <section id="current-lesson" class="bg-gray-800 rounded-lg p-6">
-                    <!-- Lesson content injected here -->
-                </section>
-
-                <!-- Code Editor & Terminal -->
-                <section class="bg-gray-800 rounded-lg p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold">
-                            <i class="fas fa-code mr-2 text-green-400"></i>
-                            Editor Kode
-                        </h3>
-                        <div class="space-x-2">
-                            <button onclick="runCode()" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-medium transition flex items-center">
-                                <i class="fas fa-play mr-2"></i> Jalankan
-                            </button>
-                            <button onclick="resetCode()" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded font-medium transition">
-                                <i class="fas fa-undo mr-2"></i> Reset
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <!-- Code Input -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-2">Kode Anda:</label>
-                            <textarea id="code-editor" class="code-editor w-full h-80 p-4 rounded-lg border border-gray-700 text-sm" spellcheck="false"></textarea>
-                        </div>
-
-                        <!-- Terminal Output -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-2">Output:</label>
-                            <div id="terminal-output" class="terminal-output w-full h-80 p-4 rounded-lg border border-gray-700 text-sm overflow-auto">
-                                <span class="text-gray-500">// Output akan muncul di sini setelah Anda menekan "Jalankan"</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="validation-msg" class="mt-4 p-3 rounded hidden"></div>
-                </section>
-
-                <!-- Quiz Section -->
-                <section id="quiz-section" class="bg-gray-800 rounded-lg p-6 hidden">
-                    <h3 class="text-lg font-semibold mb-4 flex items-center">
-                        <i class="fas fa-question-circle mr-2 text-yellow-400"></i>
-                        Quiz Sederhana
-                    </h3>
-                    <div id="quiz-content" class="space-y-4">
-                        <!-- Quiz injected here -->
-                    </div>
-                    <button onclick="checkQuiz()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded font-medium transition">
-                        Submit Jawaban
-                    </button>
-                </section>
-
-                <!-- Navigation -->
-                <div class="flex justify-between items-center">
-                    <button id="prev-btn" onclick="prevLesson()" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fas fa-arrow-left mr-2"></i> Sebelumnya
-                    </button>
-                    <button id="next-btn" onclick="nextLesson()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed">
-                        Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
+                <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="# Write your Java code here..."></textarea>
+                <div class="mt-2">
+                    <span class="text-xs text-gray-500">Output:</span>
+                    <div id="output" class="output-area"><span class="text-gray-600"># Output will appear here</span></div>
                 </div>
-            </main>
-        </div>
+                <div id="validation-msg" class="mt-3 p-3 rounded hidden"></div>
+            </div>
+
+            <!-- Quiz -->
+            <div class="quiz-section" id="quiz-section" style="max-width: 800px; margin: 24px auto; display: none;">
+                <div class="quiz-title"><i class="fas fa-question-circle mr-2 text-yellow-400"></i>Quiz</div>
+                <div id="quiz-content"></div>
+                <button class="btn-run mt-3" onclick="checkQuiz()">Submit Answer</button>
+                <div id="quiz-result"></div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-buttons" id="nav-buttons" style="max-width: 800px; margin: 0 auto; padding: 16px 24px;">
+                <button class="btn-nav btn-prev" id="prev-btn" onclick="prevLesson()" disabled><i class="fas fa-chevron-left mr-2"></i>Previous</button>
+                <button class="btn-complete" id="complete-btn" onclick="markComplete()" style="display:none;">Mark as Complete</button>
+                <button class="btn-completed" id="completed-btn" style="display:none;"><i class="fas fa-check mr-2"></i>Completed</button>
+                <button class="btn-nav btn-next" id="next-btn" onclick="nextLesson()">Next<i class="fas fa-chevron-right ml-2"></i></button>
+            </div>
+        </main>
     </div>
 
-    <footer class="bg-gray-800 border-t border-gray-700 mt-8 py-6">
-        <div class="container mx-auto px-4 text-center text-gray-400 text-sm">
-            <p>Interactive Java Tutorial - Belajar Go dengan cara praktik langsung</p>
-            <p class="mt-2">Dibuat dengan <i class="fas fa-heart text-red-500"></i> untuk developer Indonesia</p>
-        </div>
-    </footer>
-
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/"></script>
     <script src="app.js"></script>
+
+
+<script>
+// Simple Python runtime fallback (if Pyodide fails)
+class SimplePythonRuntime {
+    constructor() {
+        this.output = [];
+    }
+    
+    run(code) {
+        this.output = [];
+        const lines = code.split('\n');
+        let result = '';
+        
+        for (let line of lines) {
+            line = line.trim();
+            if (!line || line.startsWith('#')) continue;
+            
+            // Handle print()
+            const printMatch = line.match(/^print\s*\((.*)\)$/);
+            if (printMatch) {
+                let arg = printMatch[1].trim();
+                // Handle f-strings
+                if (arg.startsWith('f"') || arg.startsWith("f'")) {
+                    arg = arg.slice(2, -1);
+                    arg = arg.replace(/\{([^}]+)\}/g, (match, expr) => {
+                        try { return eval(expr); } catch(e) { return match; }
+                    });
+                    this.output.push(arg);
+                }
+                // Handle string literals
+                else if ((arg.startsWith('"') && arg.endsWith('"')) || 
+                         (arg.startsWith("'") && arg.endsWith("'"))) {
+                    this.output.push(arg.slice(1, -1));
+                }
+                // Handle variables or expressions
+                else {
+                    try {
+                        const val = eval(arg);
+                        this.output.push(String(val));
+                    } catch(e) {
+                        this.output.push(arg);
+                    }
+                }
+            }
+            // Handle simple assignments
+            else if (line.includes('=') && !line.includes('==')) {
+                const parts = line.split('=').map(s => s.trim());
+                if (parts.length === 2) {
+                    try { eval(`var ${parts[0]} = ${parts[1]}`); } catch(e) {}
+                }
+            }
+        }
+        
+        return this.output.join('\n');
+    }
+}
+
+// Pyodide loader with fallback
+let pyodide = null;
+let pyodideReady = false;
+let simplePython = null;
+
+async function initPyodide() {
+    if (pyodideReady) return;
+    
+    const output = document.getElementById('output');
+    const runBtn = document.querySelector('.btn-run');
+    
+    // Try Pyodide first
+    try {
+        output.innerHTML = '<span class="text-yellow-400">⏳ Loading Python runtime...</span>';
+        if (runBtn) { runBtn.disabled = true; runBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...'; }
+        
+        // Check if loadPyodide exists
+        if (typeof loadPyodide === 'function') {
+            pyodide = await loadPyodide();
+            pyodideReady = true;
+            output.innerHTML = '<span class="text-green-400">✅ Python (Pyodide) ready!</span>';
+        } else {
+            throw new Error('Pyodide not loaded');
+        }
+    } catch (e) {
+        // Fallback to simple Python
+        console.warn('Pyodide failed, using simple runtime:', e);
+        simplePython = new SimplePythonRuntime();
+        pyodideReady = true; // Mark as ready (using fallback)
+        output.innerHTML = '<span class="text-orange-400">✅ Python (simple mode) ready! (basic print support)</span>';
+    }
+    
+    if (runBtn) { runBtn.disabled = false; runBtn.innerHTML = '<i class="fas fa-play mr-2"></i>Run'; }
+}
+
+async function runCode() {
+    if (!pyodideReady) await initPyodide();
+    
+    const code = document.getElementById('code-editor').value;
+    const output = document.getElementById('output');
+    const validation = document.getElementById('validation-msg');
+    
+    try {
+        let result = '';
+        
+        if (pyodide) {
+            // Use Pyodide
+            pyodide.runPython(`import sys\nfrom io import StringIO\nsys.stdout = StringIO()`);
+            pyodide.runPython(code);
+            result = pyodide.runPython(`sys.stdout.getvalue()`);
+        } else if (simplePython) {
+            // Use simple fallback
+            result = simplePython.run(code);
+        } else {
+            throw new Error('No Python runtime available');
+        }
+        
+        output.innerHTML = '<span class="text-green-400">' + escapeHtml(result) + '</span>';
+        
+        // Validate
+        const lesson = lessons[currentLesson];
+        if (lesson && lesson.expectedOutput) {
+            const expected = lesson.expectedOutput.replace(/\\n/g, '\n');
+            if (result.trim() === expected.trim()) {
+                validation.className = 'mt-4 p-3 rounded bg-green-900/50 border border-green-500 text-green-300';
+                validation.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Benar! ✅';
+                if (lesson.id) {
+                    progress[lesson.id] = true;
+                    localStorage.setItem('python_progress', JSON.stringify(progress));
+                    updateProgress();
+                    renderNav();
+                }
+            } else {
+                validation.className = 'mt-4 p-3 rounded bg-yellow-900/50 border border-yellow-500 text-yellow-300';
+                validation.innerHTML = '<i class="fas fa-lightbulb mr-2"></i>Hint: ' + (lesson.hint || '');
+            }
+        }
+    } catch (e) {
+        output.innerHTML = '<span class="text-red-400">❌ ' + escapeHtml(String(e.message || e)) + '</span>';
+    }
+}
+
+function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => { initPyodide(); });
+</script>
+
+
 </body>
 </html>
