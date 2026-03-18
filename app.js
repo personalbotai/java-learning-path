@@ -760,21 +760,16 @@ async function runCode() {
     const code = document.getElementById('code-editor').value;
     const output = document.getElementById('output');
     const validation = document.getElementById('validation-msg');
-    output.innerHTML = '<span class="text-yellow-400">⏳ Compiling Java...</span>';
-    try {
-        if (typeof cheerpjInit !== 'undefined') {
-            if (!window._cjReady) { await cheerpjInit({libraryPrefix:'https://cj.cheerpj.com/cheerpj3/nocache/'}); window._cjReady = true; }
-            const result = await cheerpjRunJava(code);
-            output.innerHTML = '<span class="text-green-400">' + escapeHtml(result) + '</span>';
-        } else {
-            throw new Error('CheerpJ not loaded');
-        }
-    } catch(e) {
-        const lesson = lessons[currentLesson];
-        output.innerHTML = '<span class="text-green-400">' + escapeHtml(lesson.expectedOutput) + '</span>';
-        validation.className = 'mt-4 p-3 rounded bg-yellow-900/50 border border-yellow-500 text-yellow-300';
-        validation.innerHTML = 'ℹ️ CheerpJ loading... showing expected output.';
-    }
+    const lesson = lessons[currentLesson];
+    
+    // Show user's code
+    output.innerHTML = '<div class="mb-3"><span class="text-gray-400 text-xs">// Your code:</span></div>' +
+        '<pre class="text-gray-300 mb-3">' + escapeHtml(code) + '</pre>' +
+        '<div class="border-t border-gray-700 pt-3 mt-3"><span class="text-gray-400 text-xs">// Expected output:</span></div>' +
+        '<pre class="text-green-400">' + escapeHtml(lesson.expectedOutput) + '</pre>';
+    
+    validation.className = 'mt-4 p-3 rounded bg-blue-900/50 border border-blue-500 text-blue-300';
+    validation.innerHTML = '<i class="fas fa-info-circle mr-2"></i>Java tidak bisa dijalankan di browser (tidak ada JVM). Menampilkan output yang diharapkan.';
 }
 
 function resetCode() { document.getElementById('code-editor').value = lessons[currentLesson].defaultCode; }
