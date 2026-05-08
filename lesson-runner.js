@@ -1,60 +1,95 @@
-// lesson-runner-simple.js - Simple runner that shows expected output
-// Java cannot run directly in browser without JVM/CheerpJ
-// This runner displays the expected output for learning purposes
-
+// lesson-runner-final.js - Shows expected output for Java lessons
+// Java cannot run in browser without JVM - this shows expected results
 (function() {
     'use strict';
     
-    console.log('[Runner] Initializing simple runner (expected output mode)...');
+    console.log('[Runner] Initializing (expected output mode)...');
     
-    // Store current lesson data
     let currentLesson = null;
+    let bridgeReady = false;
     
-    // Initialize when DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
+    // Initialize
+    function init() {
+        // Wait for bridge to be ready
+        if (window.lessonDataBridge) {
+            setupBridge();
+        } else {
+            // Wait for bridge to load
+            const checkInterval = setInterval(() => {
+                if (window.lessonDataBridge) {
+                    clearInterval(checkInterval);
+                    setupBridge();
+                }
+            }, 100);
+            setTimeout(() => clearInterval(checkInterval), 5000); // Timeout after 5s
+        }
+        
+        // Fallback: try to get lesson from global scope
+        setTimeout(() => {
+            if (window.currentLesson) {
+                currentLesson = window.currentLesson;
+                console.log('[Runner] Got lesson from global scope');
+            }
+        }, 500);
+        
+        setupRunButton();
+        console.log('[Runner] Ready - Java output simulation mode');
     }
     
-    function init() {
-        console.log('[Runner] Setting up...');
-        
-        // Override any existing run function
-        window.runJavaCode = runJavaCode;
-        window.compileJava = compileJava;
-        
-        // Setup Run button if exists
-        const runBtn = document.getElementById('runCode') || document.querySelector('[id*="run"]') || document.querySelector('[id*="Run"]');
-        if (runBtn) {
-            runBtn.addEventListener('click', handleRunClick);
-            console.log('[Runner] Run button found and configured');
-        }
-        
-        // Listen for lesson changes
-        document.addEventListener('lessonLoaded', function(e) {
-            if (e.detail && e.detail.lesson) {
-                currentLesson = e.detail.lesson;
-                console.log('[Runner] Lesson loaded:', currentLesson.title);
-            }
+    function setupBridge() {
+        bridgeReady = true;
+        window.lessonDataBridge.onLessonChange(function(lesson) {
+            currentLesson = lesson;
+            console.log('[Runner] Lesson updated via bridge:', lesson?.title);
         });
         
-        // Try to get current lesson from global scope
-        if (window.currentLesson) {
-            currentLesson = window.currentLesson;
+        // Get current lesson if already set
+        if (window.lessonDataBridge.currentLesson) {
+            currentLesson = window.lessonDataBridge.currentLesson;
+        }
+    }
+    
+    function setupRunButton() {
+        // Find run button(s)
+        const runSelectors = [
+            '#runCode', 
+            '#runBtn',
+            'button[onclick*="run"]',
+            'button:contains("Run")',
+            'button:contains("Lihat Output")'
+        ];
+        
+        let runBtn = null;
+        for (const sel of runSelectors) {
+            try {
+                const el = document.querySelector(sel);
+                if (el) {
+                    runBtn = el;
+                    break;
+                }
+            } catch(e) {} // Invalid selector
         }
         
-        console.log('[Runner] Ready - will show expected output');
+        if (runBtn) {
+            runBtn.addEventListener('click', handleRunClick);
+            console.log('[Runner] Run button configured');
+        } else {
+            // Create run button if not exists
+            console.log('[Runner] No run button found, will listen for custom events');
+        }
+        
+        // Also listen for custom run events
+        document.addEventListener('runJava', handleRunClick);
+        document.addEventListener('showOutput', handleRunClick);
     }
     
     function handleRunClick(e) {
-        e.preventDefault();
+        if (e.preventDefault) e.preventDefault();
         const code = getCodeFromEditor();
-        runJavaCode(code);
+        showExpectedOutput(code);
     }
     
     function getCodeFromEditor() {
-        // Try various editor IDs
         const editorIds = ['codeEditor', 'editor', 'javaEditor', 'code'];
         for (const id of editorIds) {
             const el = document.getElementById(id);
@@ -73,75 +108,83 @@
         return '';
     }
     
-    function runJavaCode(code) {
-        console.log('[Runner] Showing expected output for code:', code.substring(0, 50) + '...');
+    function showExpectedOutput(code) {
+        console.log('[Runner] Showing expected output...');
         
-        // Get expected output from current lesson
-        let expectedOutput = 'Java code execution simulation\n';
-        expectedOutput += '========================================\n';
-        expectedOutput += 'NOTE: Java cannot run directly in browser.\n';
-        expectedOutput += 'Showing expected output for learning.\n';
-        expectedOutput += '========================================\n\n';
+        let output = '';
         
-        if (currentLesson && currentLesson.expectedOutput) {
-            expectedOutput += currentLesson.expectedOutput;
-        } else if (window.LESSON_CONFIG && window.LESSON_CONFIG.expectedOutput) {
-            expectedOutput += window.LESSON_CONFIG.expectedOutput;
-        } else {
-            // Try to find expected output from page data
+        // Header
+        output += '=== Java Code Output (Simulasi) ===\n';
+        output += 'NOTE: Java tidak dapat dijalankan di browser\n';
+        output += 'Menampilkan hasil yang diharapkan\n';
+        output += '========================================\n\n';
+        
+        // Try to get expected output from various sources
+        let expected = null;
+        
+        // 1. From bridge
+        if (bridgeReady && window.lessonDataBridge) {
+            expected = window.lessonDataBridge.getExpectedOutput();
+        }
+        
+        // 2. From current lesson
+        if (!expected && currentLesson && currentLesson.expectedOutput) {
+            expected = currentLesson.expectedOutput;
+        }
+        
+        // 3. From window.currentLesson
+        if (!expected && window.currentLesson && window.currentLesson.expectedOutput) {
+            expected = window.currentLesson.expectedOutput;
+        }
+        
+        // 4. From data attribute
+        if (!expected) {
             const outputEl = document.querySelector('[data-expected-output]');
             if (outputEl) {
-                expectedOutput += outputEl.dataset.expectedOutput || 'No expected output defined';
-            } else {
-                expectedOutput += 'Expected output not defined for this lesson.\n';
-                expectedOutput += 'Please check the lesson material for expected results.';
+                expected = outputEl.dataset.expectedOutput;
             }
         }
         
-        // Display the output
-        displayOutput(expectedOutput);
-        
-        // Also show a notice
-        showNotice('Menampilkan hasil yang diharapkan (Java tidak dapat dijalankan di browser)');
-    }
-    
-    function compileJava(code) {
-        // Simulate compilation
-        displayOutput('Compiling Java code...\n');
-        
-        setTimeout(() => {
-            // Simple syntax check
-            if (code.includes('class') && code.includes('main')) {
-                displayOutput('✅ Compilation successful!\n');
-                displayOutput('Note: Showing expected output (Java requires JVM)\n');
-                runJavaCode(code);
-            } else {
-                displayOutput('❌ Compilation failed!\n');
-                displayOutput('Error: Missing class or main method\n');
+        // 5. Try to parse from page content
+        if (!expected) {
+            const pageText = document.body.textContent || '';
+            const match = pageText.match(/Expected Output[:\s]*([\n\r]+.*?)(?=\n\n|$)/i);
+            if (match) {
+                expected = match[1].trim();
             }
-        }, 500);
+        }
+        
+        if (expected) {
+            output += expected + '\n';
+        } else {
+            output += 'Expected output tidak ditemukan untuk lesson ini.\n';
+            output += 'Silakan periksa materi pembelajaran.\n';
+        }
+        
+        output += '\n========================================\n';
+        output += 'Simulasi selesai.';
+        
+        displayOutput(output);
+        
+        // Show notice
+        showNotice('Menampilkan hasil yang diharapkan (Java butuh JVM untuk menjalankan kode)');
     }
     
     function displayOutput(text) {
-        // Try to find output container
-        const outputIds = ['codeOutput', 'output', 'result', 'console', 'outputArea'];
-        let outputEl = null;
-        
-        for (const id of outputIds) {
-            outputEl = document.getElementById(id);
-            if (outputEl) break;
-        }
+        // Find or create output container
+        let outputEl = document.getElementById('codeOutput') || 
+                     document.getElementById('output') ||
+                     document.getElementById('result');
         
         if (!outputEl) {
-            // Create output container if not exists
             outputEl = document.createElement('div');
             outputEl.id = 'codeOutput';
-            outputEl.className = 'mt-4 p-4 bg-gray-900 rounded text-green-400 font-mono text-sm whitespace-pre-wrap';
-            outputEl.style.maxHeight = '300px';
-            outputEl.style.overflowY = 'auto';
+            outputEl.style.cssText = 'margin-top: 16px; padding: 16px; background: #0f172a; color: #4ade80; font-family: monospace; font-size: 13px; border-radius: 8px; border: 1px solid #334155; white-space: pre-wrap; max-height: 300px; overflow-y: auto;';
             
             // Insert after code editor
-            const editor = document.getElementById('codeEditor') || document.querySelector('textarea');
+            const editor = document.getElementById('codeEditor') || 
+                         document.querySelector('textarea') ||
+                         document.querySelector('.code-editor');
             if (editor && editor.parentNode) {
                 editor.parentNode.insertBefore(outputEl, editor.nextSibling);
             } else {
@@ -149,7 +192,6 @@
             }
         }
         
-        // Show output
         outputEl.textContent = text;
         outputEl.classList.remove('hidden');
         
@@ -158,28 +200,43 @@
     }
     
     function showNotice(message) {
-        // Create or update notice banner
         let notice = document.getElementById('runnerNotice');
         if (!notice) {
             notice = document.createElement('div');
             notice.id = 'runnerNotice';
-            notice.className = 'bg-blue-900 text-blue-200 px-4 py-2 rounded mb-4 text-sm';
-            notice.style.cssText = 'background: #1e3a5f; color: #93c5fd; padding: 8px 16px; border-radius: 4px; margin-bottom: 16px; font-size: 14px;';
+            notice.style.cssText = 'background: #1e3a5f; color: #93c5fd; padding: 12px 20px; border-radius: 6px; margin: 16px 0; font-size: 14px; border-left: 4px solid #3b82f6;';
+            notice.innerHTML = '<i class="fas fa-info-circle mr-2"></i>' + message;
             
             const header = document.querySelector('header, .header, main, .main-content');
-            if (header) {
+            if (header && header.parentNode) {
                 header.parentNode.insertBefore(notice, header.nextSibling);
             }
         }
-        notice.textContent = 'ℹ️ ' + message;
+        notice.innerHTML = '<i class="fas fa-info-circle mr-2"></i>' + message;
         notice.style.display = 'block';
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            notice.style.display = 'none';
+        }, 5000);
     }
     
-    // Export for global use
+    // Also provide a global function for manual calls
+    window.showJavaOutput = showExpectedOutput;
     window.JavaRunner = {
-        run: runJavaCode,
-        compile: compileJava,
-        setLesson: function(lesson) { currentLesson = lesson; }
+        run: showExpectedOutput,
+        setLesson: function(lesson) { 
+            currentLesson = lesson; 
+            if (bridgeReady && window.lessonDataBridge) {
+                window.lessonDataBridge.setLesson(lesson);
+            }
+        }
     };
     
+    // Initialize
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
