@@ -87,3 +87,16 @@ abstract class DataProcessor {
 - Tandai class abstract jika memiliki abstract method.
 
 - Jangan membuat abstract class tanpa abstract methods? Bisa (misal untuk utility).
+
+## Java Modern: Sealed Classes (Java 17/21 LTS)
+
+`sealed class` membatasi subclass mana saja yang boleh meng-extend sebuah class menggunakan kata kunci `permits`:
+
+```
+public sealed abstract class Bentuk permits Lingkaran, Persegi {}
+
+public final class Lingkaran extends Bentuk {}
+public final class Persegi extends Bentuk {}
+```
+
+Sealed classes cocok untuk domain tertutup (payment status, AST node, hasil validasi) — compiler bisa memverifikasi exhaustiveness pada `switch` pattern matching.

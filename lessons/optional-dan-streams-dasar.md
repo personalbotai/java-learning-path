@@ -92,6 +92,17 @@ List<String> result = names.stream()
 
 Cukup ubah `stream()` menjadi `parallelStream()` untuk memanfaatkan multiple cores. Hatikan: operasi harus bebas side-effects.
 
+## Java 21 LTS: Virtual Threads (Project Loom)
+
+Selain Streams untuk pemrosesan paralel data, Java 21 LTS memperkenalkan **Virtual Threads** melalui `Thread.ofVirtual().start(...)` — thread ringan (lightweight) yang memungkinkan jutaan thread konkuren tanpa overhead OS threads. Cocok untuk I/O-bound workloads yang sebelumnya membutuhkan thread pool kompleks:
+
+```
+Thread.ofVirtual().start(() -> {
+    System.out.println("Running on Virtual Thread: " + Thread.currentThread());
+});
+// Alternatif: Executors.newVirtualThreadPerTaskExecutor()
+```
+
 ## Best Practice
 
 - Gunakan `Optional` sebagai return type, bukan parameter atau field.
@@ -101,3 +112,5 @@ Cukup ubah `stream()` menjadi `parallelStream()` untuk memanfaatkan multiple cor
 - Streams dirancang untuk functional style; hindari mutasi state di lambda.
 
 - Choose sequential vs parallel berdasarkan data size dan operation characteristic.
+
+- Gunakan Virtual Threads untuk concurrency I/O-bound skala besar; Streams tetap ideal untuk transformasi koleksi fungsional.

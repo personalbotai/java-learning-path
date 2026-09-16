@@ -105,4 +105,17 @@ public Person(String name, int age) { ... }
 
 - Perhatikan immutability: class dengan final fields dan tidak ada setter.
 
+## Java Modern: Records (Java 16/21 LTS)
+
+`record` adalah sintaks ringkas untuk mendefinisikan kelas pembawa data (data carrier) yang otomatis immutable — dilengkapi constructor, getter, `equals()`, `hashCode()`, dan `toString()` secara otomatis:
+
+```
+public record User(String name, int age) {}
+
+User u = new User("Alex", 25);
+System.out.println(u.name()); // akses langsung, bukan u.getName()
+```
+
+Gunakan `record` untuk DTO/model tanpa logika kompleks. Gunakan class biasa jika butuh mutability atau inheritance.
+
 Ini adalah dasar untuk semua konsep OOP selanjutnya.

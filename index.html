@@ -1,157 +1,171 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Learning Path — Tutorial Interaktif</title>
-    <meta name="description" content="Belajar Java dari dasar hingga mahir. Tutorial interaktif dengan code editor, quiz, dan progress tracking.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Learning Path — Tutorial Interaktif</title>
+<meta name="description" content="Belajar Java 21 LTS dari dasar hingga mahir. 30 pelajaran interaktif dengan code editor, quiz, records, sealed classes, pattern matching & virtual threads.">
+<meta name="theme-color" content="#0a0f1a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif'],mono:['JetBrains Mono','monospace'],display:['Space Grotesk','sans-serif']}}}}</script>
 </head>
-<body>
-    <!-- Mobile Header -->
-    <div class="mobile-header" id="mobile-header">
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-            <i class="fas fa-bars"></i>
-        </button>
-        <span class="mobile-title"><i class="fab fa-java text-orange-400 mr-2"></i>Java Learning Path</span>
-        <span class="mobile-progress" id="mobile-progress">0%</span>
+<body class="antialiased">
+<!-- Top Bar -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <button id="menuToggle" class="menu-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+    <a class="brand" href="#">
+      <span class="brand-mark"><i class="fa-brands fa-java"></i></span>
+      <span class="brand-text"><b>Java</b> Learning Path <span class="brand-badge">JAVA 21</span></span>
+    </a>
+    <div class="topbar-search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="searchInput" placeholder="Cari pelajaran… ( / )" autocomplete="off">
+      <kbd>/</kbd>
+    </div>
+    <div class="topbar-actions">
+      <div class="progress-wrap" title="Progress keseluruhan">
+        <span id="course-progress">0%</span>
+        <span id="mobile-progress" style="display:none">0%</span>
+        <div class="progress-track"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <button id="themeToggle" class="icon-btn" title="Toggle theme"><i id="themeToggleIcon" class="fa-solid fa-moon"></i></button>
+      <a href="https://github.com/personalbotai/java-learning-path" target="_blank" class="icon-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-title">Kurikulum</div>
+      <div class="sidebar-sub"><span id="stat-lessons">30</span> pelajaran • <span id="stat-modules">5</span> modul • <span id="stat-done">0</span> selesai <span id="progress-count" style="display:none">0/30</span></div>
+      <div class="sidebar-search-mobile">
+        <div style="position:relative">
+          <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-d);font-size:12px"></i>
+          <input id="searchInputMobile" placeholder="Cari…" style="width:100%;height:32px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:0 12px 0 32px;color:var(--text);font-size:12px;outline:none">
+        </div>
+      </div>
+    </div>
+    <nav id="lessons-nav" class="nav-scroll"></nav>
+    <div class="sidebar-foot">
+      <button onclick="resetProgress()" class="btn-ghost w-full"><i class="fa-solid fa-rotate-left mr-2"></i>Reset Progress</button>
+      <div class="foot-note">Progress tersimpan otomatis di browser. Java 21 LTS • records • sealed • pattern matching • virtual threads</div>
+    </div>
+  </aside>
+  <div id="backdrop" class="backdrop"></div>
+  <div id="sidebarOverlay" style="display:none"></div>
+
+  <!-- Main -->
+  <main class="content-area" id="contentArea">
+    <div id="lesson-header" class="lesson-header">
+      <div class="breadcrumb" id="breadcrumb">Pilih pelajaran untuk mulai</div>
+      <h1 id="lesson-title" class="lesson-h1">Selamat Datang, Java Developer! ☕</h1>
+      <div class="lesson-meta">
+        <span id="lesson-duration" class="meta-pill"><i class="fa-regular fa-clock"></i> —</span>
+        <span id="lesson-level" class="meta-pill level">Pemula → Mahir • Java 21 LTS</span>
+        <span id="lesson-id" class="meta-pill id"></span>
+      </div>
     </div>
 
-    <!-- Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="content-wrap">
+      <!-- markdown -->
+      <article id="lesson-content" class="lesson-content prose">
+        <div class="hero">
+          <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Java 21 LTS • Records • Sealed • Pattern Matching • Virtual Threads</div>
+          <h2>Belajar Java modern seperti engineer di Gojek, Tokopedia & Bank.</h2>
+          <p>Java Learning Path menyatukan <b>30 pelajaran</b> terkurasi, <b>editor Java interaktif</b>, dan <b>quiz</b> yang memvalidasi pemahamanmu — dari dasar OOP hingga <b>records, sealed classes, pattern matching & virtual threads (Project Loom)</b> di Java 21.</p>
+          <div class="hero-actions">
+            <button onclick="loadLesson(0)" class="btn-primary"><i class="fa-solid fa-play mr-2"></i>Mulai dari Awal</button>
+            <button onclick="loadLesson(6)" class="btn-secondary"><i class="fa-solid fa-rocket mr-2"></i>Lompat ke Wrapper</button>
+          </div>
+          <div class="hero-stats">
+            <div><b>30</b><span>Materi</span></div><div><b>5</b><span>Modul</span></div><div><b>21 LTS</b><span>Modern</span></div><div><b>∞</b><span>Bisa diulang</span></div>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="mini-card"><i class="fa-solid fa-code"></i><h3>Editor Live</h3><p>Tulis & jalankan Java langsung. Validasi output otomatis.</p></div>
+          <div class="mini-card"><i class="fa-solid fa-cube"></i><h3>Java 21 Modern</h3><p><code>record</code>, <code>sealed</code>, pattern matching, <code>var</code>, virtual threads.</p></div>
+          <div class="mini-card"><i class="fa-solid fa-brain"></i><h3>Quiz Adaptif</h3><p>Setiap bab ada quiz — lulus untuk membuka progress berikutnya.</p></div>
+        </div>
+        <p class="text-muted">Pilih pelajaran di sidebar untuk memulai. Progress akan tersimpan otomatis.</p>
+        <div class="info-banner" id="info-banner" style="margin-top:20px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#fecaca;border-radius:10px;padding:12px 18px;font-size:13.5px;display:flex;gap:10px;align-items:flex-start;line-height:1.55"><i class="fas fa-info-circle" style="margin-top:3px;color:#f87171;flex-shrink:0"></i><span><strong>Info:</strong> Java tidak bisa dijalankan langsung di browser (butuh JVM). Tombol <strong>Run</strong> menampilkan Expected Output sebagai simulasi — termasuk untuk fitur Java 21 seperti records & virtual threads.</span></div>
+      </article>
 
-    <div class="app-layout" id="appLayout">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo-section">
-                    <div class="logo-icon">
-                        <i class="fab fa-java"></i>
-                    </div>
-                    <div>
-                        <div class="course-title">Java Learning Path</div>
-                        <div class="course-subtitle">Dasar → Mahir</div>
-                    </div>
-                </div>
-                <div class="progress-section">
-                    <div class="progress-info">
-                        <span class="course-progress" id="course-progress">0% selesai</span>
-                        <span class="progress-count" id="progress-count">0/30</span>
-                    </div>
-                    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-                </div>
-                <button class="reset-btn" onclick="resetProgress()" title="Reset Progress">
-                    <i class="fas fa-redo-alt mr-1"></i>Reset
-                </button>
+      <!-- Editor -->
+      <section id="code-section" class="panel" style="display:none">
+        <div class="panel-head">
+          <div class="tabs">
+            <button class="tab active" data-tab="editor"><i class="fa-solid fa-code"></i> Editor</button>
+            <button class="tab" data-tab="terminal"><i class="fa-solid fa-terminal"></i> Terminal</button>
+          </div>
+          <div class="panel-actions">
+            <button class="btn-ghost-sm" onclick="copyCode()"><i class="fa-regular fa-copy"></i> Copy</button>
+            <button class="btn-ghost-sm" onclick="resetCode()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+            <button class="btn-ghost-sm" onclick="showSolution()" title="Lihat Solusi"><i class="fa-solid fa-lightbulb"></i> Solusi</button>
+            <button class="btn-primary-sm" onclick="runCode()"><i class="fa-solid fa-play"></i> Run <span class="kbd">⌘↵</span></button>
+          </div>
+        </div>
+        <div class="tab-panels">
+          <div id="tab-editor" class="tab-panel active">
+            <div class="editor-wrap">
+              <div class="editor-gutter" id="editor-gutter">1</div>
+              <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="public class Main {&#10;  public static void main(String[] args){&#10;    System.out.println(&quot;Hello, Java 21!&quot;);&#10;  }&#10;}"></textarea>
             </div>
-            <nav id="lessons-nav" class="sidebar-nav">
-                <!-- Modules rendered by JS -->
-            </nav>
-        </aside>
+            <div class="editor-foot">
+              <span class="foot-lang"><span class="dot"></span> Java 21 LTS • javac • auto-validated</span>
+              <span class="foot-hint">Tip: tekan <b>Cmd/Ctrl + Enter</b> untuk Run</span>
+            </div>
+          </div>
+          <div id="tab-terminal" class="tab-panel">
+            <div class="terminal">
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">zsh — java-learning-path</span><button class="btn-ghost-sm" onclick="clearTerminal()">Clear</button></div>
+              <div id="terminal-log" class="term-log"><div class="term-line muted">$ ketik perintah — coba: <code>javac Main.java && java Main</code> • <code>java --version</code> • <code>help</code></div></div>
+              <div class="term-input-row"><span class="prompt">➜</span><input id="terminal-input" placeholder="javac Main.java && java Main" autocomplete="off"><button onclick="runTerminal()" class="btn-primary-sm">Enter</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="output-wrap">
+          <div class="output-head"><span><i class="fa-solid fa-square-poll-vertical mr-2"></i>Output</span><button class="btn-ghost-sm" onclick="clearOutput()">Clear</button></div>
+          <pre id="output" class="output"><span class="muted"># Output akan muncul di sini — klik Run atau jalankan javac di terminal</span></pre>
+          <div id="validation-msg" class="validation hidden"></div>
+        </div>
+      </section>
 
-        <!-- Main Content -->
-        <main class="content-area" id="contentArea">
-            <!-- Sticky Header -->
-            <div class="content-header" id="lesson-header">
-                <div>
-                    <div class="breadcrumb" id="breadcrumb">Module 1 — Dasar-Dasar Java</div>
-                    <h1 class="content-title" id="lesson-title">Pilih lesson untuk mulai belajar</h1>
-                </div>
-                <div class="header-actions">
-                    <button class="btn-complete" id="complete-btn" onclick="markComplete()" style="display:none;">
-                        <i class="fas fa-check mr-1"></i>Selesai
-                    </button>
-                    <button class="btn-completed" id="completed-btn" style="display:none;">
-                        <i class="fas fa-check-circle mr-1"></i>Sudah Selesai
-                    </button>
-                </div>
-            </div>
+      <!-- Quiz -->
+      <section id="quiz-section" class="panel hidden" style="display:none">
+        <div class="quiz-head"><i class="fa-solid fa-circle-question"></i> Quiz — uji pemahamanmu</div>
+        <div id="quiz-content" class="quiz-content"></div>
+        <div class="quiz-actions">
+          <button class="btn-primary" onclick="checkQuiz()"><i class="fa-solid fa-paper-plane mr-2"></i>Submit Jawaban</button>
+          <span id="quiz-result" class="quiz-result"></span>
+        </div>
+      </section>
 
-            <!-- Info Banner -->
-            <div class="info-banner" id="info-banner">
-                <i class="fas fa-info-circle"></i>
-                <span><strong>Info:</strong> Java tidak bisa dijalankan langsung di browser (butuh JVM). Tombol <strong>Run</strong> menampilkan Expected Output sebagai simulasi.</span>
-            </div>
-
-            <!-- Lesson Content -->
-            <div class="lesson-content" id="lesson-content">
-                <div class="welcome-screen">
-                    <div class="welcome-icon"><i class="fab fa-java"></i></div>
-                    <h2>Selamat Datang di Java Learning Path!</h2>
-                    <p>Tutorial interaktif untuk belajar Java dari dasar hingga mahir. Pilih lesson dari sidebar untuk memulai.</p>
-                    <div class="feature-grid">
-                        <div class="feature-card">
-                            <i class="fas fa-book-open"></i>
-                            <span>30 Lessons</span>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-code"></i>
-                            <span>Code Editor</span>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-question-circle"></i>
-                            <span>Quiz Interaktif</span>
-                        </div>
-                        <div class="feature-card">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Progress Tracking</span>
-                        </div>
-                    </div>
-                    <button class="btn-start" onclick="loadLesson(0)">
-                        <i class="fas fa-play mr-2"></i>Mulai Belajar
-                    </button>
-                </div>
-            </div>
-
-            <!-- Code Editor -->
-            <div class="code-section" id="code-section" style="display:none;">
-                <div class="code-header">
-                    <span class="code-label"><i class="fas fa-code mr-2"></i>Java Code Editor</span>
-                    <div class="code-actions">
-                        <button class="btn-run" onclick="runCode()"><i class="fas fa-play mr-1"></i>Run</button>
-                        <button class="btn-solution" onclick="showSolution()" title="Lihat Solusi"><i class="fas fa-lightbulb mr-1"></i>Solusi</button>
-                        <button class="btn-reset" onclick="resetCode()"><i class="fas fa-undo mr-1"></i>Reset</button>
-                    </div>
-                </div>
-                <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="// Tulis kode Java di sini..."></textarea>
-                <div class="output-section">
-                    <span class="output-label"><i class="fas fa-terminal mr-1"></i>Output:</span>
-                    <div id="output" class="output-area"><span class="text-slate-500">// Output akan muncul di sini</span></div>
-                </div>
-                <div id="validation-msg" class="validation-msg hidden"></div>
-            </div>
-
-            <!-- Quiz -->
-            <div class="quiz-section" id="quiz-section" style="display:none;">
-                <div class="quiz-header">
-                    <i class="fas fa-question-circle text-amber-400 mr-2"></i>
-                    <span class="quiz-title">Quiz</span>
-                </div>
-                <div id="quiz-content"></div>
-                <button class="btn-submit-quiz" onclick="checkQuiz()"><i class="fas fa-paper-plane mr-1"></i>Submit</button>
-                <div id="quiz-result"></div>
-            </div>
-
-            <!-- Navigation -->
-            <div class="nav-buttons" id="nav-buttons" style="display:none;">
-                <button class="btn-nav btn-prev" id="prev-btn" onclick="prevLesson()" disabled>
-                    <i class="fas fa-chevron-left mr-2"></i>Sebelumnya
-                </button>
-                <div class="nav-spacer"></div>
-                <button class="btn-nav btn-next" id="next-btn" onclick="nextLesson()">
-                    Selanjutnya<i class="fas fa-chevron-right ml-2"></i>
-                </button>
-            </div>
-        </main>
+      <!-- Nav -->
+      <div class="nav-buttons" id="nav-buttons" style="display:none">
+        <button class="btn-secondary" id="prev-btn" onclick="prevLesson()" disabled><i class="fa-solid fa-chevron-left mr-2"></i>Sebelumnya</button>
+        <div class="nav-center">
+          <button class="btn-complete" id="complete-btn" onclick="markComplete()"><i class="fa-solid fa-check mr-2"></i>Tandai Selesai</button>
+          <button class="btn-completed" id="completed-btn" style="display:none"><i class="fa-solid fa-check-double mr-2"></i>Selesai ✓</button>
+        </div>
+        <button class="btn-primary" id="next-btn" onclick="nextLesson()">Selanjutnya<i class="fa-solid fa-chevron-right ml-2"></i></button>
+      </div>
+      <footer class="site-foot">Dibuat dengan <i class="fa-solid fa-heart text-red-400"></i> untuk komunitas Java Indonesia • <a href="https://dev.java" target="_blank">dev.java</a> • <a href="https://github.com/personalbotai/java-learning-path" target="_blank">GitHub</a> • Java 21 LTS • records • sealed • pattern matching • virtual threads</footer>
     </div>
+  </main>
+</div>
 
-    <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

@@ -2221,42 +2221,47 @@ const LESSONS = [
 
 let currentLessonIndex = 0;
 let progress = JSON.parse(localStorage.getItem('java_progress') || '{}');
+let filterQuery = '';
 
-// ============ Sidebar Navigation ============
+// ============ Sidebar Navigation (Accordion 5 Modul + Search) ============
 function renderNav() {
     const nav = document.getElementById('lessons-nav');
     if (!nav) return;
 
+    const q = filterQuery.toLowerCase();
     nav.innerHTML = MODULES.map(mod => {
         const modLessons = LESSONS.filter(l => l.moduleId === mod.id);
         const completedCount = modLessons.filter(l => progress[l.id]).length;
         const currentModId = LESSONS[currentLessonIndex]?.moduleId || 1;
-        const isCurrentModule = mod.id === currentModId;
+        const matches = q ? modLessons.filter(l => l.title.toLowerCase().includes(q) || l.slug.includes(q)) : modLessons;
+        if (q && matches.length === 0) return '';
+        const isOpen = q ? true : (mod.id === currentModId);
 
         return `
-            <div class="module-block ${isCurrentModule ? '' : 'collapsed'}" id="module-block-${mod.id}">
-                <button class="module-toggle" onclick="toggleModule(${mod.id})">
+            <div class="mod-group module-block ${isOpen ? '' : 'collapsed'}" id="module-block-${mod.id}">
+                <button class="mod-head module-toggle" onclick="toggleModule(${mod.id})">
                     <div class="module-toggle-left">
-                        <i class="${mod.icon}"></i>
+                        <i class="${mod.icon} mod-icon"></i>
                         <span class="module-name">${mod.title}</span>
                     </div>
                     <div class="module-meta">
-                        <span class="module-count">${completedCount}/${modLessons.length}</span>
-                        <i class="fas fa-chevron-down module-chevron"></i>
+                        <span class="mod-count module-count">${completedCount}/${modLessons.length}</span>
+                        <i class="fas fa-chevron-right chevron module-chevron"></i>
                     </div>
                 </button>
-                <div class="module-lessons" id="module-lessons-${mod.id}">
+                <div class="mod-lessons module-lessons ${isOpen ? 'open' : ''}" id="module-lessons-${mod.id}">
                     ${modLessons.map(l => {
                         const idx = LESSONS.findIndex(item => item.id === l.id);
                         const isDone = Boolean(progress[l.id]);
                         const isCur = idx === currentLessonIndex;
+                        const isHidden = q && !matches.includes(l) ? 'style="display:none"' : '';
                         return `
-                            <button class="lesson-btn ${isDone ? 'done' : ''} ${isCur ? 'current' : ''}"
-                                onclick="loadLesson(${idx})" id="lesson-btn-${l.id}">
-                                <span class="lesson-check">
-                                    ${isDone ? '<i class="fas fa-check"></i>' : (isCur ? '<i class="fas fa-play" style="font-size:8px"></i>' : '')}
+                            <button class="lesson-nav lesson-btn ${isDone ? 'done' : ''} ${isCur ? 'active current' : ''}"
+                                onclick="loadLesson(${idx})" id="lesson-btn-${l.id}" ${isHidden}>
+                                <span class="nav-check lesson-check">
+                                    ${isDone ? '✓' : (isCur ? '<i class="fas fa-play" style="font-size:7px"></i>' : '')}
                                 </span>
-                                <span class="lesson-title-text">${l.title}</span>
+                                <span class="lesson-title-text" style="flex:1">${l.title}</span>
                                 <span class="lesson-duration">${l.duration}</span>
                             </button>
                         `;
@@ -2265,12 +2270,20 @@ function renderNav() {
             </div>
         `;
     }).join('');
+
+    const totalDone = Object.keys(progress).filter(k => progress[k]).length;
+    const statDone = document.getElementById('stat-done');
+    if (statDone) statDone.textContent = totalDone;
 }
 
 function toggleModule(modId) {
     const block = document.getElementById(`module-block-${modId}`);
+    const lessonsEl = document.getElementById(`module-lessons-${modId}`);
     if (block) {
         block.classList.toggle('collapsed');
+    }
+    if (lessonsEl) {
+        lessonsEl.classList.toggle('open');
     }
 }
 
@@ -2288,6 +2301,12 @@ async function loadLesson(index) {
     const mod = MODULES.find(m => m.id === lesson.moduleId);
     document.getElementById('breadcrumb').textContent = `Module ${lesson.moduleId} — ${mod ? mod.title : ''}`;
     document.getElementById('lesson-title').textContent = lesson.title;
+    const durationEl = document.getElementById('lesson-duration');
+    if (durationEl) durationEl.innerHTML = '<i class="fa-regular fa-clock"></i> ' + (lesson.duration || '15 min');
+    const levelEl = document.getElementById('lesson-level');
+    if (levelEl) levelEl.textContent = 'Modul ' + lesson.moduleId + ' · ' + (mod ? mod.title : '');
+    const idEl = document.getElementById('lesson-id');
+    if (idEl) idEl.textContent = '#' + lesson.slug;
 
     // Show loading in lesson content
     const contentEl = document.getElementById('lesson-content');
@@ -2320,11 +2339,13 @@ async function loadLesson(index) {
     // Setup Code Editor
     const editor = document.getElementById('code-editor');
     editor.value = lesson.defaultCode;
+    setTimeout(updateGutter, 30);
     const output = document.getElementById('output');
     output.innerHTML = '<span class="text-slate-500">// Output akan muncul di sini saat tombol Run ditekan</span>';
     
     const valMsg = document.getElementById('validation-msg');
-    valMsg.className = 'validation-msg hidden';
+    valMsg.className = 'validation hidden';
+    valMsg.classList.add('hidden');
 
     // Setup Quiz
     renderQuiz(lesson);
@@ -2343,8 +2364,14 @@ async function loadLesson(index) {
     closeMobileSidebar();
 }
 
-// ============ Code Blocks Enhancer (Copy button) ============
+// ============ Code Blocks Enhancer (Copy button + Highlight) ============
 function enhanceCodeBlocks(container) {
+    // Highlight with highlight.js if available
+    if (window.hljs) {
+        container.querySelectorAll('pre code').forEach(el => {
+            try { window.hljs.highlightElement(el); } catch (e) {}
+        });
+    }
     const preBlocks = container.querySelectorAll('pre');
     preBlocks.forEach(pre => {
         if (pre.querySelector('.code-copy-btn')) return;
@@ -2369,26 +2396,101 @@ function runCode() {
     const output = document.getElementById('output');
     const valMsg = document.getElementById('validation-msg');
 
-    output.innerHTML = `<div class="mb-2 text-slate-400 text-xs font-semibold">// Output Eksekusi (Simulasi):</div>` +
+    output.innerHTML = `<div class="mb-2 text-slate-400 text-xs font-semibold">// Output Eksekusi (Simulasi Java 21):</div>` +
         `<div class="text-green-400">${escapeHtml(lesson.expectedOutput)}</div>`;
 
-    valMsg.className = 'validation-msg info';
-    valMsg.innerHTML = `<i class="fas fa-check-circle mr-2 text-green-400"></i><strong>Kode siap!</strong> Output di atas adalah hasil eksekusi sesuai bytecode JVM. Anda bisa bereksperimen dengan mengubah kode lalu klik Run kembali.`;
+    valMsg.className = 'validation correct';
+    valMsg.classList.remove('hidden');
+    valMsg.innerHTML = `<i class="fas fa-check-circle mr-2 text-green-400"></i><strong>Kode siap!</strong> Output di atas adalah hasil eksekusi sesuai bytecode JVM (Java 21 LTS). Anda bisa bereksperimen dengan mengubah kode lalu klik Run kembali.`;
 }
 
 function resetCode() {
     const lesson = LESSONS[currentLessonIndex];
     document.getElementById('code-editor').value = lesson.defaultCode;
+    setTimeout(updateGutter, 30);
     document.getElementById('output').innerHTML = '<span class="text-slate-500">// Kode telah di-reset ke versi awal</span>';
     const valMsg = document.getElementById('validation-msg');
-    valMsg.className = 'validation-msg hidden';
+    valMsg.className = 'validation hidden';
+    valMsg.classList.add('hidden');
 }
 
 function showSolution() {
     const lesson = LESSONS[currentLessonIndex];
     const valMsg = document.getElementById('validation-msg');
-    valMsg.className = 'validation-msg info';
+    valMsg.className = 'validation info';
+    valMsg.classList.remove('hidden');
     valMsg.innerHTML = `<div class="font-semibold mb-1"><i class="fas fa-lightbulb mr-2 text-amber-400"></i>Petunjuk Pembelajaran:</div><div>${lesson.hint}</div>`;
+}
+
+// ============ Master Template Helpers: Gutter / Copy / Terminal / Clear ============
+function updateGutter() {
+    const ta = document.getElementById('code-editor');
+    const gutter = document.getElementById('editor-gutter');
+    if (!ta || !gutter) return;
+    const lines = ta.value.split('\n').length;
+    gutter.innerHTML = Array.from({length: lines}, (_, i) => i + 1).join('<br>');
+}
+
+function copyCode() {
+    const editor = document.getElementById('code-editor');
+    if (!editor) return;
+    const code = editor.value;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(code).then(() => {
+            termLog('$ code copied to clipboard', 'success');
+        }).catch(() => {
+            editor.select();
+            document.execCommand('copy');
+        });
+    } else {
+        editor.select();
+        document.execCommand('copy');
+    }
+}
+
+function clearOutput() {
+    const out = document.getElementById('output');
+    if (out) out.innerHTML = '<span class="muted"># Output akan muncul di sini — klik Run atau jalankan javac di terminal</span>';
+}
+
+function termLog(html, cls = '') {
+    const log = document.getElementById('terminal-log');
+    if (!log) return;
+    const div = document.createElement('div');
+    div.className = 'term-line ' + cls;
+    div.innerHTML = html;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+}
+
+function clearTerminal() {
+    const log = document.getElementById('terminal-log');
+    if (log) log.innerHTML = '<div class="term-line muted">$ terminal dibersihkan</div>';
+}
+
+function runTerminal() {
+    const inp = document.getElementById('terminal-input');
+    if (!inp) return;
+    const cmd = inp.value.trim();
+    if (!cmd) return;
+    termLog('$ ' + escapeHtml(cmd));
+    inp.value = '';
+    if (cmd === 'clear' || cmd === 'cls') { clearTerminal(); return; }
+    if (cmd === 'help') {
+        termLog('Perintah tersedia:<br>javac Main.java && java Main — jalankan editor<br>java --version — cek JDK<br>clear / cls — bersihkan terminal<br>help — bantuan ini');
+        return;
+    }
+    if (/javac|java\s+Main|java --version|java -version/.test(cmd)) {
+        const lesson = LESSONS[currentLessonIndex];
+        if (lesson) {
+            termLog('$ javac Main.java && java Main');
+            termLog(escapeHtml(lesson.expectedOutput), 'success');
+        } else {
+            termLog('$ Hello, Java 21!', 'success');
+        }
+        return;
+    }
+    termLog('simulasi: perintah tidak dikenal — ketik <code>help</code>', 'err');
 }
 
 // ============ Quiz Engine ============
@@ -2399,11 +2501,11 @@ function renderQuiz(lesson) {
     quizResult.innerHTML = '';
 
     if (!lesson.quiz || lesson.quiz.length === 0) {
-        quizSec.style.display = 'none';
+        if (quizSec) { quizSec.style.display = 'none'; quizSec.classList.add('hidden'); }
         return;
     }
 
-    quizSec.style.display = 'block';
+    if (quizSec) { quizSec.style.display = 'block'; quizSec.classList.remove('hidden'); }
     quizContent.innerHTML = lesson.quiz.map((q, qIndex) => `
         <div class="quiz-question-card" id="quiz-card-${qIndex}">
             <div class="quiz-q-text">${qIndex + 1}. ${escapeHtml(q.question)}</div>
@@ -2558,22 +2660,27 @@ function setupMobileMenu() {
     const toggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
+    const backdrop = document.getElementById('backdrop');
 
-    if (!toggle || !sidebar || !overlay) return;
+    if (!toggle || !sidebar) return;
 
     toggle.addEventListener('click', () => {
         sidebar.classList.toggle('open');
-        overlay.classList.toggle('show');
+        if (overlay) overlay.classList.toggle('show');
+        if (backdrop) backdrop.classList.toggle('show');
     });
 
-    overlay.addEventListener('click', closeMobileSidebar);
+    if (overlay) overlay.addEventListener('click', closeMobileSidebar);
+    if (backdrop) backdrop.addEventListener('click', closeMobileSidebar);
 }
 
 function closeMobileSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
+    const backdrop = document.getElementById('backdrop');
     if (sidebar) sidebar.classList.remove('open');
     if (overlay) overlay.classList.remove('show');
+    if (backdrop) backdrop.classList.remove('show');
 }
 
 // ============ Utilities ============
@@ -2593,17 +2700,92 @@ document.addEventListener('DOMContentLoaded', () => {
     updateOverallProgress();
     setupMobileMenu();
 
+    // Editor Gutter Live
+    const ed = document.getElementById('code-editor');
+    if (ed) {
+        ed.addEventListener('input', updateGutter);
+        ed.addEventListener('scroll', () => {
+            const g = document.getElementById('editor-gutter');
+            if (g) g.scrollTop = ed.scrollTop;
+        });
+    }
+
+    // Tabs (Editor / Terminal)
+    document.querySelectorAll('.tab').forEach(t => {
+        t.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(x => x.classList.remove('active'));
+            t.classList.add('active');
+            const panel = document.getElementById('tab-' + t.dataset.tab);
+            if (panel) panel.classList.add('active');
+        });
+    });
+
+    // Search Input (Desktop & Mobile)
+    const s = document.getElementById('searchInput');
+    const sm = document.getElementById('searchInputMobile');
+    const handler = (v) => { filterQuery = v; renderNav(); };
+    if (s) s.addEventListener('input', e => handler(e.target.value));
+    if (sm) sm.addEventListener('input', e => { handler(e.target.value); if (s) s.value = e.target.value; });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+            e.preventDefault();
+            s?.focus();
+        }
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+            e.preventDefault();
+            runCode();
+        }
+        if (e.key === 'Escape') {
+            document.getElementById('sidebar')?.classList.remove('open');
+            document.getElementById('backdrop')?.classList.remove('show');
+            document.getElementById('sidebarOverlay')?.classList.remove('show');
+        }
+    });
+
+    // Terminal Enter
+    const ti = document.getElementById('terminal-input');
+    if (ti) ti.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            runTerminal();
+        }
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeToggleIcon');
+    function applyTheme(isDark) {
+        document.documentElement.classList.toggle('dark', isDark);
+        if (themeIcon) {
+            themeIcon.className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        }
+        localStorage.setItem('java_theme', isDark ? 'dark' : 'light');
+    }
+    const savedTheme = localStorage.getItem('java_theme');
+    applyTheme(savedTheme !== 'light');
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(!isDark);
+        });
+    }
+
     // Auto-load last viewed or first lesson
     const savedLastIndex = parseInt(localStorage.getItem('java_last_lesson') || '0');
     const initialIndex = (savedLastIndex >= 0 && savedLastIndex < LESSONS.length) ? savedLastIndex : 0;
 
     // Load first lesson directly (or last viewed)
     loadLesson(initialIndex);
+    setTimeout(updateGutter, 200);
+
     // Save current index on unload
     window.addEventListener('beforeunload', () => {
         localStorage.setItem('java_last_lesson', currentLessonIndex);
     });
 
     // Expose for debugging
-    window.app = { LESSONS, MODULES, loadLesson };
+    window.app = { LESSONS, MODULES, loadLesson, copyCode, clearOutput, clearTerminal, runTerminal };
 });

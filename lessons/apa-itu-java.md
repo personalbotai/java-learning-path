@@ -16,7 +16,11 @@ Keunggulan utama Java antara lain:
 
 - **Maturitas**: Java telah digunakan dalam sistem besar selama puluhan tahun, dengan dukungan jangka panjang (LTS).
 
-Java terus berkembang melalui rilis reguler. Versi terbaru (Java 21 LTS) memperkenalkan fitur-fitur modern seperti `var` (type inference), *records*, *sealed classes*, serta peningkatan kinerja garbage collection.
+Java terus berkembang melalui rilis reguler berjangka. Versi LTS terkini (**Java 21 LTS**) memperkenalkan pembaruan revolusioner bagi ekosistem modern:
+- **Records**: Sintaks deklaratif untuk immutable data carrier tanpa boilerplate getter/equals/hashCode.
+- **Sealed Classes**: Kontrol penuh hierarki pewarisan menggunakan kata kunci `sealed` dan `permits`.
+- **Pattern Matching**: Pengecekan tipe dan dekonstruksi yang ekspresif pada `instanceof` serta `switch`.
+- **Virtual Threads (Project Loom)**: Thread ringan (lightweight) berbasis JVM yang memungkinkan jutaan thread konkuren tanpa membebani thread sistem operasi (OS threads).
 
 Untuk pemula, Java adalah bahasa yang sangat baik untuk memahami konsep pemrograman berorientasi objek dan dasar-dasar software engineering. Sintaks Java yang eksplisit memaksa programmer memahami tipe data, alur kontrol, dan struktur program dengan baik.
 

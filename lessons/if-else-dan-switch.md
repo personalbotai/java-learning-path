@@ -111,3 +111,20 @@ switch (s) {
 - Perbandingan dengan `==` pada String; switch menggunakan `.equals()` secara internal, jadi aman.
 
 If-else lebih fleksibel untuk kondisi kompleks (range, multiple conditions). Gunakan switch untukEkuitas value-based.
+
+## Java Modern: Pattern Matching untuk Switch (Java 21 LTS)
+
+Java 21 LTS menyempurnakan switch dengan *pattern matching* untuk memeriksa tipe objek secara langsung tanpa `instanceof` manual:
+
+```
+static String formatObjek(Object obj) {
+    return switch (obj) {
+        case Integer i -> String.format("Angka bulat: %d", i);
+        case String s  -> String.format("Teks panjang: %d", s.length());
+        case null      -> "Objek bernilai null";
+        default        -> obj.toString();
+    };
+}
+```
+
+Digabungkan dengan `sealed class`, compiler dapat memverifikasi bahwa semua kemungkinan subclass telah ditangani (exhaustiveness) tanpa perlu default branch.
