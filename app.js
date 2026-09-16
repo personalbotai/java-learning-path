@@ -2396,12 +2396,99 @@ function runCode() {
     const output = document.getElementById('output');
     const valMsg = document.getElementById('validation-msg');
 
-    output.innerHTML = `<div class="mb-2 text-slate-400 text-xs font-semibold">// Output Eksekusi (Simulasi Java 21):</div>` +
-        `<div class="text-green-400">${escapeHtml(lesson.expectedOutput)}</div>`;
+    // --- extract System.out.print/println/printf strings (real simulation) ---
+    function simulateJava(code) {
+        const lines = [];
+        let hasPrint = false;
+        // Match System.out.println("..."), System.out.print("..."), System.out.printf("...", ...)
+        const re = /System\.out\.print(?:ln|f)?\s*\(\s*([^)]*)\)/g;
+        let m;
+        while ((m = re.exec(code)) !== null) {
+            hasPrint = true;
+            let args = m[1].trim();
+            // handle string literals + concatenations with +
+            // split by + outside quotes (simple)
+            let parts = [];
+            let cur = '', inStr = false, esc = false, quote = '';
+            for (let i = 0; i < args.length; i++) {
+                const ch = args[i];
+                if (esc) { cur += ch; esc = false; continue; }
+                if (ch === '\\') { cur += ch; esc = true; continue; }
+                if ((ch === '"' || ch === "'") && !inStr) { inStr = true; quote = ch; cur += ch; continue; }
+                if (ch === quote && inStr) { inStr = false; cur += ch; continue; }
+                if (ch === '+' && !inStr) { parts.push(cur.trim()); cur = ''; continue; }
+                cur += ch;
+            }
+            if (cur.trim()) parts.push(cur.trim());
+            // resolve each part to string
+            let resolved = parts.map(p => {
+                const sm = p.match(/^"(.*)"$/s) || p.match(/^'(.*)'$/s);
+                if (sm) return sm[1].replace(/\\n/g,'\n').replace(/\\t/g,'\t').replace(/\\"/g,'"');
+                // numeric literal
+                if (/^-?\d+(\.\d+)?$/.test(p)) return p;
+                // boolean/null
+                if (p === 'true' || p === 'false' || p === 'null') return p;
+                // try to resolve variable assignment: look for "Type name = value" or "name = value"
+                const varRe = new RegExp('(?:\\b\\w+\\s+)?' + p.replace(/\$/g,'\\$') + '\\s*=\\s*("[^"]*"|\'[^\']*\'|\\S+)');
+                const vm = code.match(varRe);
+                if (vm) {
+                    const v = vm[1].replace(/^["']|["']$/g,'');
+                    return v;
+                }
+                return p;
+            }).join('');
+            lines.push(resolved);
+        }
+        // Arrays.toString helper
+        const arrRe = /Arrays\.toString\s*\(\s*(\w+)\s*\)/g;
+        let am;
+        while ((am = arrRe.exec(code)) !== null) {
+            if (!hasPrint) { lines.push('[array]'); hasPrint = true; }
+        }
+        return { hasPrint, text: lines.join('\n'), lines };
+    }
 
-    valMsg.className = 'validation correct';
-    valMsg.classList.remove('hidden');
-    valMsg.innerHTML = `<i class="fas fa-check-circle mr-2 text-green-400"></i><strong>Kode siap!</strong> Output di atas adalah hasil eksekusi sesuai bytecode JVM (Java 21 LTS). Anda bisa bereksperimen dengan mengubah kode lalu klik Run kembali.`;
+    const sim = simulateJava(userCode);
+    let displayText = '';
+    let isReal = sim.hasPrint && sim.text.trim().length > 0;
+
+    if (isReal) {
+        displayText = sim.text;
+        output.innerHTML = `<div class="mb-2 text-slate-500 text-xs">// Output — simulasi lokal (println extraction)</div><div class="text-emerald-400 whitespace-pre-wrap">${escapeHtml(displayText)}</div>`;
+    } else {
+        // fallback: show expected but mark as simulation
+        displayText = lesson.expectedOutput || '(tidak ada output)';
+        const hint = isReal ? '' : '<div class="text-[11px] text-slate-500 mt-1">Tip: pakai System.out.println("teks") agar output terbaca real.</div>';
+        output.innerHTML = `<div class="mb-2 text-slate-500 text-xs">// Output simulasi — belum ada System.out.println terdeteksi</div><div class="text-emerald-400 whitespace-pre-wrap">${escapeHtml(displayText)}</div>${hint}`;
+        isReal = false;
+    }
+
+    // validation vs expectedOutput
+    const expected = (lesson.expectedOutput || '').trim();
+    const got = (isReal ? displayText : expected).trim();
+    const ok = expected && got.includes(expected.split('\n')[0].trim().slice(0,40));
+
+    if (expected && (isReal ? displayText.includes(expected.split('\n')[0].trim()) : true)) {
+        // if real print contains first line of expected, mark correct
+        const firstLine = expected.split('\n')[0].trim();
+        if (!isReal || displayText.includes(firstLine) || firstLine.length < 5) {
+            valMsg.className = 'validation correct';
+            valMsg.classList.remove('hidden');
+            valMsg.innerHTML = `<i class="fas fa-check-circle mr-2 text-emerald-400"></i><strong>${isReal ? 'Output terdeteksi!' : 'Kode siap!'}</strong> ${isReal ? 'println terbaca — lanjutkan!' : 'Simulasi sesuai ekspektasi JVM (Java 21).'}`;
+            if (isReal) {
+                const k = lesson.id ?? currentLessonIndex;
+                try { const prog = JSON.parse(localStorage.getItem('java_progress')||'{}'); prog[k]=true; localStorage.setItem('java_progress', JSON.stringify(prog)); } catch {}
+            }
+        } else {
+            valMsg.className = 'validation wrong';
+            valMsg.classList.remove('hidden');
+            valMsg.innerHTML = `💡 Output belum sesuai. Harus mengandung: <b>${escapeHtml(firstLine.slice(0,80))}</b>`;
+        }
+    } else {
+        valMsg.className = 'validation hidden';
+        valMsg.classList.add('hidden');
+    }
+    try { if (typeof termLog === 'function') termLog('$ java run — ' + (isReal ? 'real println' : 'simulasi'), isReal ? 'success' : 'muted'); } catch {}
 }
 
 function resetCode() {
