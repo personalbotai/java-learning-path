@@ -2863,26 +2863,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Theme toggle
-    const themeBtn = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeToggleIcon');
-    function applyTheme(isDark) {
-        document.documentElement.classList.toggle('dark', isDark);
-        if (themeIcon) {
-            themeIcon.className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-        }
-        localStorage.setItem('java_theme', isDark ? 'dark' : 'light');
-    }
-    const savedTheme = localStorage.getItem('java_theme');
-    applyTheme(savedTheme !== 'light');
-
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            applyTheme(!isDark);
-        });
-    }
-
     // Auto-load last viewed or first lesson
     const savedLastIndex = parseInt(localStorage.getItem('java_last_lesson') || '0');
     const initialIndex = (savedLastIndex >= 0 && savedLastIndex < LESSONS.length) ? savedLastIndex : 0;

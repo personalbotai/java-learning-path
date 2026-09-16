@@ -37,6 +37,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Theme Init (Instant Class Application) -->
+    <script>
+        (function(){
+            try {
+                const saved = localStorage.getItem('java_theme');
+                if (saved === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.classList.add('light');
+                } else {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                }
+            } catch(e) {}
+        })();
+    </script>
 </head>
 <body class="bg-[#0a0f1a] text-slate-200 font-['Inter',sans-serif] antialiased overflow-hidden">
 
@@ -76,9 +91,7 @@
                     </div>
                 </div>
                 <span class="sm:hidden text-xs font-mono text-red-400" id="mobile-progress">0%</span>
-                <button id="themeToggle" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white transition" title="Toggle theme">
-                    <i id="themeToggleIcon" class="fas fa-moon text-sm"></i>
-                </button>
+                <button id="themeToggle" onclick="toggleAppTheme()" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white transition cursor-pointer" title="Toggle theme" type="button"><i id="themeToggleIcon" class="fas fa-moon text-sm pointer-events-none"></i></button>
                 <a href="https://github.com/personalbotai/java-learning-path" target="_blank" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hidden sm:flex items-center justify-center text-slate-400 hover:text-white transition" title="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
@@ -245,31 +258,44 @@
 
     <script src="app.js"></script>
     <script>
-    // Theme toggle (light/dark) — persist
-    (function(){
-        const btn=document.getElementById('themeToggle');
-        const icon=document.getElementById('themeToggleIcon');
-        const html=document.documentElement;
-        function apply(theme){
-            if(theme==='light'){
-                html.classList.remove('dark');
-                html.classList.add('light');
-                if(icon) icon.className='fas fa-sun text-sm text-amber-500';
-            } else {
-                html.classList.add('dark');
-                html.classList.remove('light');
-                if(icon) icon.className='fas fa-moon text-sm text-slate-400';
-            }
+    // Global Theme Toggle Function
+    window.toggleAppTheme = function() {
+        const html = document.documentElement;
+        const icon = document.getElementById('themeToggleIcon');
+        const isDark = html.classList.contains('dark');
+        const next = isDark ? 'light' : 'dark';
+        
+        if (next === 'light') {
+            html.classList.remove('dark');
+            html.classList.add('light');
+            if (icon) icon.className = 'fas fa-sun text-sm text-red-500 pointer-events-none';
+        } else {
+            html.classList.add('dark');
+            html.classList.remove('light');
+            if (icon) icon.className = 'fas fa-moon text-sm text-slate-400 pointer-events-none';
         }
-        const saved=localStorage.getItem('java_theme')||'dark';
-        apply(saved);
-        if(btn) btn.addEventListener('click',()=>{
-            const isDark=html.classList.contains('dark');
-            const next=isDark?'light':'dark';
+        try {
             localStorage.setItem('java_theme', next);
-            apply(next);
-        });
+        } catch(e) {}
+    };
+    
+    // Theme toggle init on load
+    (function(){
+        const icon = document.getElementById('themeToggleIcon');
+        const html = document.documentElement;
+        const saved = localStorage.getItem('java_theme') || 'dark';
+        if (saved === 'light') {
+            html.classList.remove('dark');
+            html.classList.add('light');
+            if (icon) icon.className = 'fas fa-sun text-sm text-red-500 pointer-events-none';
+        } else {
+            html.classList.add('dark');
+            html.classList.remove('light');
+            if (icon) icon.className = 'fas fa-moon text-sm text-slate-400 pointer-events-none';
+        }
     })();
+
+        
     
         // Search: filter via renderNav(filter) if supported
         const s=document.getElementById('lesson-search');
