@@ -2224,67 +2224,41 @@ let progress = JSON.parse(localStorage.getItem('java_progress') || '{}');
 let filterQuery = '';
 
 // ============ Sidebar Navigation (Accordion 5 Modul + Search) ============
-function renderNav() {
+function renderNav(filter) {
     const nav = document.getElementById('lessons-nav');
     if (!nav) return;
-
-    const q = filterQuery.toLowerCase();
-    nav.innerHTML = MODULES.map(mod => {
-        const modLessons = LESSONS.filter(l => l.moduleId === mod.id);
-        const completedCount = modLessons.filter(l => progress[l.id]).length;
-        const currentModId = LESSONS[currentLessonIndex]?.moduleId || 1;
-        const matches = q ? modLessons.filter(l => l.title.toLowerCase().includes(q) || l.slug.includes(q)) : modLessons;
-        if (q && matches.length === 0) return '';
-        const isOpen = q ? true : (mod.id === currentModId);
-
-        return `
-            <div class="mod-group module-block ${isOpen ? '' : 'collapsed'}" id="module-block-${mod.id}">
-                <button class="mod-head module-toggle" onclick="toggleModule(${mod.id})">
-                    <div class="module-toggle-left">
-                        <i class="${mod.icon} mod-icon"></i>
-                        <span class="module-name">${mod.title}</span>
-                    </div>
-                    <div class="module-meta">
-                        <span class="mod-count module-count">${completedCount}/${modLessons.length}</span>
-                        <i class="fas fa-chevron-right chevron module-chevron"></i>
-                    </div>
-                </button>
-                <div class="mod-lessons module-lessons ${isOpen ? 'open' : ''}" id="module-lessons-${mod.id}">
-                    ${modLessons.map(l => {
-                        const idx = LESSONS.findIndex(item => item.id === l.id);
-                        const isDone = Boolean(progress[l.id]);
-                        const isCur = idx === currentLessonIndex;
-                        const isHidden = q && !matches.includes(l) ? 'style="display:none"' : '';
-                        return `
-                            <button class="lesson-nav lesson-btn ${isDone ? 'done' : ''} ${isCur ? 'active current' : ''}"
-                                onclick="loadLesson(${idx})" id="lesson-btn-${l.id}" ${isHidden}>
-                                <span class="nav-check lesson-check">
-                                    ${isDone ? '✓' : (isCur ? '<i class="fas fa-play" style="font-size:7px"></i>' : '')}
-                                </span>
-                                <span class="lesson-title-text" style="flex:1">${l.title}</span>
-                                <span class="lesson-duration">${l.duration}</span>
-                            </button>
-                        `;
-                    }).join('')}
-                </div>
-            </div>
-        `;
+    const q = (filter || filterQuery || '').toLowerCase().trim();
+    const curModId = LESSONS[currentLessonIndex] ? LESSONS[currentLessonIndex].moduleId : 1;
+    nav.innerHTML = MODULES.map(function(mod) {
+        const modLessons = LESSONS.filter(function(l) { return l.moduleId === mod.id; });
+        const filtered = q ? modLessons.filter(function(l){ return l.title.toLowerCase().includes(q) || mod.title.toLowerCase().includes(q); }) : modLessons;
+        if (q && filtered.length === 0) return '';
+        const doneCount = modLessons.filter(function(l) { return !!progress[l.id]; }).length;
+        const isCurrentModule = q ? true : mod.id === curModId;
+        const lessonRows = filtered.map(function(l) {
+            const idx = LESSONS.findIndex(function(x) { return x.id === l.id; });
+            const isActive = idx === currentLessonIndex;
+            const isDone = !!progress[l.id];
+            const cls = isActive ? 'lesson-active font-semibold' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5';
+            return '<button onclick="loadLesson(' + idx + '); closeSidebar();" class="w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center gap-2.5 ' + cls + '">' +
+                '<span class="text-[11px] shrink-0">' + (isDone ? '&#9989;' : '&#9675;') + '</span>' +
+                '<span class="truncate flex-1">' + l.title + '</span></button>';
+        }).join('');
+        const badgeCls = doneCount === modLessons.length ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/5 text-slate-500';
+        return '<div class="mb-1">' +
+            '<button onclick="toggleModule(' + mod.id + ')" class="w-full flex items-center justify-between px-4 py-2.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition rounded-lg text-left">' +
+            '<span class="flex items-center gap-2 truncate"><i class="' + mod.icon + ' text-red-400 text-sm w-4 text-center"></i><span class="truncate">' + mod.title + '</span></span>' +
+            '<span class="text-[10px] font-mono px-2 py-0.5 rounded-full ' + badgeCls + '">' + doneCount + '/' + modLessons.length + '</span></button>' +
+            '<div id="module-' + mod.id + '" class="space-y-0.5 mt-0.5 px-2 ' + (isCurrentModule ? '' : 'hidden') + '">' + lessonRows + '</div></div>';
     }).join('');
-
     const totalDone = Object.keys(progress).filter(k => progress[k]).length;
     const statDone = document.getElementById('stat-done');
     if (statDone) statDone.textContent = totalDone;
 }
 
-function toggleModule(modId) {
-    const block = document.getElementById(`module-block-${modId}`);
-    const lessonsEl = document.getElementById(`module-lessons-${modId}`);
-    if (block) {
-        block.classList.toggle('collapsed');
-    }
-    if (lessonsEl) {
-        lessonsEl.classList.toggle('open');
-    }
+function toggleModule(id) {
+    const el = document.getElementById('module-' + id);
+    if (el) el.classList.toggle('hidden');
 }
 
 // ============ Lesson Loader ============
@@ -2294,13 +2268,13 @@ async function loadLesson(index) {
     const lesson = LESSONS[index];
 
     // Show sections
-    document.getElementById('code-section').style.display = 'block';
-    document.getElementById('nav-buttons').style.display = 'flex';
+    { const _cs=document.getElementById('code-section'); if(_cs) _cs.style.display='block'; }
+    { const _nb=document.getElementById('nav-buttons'); if(_nb) _nb.style.display='flex'; }
 
     // Update Header
     const mod = MODULES.find(m => m.id === lesson.moduleId);
-    document.getElementById('breadcrumb').textContent = `Module ${lesson.moduleId} — ${mod ? mod.title : ''}`;
-    document.getElementById('lesson-title').textContent = lesson.title;
+    { const _bc=document.getElementById('breadcrumb'); if(_bc) _bc.textContent = `Module ${lesson.moduleId} — ${mod ? mod.title : ''}`; }
+    { const _lt=document.getElementById('lesson-title'); if(_lt) _lt.textContent = lesson.title; }
     const durationEl = document.getElementById('lesson-duration');
     if (durationEl) durationEl.innerHTML = '<i class="fa-regular fa-clock"></i> ' + (lesson.duration || '15 min');
     const levelEl = document.getElementById('lesson-level');
@@ -2359,7 +2333,7 @@ async function loadLesson(index) {
     updateOverallProgress();
 
     // Scroll to top of content
-    document.getElementById('contentArea').scrollTo({ top: 0, behavior: 'smooth' });
+    (document.getElementById('contentArea') || document.getElementById('content-scroll'))?.scrollTo({ top: 0, behavior: 'smooth' });
 
     // Close mobile menu if open
     closeMobileSidebar();
@@ -2744,6 +2718,8 @@ function prevLesson() {
 }
 
 // ============ Mobile Drawer ============
+
+function closeSidebar(){ try{ if(typeof closeMobileSidebar==='function') closeMobileSidebar(); }catch(e){} const _sb=document.getElementById('sidebar'); if(_sb){ _sb.classList.remove('open'); } const _bd=document.getElementById('backdrop'); if(_bd) _bd.classList.remove('show'); const _ov=document.getElementById('sidebarOverlay'); if(_ov) _ov.classList.remove('show'); }
 function setupMobileMenu() {
     const toggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
@@ -2811,8 +2787,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Search Input (Desktop & Mobile)
-    const s = document.getElementById('searchInput');
-    const sm = document.getElementById('searchInputMobile');
+    const s = document.getElementById('searchInput') || document.getElementById('lesson-search');
+    const sm = document.getElementById('searchInputMobile') || document.getElementById('lesson-search-mobile');
     const handler = (v) => { filterQuery = v; renderNav(); };
     if (s) s.addEventListener('input', e => handler(e.target.value));
     if (sm) sm.addEventListener('input', e => { handler(e.target.value); if (s) s.value = e.target.value; });
