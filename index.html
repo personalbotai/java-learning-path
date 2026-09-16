@@ -58,9 +58,9 @@
     <!-- Sticky Header: logo SB + search + theme toggle + progress bar -->
     <header class="sticky top-0 z-50 glass-header border-b border-white/5">
         <div class="px-3 sm:px-4 max-w-[1600px] mx-auto">
-            <div class="flex items-center gap-2 sm:gap-4 h-[48px] sm:h-[56px]">
+            <div class="flex items-center gap-2 sm:gap-4 h-[52px] sm:h-[56px]">
                 <!-- Hamburger (mobile drawer) -->
-                <button id="menuToggle" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition shrink-0" aria-label="Toggle menu">
+                <button id="menuToggle" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition shrink-0" aria-label="Toggle menu" type="button">
                     <i class="fas fa-bars text-lg"></i>
                 </button>
                 <button id="sidebar-toggle" class="hidden" aria-label="Sidebar toggle"></button>
@@ -71,7 +71,7 @@
                         <div class="font-bold text-sm text-white flex items-center gap-2">Java Learning Path</div>
                         <div class="text-[11px] text-slate-500">5 Modul • 30 Pelajaran</div>
                     </div>
-                    <span class="sm:hidden font-bold text-sm truncate max-w-[120px] xs:max-w-none">Java LP</span>
+                    <span class="sm:hidden font-bold text-sm truncate max-w-[110px] xs:max-w-[150px]">Java LP</span>
                 </a>
                 <!-- Search (desktop) -->
                 <div class="flex-1 max-w-[420px] relative hidden md:block mx-2">
@@ -81,6 +81,11 @@
                 </div>
                 <!-- Progress + Actions -->
                 <div class="flex items-center gap-1.5 sm:gap-3 ml-auto shrink-0">
+                    <!-- Mobile search toggle button -->
+                    <button id="mobileSearchBtn" onclick="toggleMobileSearch()" class="md:hidden w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white transition cursor-pointer" title="Cari pelajaran" type="button">
+                        <i id="mobileSearchIcon" class="fas fa-search text-sm pointer-events-none"></i>
+                    </button>
+                    <!-- Progress (Desktop) -->
                     <div class="hidden sm:flex items-center gap-3">
                         <div class="text-right leading-none">
                             <div class="text-[11px] text-slate-500">Progress</div>
@@ -98,10 +103,15 @@
                     </a>
                 </div>
             </div>
-            <!-- Search row (mobile only) -->
-            <div class="relative mt-1.5 pb-2 md:hidden">
-                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none"></i>
-                <input id="lesson-search-mobile-row" type="text" placeholder="Cari pelajaran…" autocomplete="off" class="w-full h-9 bg-white/5 border border-white/10 rounded-xl pl-9 pr-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none transition">
+            <!-- Expandable search row (mobile animated) -->
+            <div id="mobileSearchContainer" class="max-h-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out md:hidden">
+                <div class="relative pt-1 pb-2.5">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none"></i>
+                    <input id="lesson-search-mobile-row" type="text" placeholder="Ketik untuk mencari materi..." autocomplete="off" class="w-full h-9 bg-white/5 border border-white/10 rounded-xl pl-9 pr-9 text-sm text-slate-200 placeholder-slate-500 focus:outline-none transition">
+                    <button onclick="toggleMobileSearch(false)" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 text-xs p-1" title="Tutup">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <!-- thin progress bar under header (mobile accent) -->
@@ -159,13 +169,13 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2 shrink-0">
-                                <button id="complete-btn" onclick="markComplete()" class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 text-white text-xs sm:text-sm font-semibold rounded-xl transition shadow-lg shadow-red-600/20 whitespace-nowrap">
-                                    <i class="fas fa-check text-xs"></i> <span class="sm:hidden">Selesai</span><span class="hidden sm:inline">Tandai Selesai</span>
-                                </button>
-                                <button id="completed-btn" class="hidden items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-emerald-500/10 text-emerald-400 text-xs sm:text-sm font-medium rounded-xl border border-emerald-500/20 whitespace-nowrap">
-                                    <i class="fas fa-check-double"></i> Selesai ✓
-                                </button>
-                            </div>
+                            <button id="complete-btn" onclick="markComplete()" class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 text-white text-xs sm:text-sm font-semibold rounded-xl transition shadow-lg shadow-red-600/20 whitespace-nowrap">
+                                <i class="fas fa-check text-xs"></i> <span class="sm:hidden">Selesai</span><span class="hidden sm:inline">Tandai Selesai</span>
+                            </button>
+                            <button id="completed-btn" style="display:none;" class="items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-emerald-500/10 text-emerald-400 text-xs sm:text-sm font-medium rounded-xl border border-emerald-500/20 whitespace-nowrap">
+                                <i class="fas fa-check-double"></i> Selesai ✓
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -262,7 +272,27 @@
 
     <script src="app.js"></script>
     <script>
-        // Global Theme Toggle Function
+            // Mobile Search Bar Accordion Toggle
+    window.toggleMobileSearch = function(force) {
+        const c = document.getElementById('mobileSearchContainer');
+        const icon = document.getElementById('mobileSearchIcon');
+        const inp = document.getElementById('lesson-search-mobile-row');
+        if (!c) return;
+        const isHidden = c.classList.contains('max-h-0') || c.style.maxHeight === '0px';
+        const shouldOpen = (typeof force === 'boolean') ? force : isHidden;
+        if (shouldOpen) {
+            c.classList.remove('max-h-0', 'opacity-0');
+            c.classList.add('max-h-16', 'opacity-100');
+            if (icon) icon.className = 'fas fa-times text-sm pointer-events-none text-slate-300';
+            setTimeout(() => inp?.focus(), 150);
+        } else {
+            c.classList.remove('max-h-16', 'opacity-100');
+            c.classList.add('max-h-0', 'opacity-0');
+            if (icon) icon.className = 'fas fa-search text-sm pointer-events-none';
+        }
+    };
+
+    // Global Theme Toggle Function
     window.toggleAppTheme = function() {
         const html = document.documentElement;
         const icon = document.getElementById('themeToggleIcon');
