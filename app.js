@@ -2893,3 +2893,194 @@ if (typeof window !== 'undefined') {
     window.app = { MODULES, LESSONS, lessons: LESSONS, loadLesson, copyCode, clearOutput, clearTerminal, runTerminal, nextLesson, prevLesson, markComplete, resetProgress, renderNav };
 }
 });
+
+
+// ============================================
+// Unified Certificate Generator & Auto-Resume
+// ============================================
+
+window.openCertificateModal = function() {
+    const modal = document.getElementById('certificate-modal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    const savedName = localStorage.getItem('user_cert_name') || 'Software Engineer';
+    const input = document.getElementById('cert-name-input');
+    if (input) input.value = savedName;
+    
+    setTimeout(() => {
+        window.drawCertificate();
+    }, 100);
+};
+
+window.closeCertificateModal = function() {
+    const modal = document.getElementById('certificate-modal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+};
+
+window.drawCertificate = function() {
+    const canvas = document.getElementById('cert-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    const studentName = (document.getElementById('cert-name-input')?.value || 'Software Engineer').trim();
+    localStorage.setItem('user_cert_name', studentName);
+    
+    // Background Dark Luxury
+    ctx.fillStyle = '#0a0f1a';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Outer Border & Accents
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#ef4444');
+    gradient.addColorStop(0.5, '#ea580c');
+    gradient.addColorStop(1, '#ef4444');
+    
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 14;
+    ctx.strokeRect(30, 30, width - 60, height - 60);
+    
+    // Inner thin border
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(45, 45, width - 90, height - 90);
+    
+    // Corner ornaments
+    const drawCorner = (x, y) => {
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.arc(x, y, 6, 0, Math.PI * 2);
+        ctx.fill();
+    };
+    drawCorner(45, 45);
+    drawCorner(width - 45, 45);
+    drawCorner(45, height - 45);
+    drawCorner(width - 45, height - 45);
+    
+    // Header Tag
+    ctx.textAlign = 'center';
+    ctx.font = '600 16px Inter, sans-serif';
+    ctx.fillStyle = '#ef4444';
+    ctx.letterSpacing = '4px';
+    ctx.fillText('CERTIFICATE OF COMPLETION', width / 2, 120);
+    
+    // Title
+    ctx.font = '800 38px Inter, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Java Learning Path — Modern Java 21 LTS', width / 2, 175);
+    
+    // Subtext
+    ctx.font = '400 18px Inter, sans-serif';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('Diberikan kepada:', width / 2, 240);
+    
+    // Student Name
+    ctx.font = '700 46px Inter, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(studentName, width / 2, 310);
+    
+    // Underline name
+    const textWidth = ctx.measureText(studentName).width;
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo((width - textWidth) / 2 - 20, 335);
+    ctx.lineTo((width + textWidth) / 2 + 20, 335);
+    ctx.stroke();
+    
+    // Paragraph
+    ctx.font = '400 18px Inter, sans-serif';
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillText('Telah berhasil menyelesaikan seluruh kurikulum interaktif, latihan kode praktik,', width / 2, 400);
+    ctx.fillText('dan uji pemahaman (quiz) pada platform Java Learning Path dengan hasil memuaskan.', width / 2, 430);
+    
+    // Verification & Date Footer
+    const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+    const codeId = 'LP-' + Math.abs(studentName.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0)).toString(36).toUpperCase().padStart(8, '0');
+    
+    ctx.textAlign = 'left';
+    ctx.font = '500 14px JetBrains Mono, monospace';
+    ctx.fillStyle = '#64748b';
+    ctx.fillText(`Tanggal: ${today}`, 90, 560);
+    ctx.fillText(`ID Sertifikat: #${codeId}`, 90, 585);
+    ctx.fillText(`Status: Terverifikasi (100% Selesai)`, 90, 610);
+    
+    // Seal / Badge
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(width - 150, 570, 48, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+    ctx.fill();
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    
+    ctx.textAlign = 'center';
+    ctx.font = '32px Inter, sans-serif';
+    ctx.fillText('☕', width - 150, 565);
+    ctx.font = '700 10px Inter, sans-serif';
+    ctx.fillStyle = '#ef4444';
+    ctx.fillText('VERIFIED', width - 150, 595);
+    ctx.restore();
+};
+
+window.downloadCertificatePNG = function() {
+    const canvas = document.getElementById('cert-canvas');
+    if (!canvas) return;
+    const link = document.createElement('a');
+    const name = (document.getElementById('cert-name-input')?.value || 'sertifikat').trim().toLowerCase().replace(/\s+/g, '-');
+    link.download = `sertifikat-${name}-java.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+};
+
+window.printCertificate = function() {
+    const canvas = document.getElementById('cert-canvas');
+    if (!canvas) return;
+    const dataUrl = canvas.toDataURL('image/png');
+    const win = window.open('', '_blank');
+    if (win) {
+        win.document.write(`
+            <html>
+                <head>
+                    <title>Cetak Sertifikat</title>
+                    <style>
+                        body { margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #111; }
+                        img { max-width: 95vw; max-height: 95vh; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+                        @media print {
+                            body { background: transparent; }
+                            img { width: 100%; max-width: 100%; }
+                        }
+                    </style>
+                </head>
+                <body onload="window.print()">
+                    <img src="${dataUrl}">
+                </body>
+            </html>
+        `);
+        win.document.close();
+    }
+};
+
+// Subtle Toast Notification
+window.showToast = function(msg) {
+    let t = document.getElementById('app-toast');
+    if (!t) {
+        t = document.createElement('div');
+        t.id = 'app-toast';
+        t.className = 'fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-xl bg-[#1e293b] border border-white/10 text-xs text-slate-200 shadow-2xl flex items-center gap-2 transform transition-all duration-300 opacity-0 translate-y-3 pointer-events-none';
+        document.body.appendChild(t);
+    }
+    t.innerHTML = msg;
+    t.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+    t.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+        t.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+        t.classList.remove('opacity-100', 'translate-y-0');
+    }, 3000);
+};
