@@ -3,146 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Learning Path - Course</title>
+    <title>Java Learning Path — Tutorial Interaktif</title>
+    <meta name="description" content="Belajar Java dari dasar hingga mahir. Tutorial interaktif dengan code editor, quiz, dan progress tracking.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; }
-        body { background: #1c1d1f; color: #d1d7dc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        .sidebar { width: 340px; background: #1c1d1f; border-right: 1px solid #3e4143; height: 100vh; overflow-y: auto; }
-        .section-header { background: #2d2f31; padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #3e4143; }
-        .section-header:hover { background: #3e4143; }
-        .section-title { font-weight: 600; font-size: 14px; color: #f7f9fa; }
-        .section-meta { font-size: 12px; color: #9da5b1; margin-top: 2px; }
-        .lesson-item { display: flex; align-items: center; padding: 10px 16px 10px 24px; border-bottom: 1px solid #2d2f31; cursor: pointer; transition: background 0.1s; }
-        .lesson-item:hover { background: #2d2f31; }
-        .lesson-item.active { background: #3e4143; border-left: 3px solid #f89820; }
-        .lesson-item.completed { opacity: 0.7; }
-        .lesson-icon { width: 20px; margin-right: 12px; text-align: center; flex-shrink: 0; }
-        .lesson-icon.playing { color: #f89820; }
-        .lesson-icon.completed { color: #e67e22; }
-        .lesson-title { font-size: 13px; flex: 1; line-height: 1.4; }
-        .lesson-duration { font-size: 11px; color: #9da5b1; margin-left: 8px; }
-        .content-area { flex: 1; overflow-y: auto; height: 100vh; }
-        .video-placeholder { background: #000; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; }
-        .lesson-content { max-width: 800px; margin: 0 auto; padding: 32px 24px; }
-        .lesson-content h1 { font-size: 28px; font-weight: 700; color: #f7f9fa; margin-bottom: 16px; }
-        .lesson-content h2 { font-size: 22px; font-weight: 600; color: #f7f9fa; margin: 32px 0 12px; border-bottom: 1px solid #3e4143; padding-bottom: 8px; }
-        .lesson-content h3 { font-size: 18px; font-weight: 600; color: #f7f9fa; margin: 24px 0 8px; }
-        .lesson-content h4 { font-size: 16px; font-weight: 600; color: #e0e0e0; margin: 16px 0 8px; }
-        .lesson-content p { font-size: 15px; line-height: 1.7; margin-bottom: 12px; color: #b0b0b0; }
-        .lesson-content ul, .lesson-content ol { margin: 12px 0; padding-left: 24px; }
-        .lesson-content li { font-size: 14px; line-height: 1.6; margin-bottom: 6px; color: #c0c0c0; }
-        .lesson-content code { background: #2d2f31; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #e06c75; }
-        .lesson-content pre { background: #2d2f31; padding: 16px; border-radius: 6px; overflow-x: auto; margin: 16px 0; border: 1px solid #3e4143; }
-        .lesson-content pre code { background: none; padding: 0; color: #d1d7dc; }
-        .lesson-content strong { color: #f7f9fa; }
-        .lesson-content a { color: #f89820; text-decoration: none; }
-        .lesson-content a:hover { text-decoration: underline; }
-        .lesson-content img { max-width: 100%; border-radius: 6px; margin: 12px 0; }
-        .code-section { background: #1c1d1f; border-top: 1px solid #3e4143; padding: 16px; }
-        .code-editor { width: 100%; height: 200px; background: #1e1e1e; color: #d4d4d4; border: 1px solid #3e4143; border-radius: 6px; padding: 12px; font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px; resize: vertical; }
-        .code-editor:focus { outline: none; border-color: #f89820; }
-        .output-area { width: 100%; height: 120px; background: #0a0a0a; color: #22c55e; border: 1px solid #3e4143; border-radius: 6px; padding: 12px; font-family: 'Fira Code', monospace; font-size: 13px; overflow: auto; margin-top: 8px; }
-        .btn-run { background: #f89820; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; }
-        .btn-run:hover { background: #9130d9; }
-        .btn-reset { background: #3e4143; color: #d1d7dc; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-left: 8px; }
-        .btn-reset:hover { background: #4e5153; }
-        .quiz-section { background: #2d2f31; border-radius: 8px; padding: 20px; margin: 24px 0; }
-        .quiz-title { font-size: 16px; font-weight: 600; color: #f7f9fa; margin-bottom: 12px; }
-        .quiz-option { display: flex; align-items: flex-start; padding: 10px 12px; margin: 6px 0; background: #1c1d1f; border: 1px solid #3e4143; border-radius: 6px; cursor: pointer; }
-        .quiz-option:hover { border-color: #f89820; }
-        .quiz-option input { margin-right: 10px; margin-top: 3px; }
-        .quiz-option label { font-size: 14px; cursor: pointer; }
-        .progress-bar { height: 4px; background: #3e4143; border-radius: 2px; overflow: hidden; margin-top: 8px; }
-        .progress-fill { height: 100%; background: #f89820; transition: width 0.3s; }
-        .header-bar { background: #2d2f31; border-bottom: 1px solid #3e4143; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
-        .course-title { font-size: 16px; font-weight: 600; color: #f7f9fa; }
-        .course-progress { font-size: 13px; color: #9da5b1; }
-        .nav-buttons { display: flex; gap: 8px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #3e4143; }
-        .btn-nav { padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; border: none; }
-        .btn-prev { background: #3e4143; color: #d1d7dc; }
-        .btn-next { background: #f89820; color: white; font-weight: 600; }
-        .btn-complete { background: #e67e22; color: white; padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; margin-left: auto; }
-        .btn-complete:hover { background: #6b3ae0; }
-        .btn-completed { background: #1e7e34; color: white; padding: 10px 20px; border-radius: 6px; border: none; cursor: default; margin-left: auto; }
-    </style>
-<link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
-    <div style="background: linear-gradient(90deg, #1e3a5f, #1e40af); color: #93c5fd; padding: 12px 20px; text-align: center; font-size: 14px; border-bottom: 2px solid #3b82f6;">
-        <i class="fas fa-info-circle mr-2"></i>
-        <strong>ℹ️ Java di Browser:</strong> Java tidak dapat dijalankan langsung di browser (butuh JVM). 
-        Tombol "Run" akan menampilkan <strong>Expected Output</strong> sebagai simulasi hasil.
-    </div>
-    
 <body>
-    <div class="flex h-screen">
+    <!-- Mobile Header -->
+    <div class="mobile-header" id="mobile-header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <span class="mobile-title"><i class="fab fa-java text-orange-400 mr-2"></i>Java Learning Path</span>
+        <span class="mobile-progress" id="mobile-progress">0%</span>
+    </div>
+
+    <!-- Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="app-layout" id="appLayout">
         <!-- Sidebar -->
-        <aside class="sidebar flex-shrink-0">
-            <div class="header-bar">
-                <div>
-                    <div class="course-title"><i class="fab fa-java mr-2 text-orange-400"></i>Java Learning Path</div>
-                    <div class="course-progress" id="course-progress">0% complete</div>
-                    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fab fa-java"></i>
+                    </div>
+                    <div>
+                        <div class="course-title">Java Learning Path</div>
+                        <div class="course-subtitle">Dasar → Mahir</div>
+                    </div>
                 </div>
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <span class="course-progress" id="course-progress">0% selesai</span>
+                        <span class="progress-count" id="progress-count">0/30</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+                </div>
+                <button class="reset-btn" onclick="resetProgress()" title="Reset Progress">
+                    <i class="fas fa-redo-alt mr-1"></i>Reset
+                </button>
             </div>
-            <div id="lessons-nav">
-                <!-- Modules rendered here -->
-            </div>
+            <nav id="lessons-nav" class="sidebar-nav">
+                <!-- Modules rendered by JS -->
+            </nav>
         </aside>
 
         <!-- Main Content -->
-        <main class="content-area">
-            <div id="lesson-header" style="background: #2d2f31; padding: 16px 24px; border-bottom: 1px solid #3e4143;">
-                <div class="text-xs text-gray-500 mb-1" id="breadcrumb">Module 1</div>
-                <h1 id="lesson-title" style="font-size: 20px; font-weight: 600; color: #f7f9fa; margin: 0;">Select a lesson</h1>
+        <main class="content-area" id="contentArea">
+            <!-- Sticky Header -->
+            <div class="content-header" id="lesson-header">
+                <div>
+                    <div class="breadcrumb" id="breadcrumb">Module 1 — Dasar-Dasar Java</div>
+                    <h1 class="content-title" id="lesson-title">Pilih lesson untuk mulai belajar</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-complete" id="complete-btn" onclick="markComplete()" style="display:none;">
+                        <i class="fas fa-check mr-1"></i>Selesai
+                    </button>
+                    <button class="btn-completed" id="completed-btn" style="display:none;">
+                        <i class="fas fa-check-circle mr-1"></i>Sudah Selesai
+                    </button>
+                </div>
             </div>
-            
+
+            <!-- Info Banner -->
+            <div class="info-banner" id="info-banner">
+                <i class="fas fa-info-circle"></i>
+                <span><strong>Info:</strong> Java tidak bisa dijalankan langsung di browser (butuh JVM). Tombol <strong>Run</strong> menampilkan Expected Output sebagai simulasi.</span>
+            </div>
+
             <!-- Lesson Content -->
             <div class="lesson-content" id="lesson-content">
-                <p class="text-gray-500">Select a lesson from the sidebar to begin.</p>
+                <div class="welcome-screen">
+                    <div class="welcome-icon"><i class="fab fa-java"></i></div>
+                    <h2>Selamat Datang di Java Learning Path!</h2>
+                    <p>Tutorial interaktif untuk belajar Java dari dasar hingga mahir. Pilih lesson dari sidebar untuk memulai.</p>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-book-open"></i>
+                            <span>30 Lessons</span>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-code"></i>
+                            <span>Code Editor</span>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Quiz Interaktif</span>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progress Tracking</span>
+                        </div>
+                    </div>
+                    <button class="btn-start" onclick="loadLesson(0)">
+                        <i class="fas fa-play mr-2"></i>Mulai Belajar
+                    </button>
+                </div>
             </div>
 
             <!-- Code Editor -->
-            <div class="code-section" id="code-section" style="max-width: 800px; margin: 0 auto;">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-sm font-semibold text-gray-300"><i class="fas fa-code mr-2"></i>Code Editor</span>
-                    <div>
-                        <button class="btn-run" onclick="runCode()"><i class="fas fa-play mr-2"></i>Run</button>
-                        <button class="btn-reset" onclick="resetCode()">Reset</button>
+            <div class="code-section" id="code-section" style="display:none;">
+                <div class="code-header">
+                    <span class="code-label"><i class="fas fa-code mr-2"></i>Java Code Editor</span>
+                    <div class="code-actions">
+                        <button class="btn-run" onclick="runCode()"><i class="fas fa-play mr-1"></i>Run</button>
+                        <button class="btn-solution" onclick="showSolution()" title="Lihat Solusi"><i class="fas fa-lightbulb mr-1"></i>Solusi</button>
+                        <button class="btn-reset" onclick="resetCode()"><i class="fas fa-undo mr-1"></i>Reset</button>
                     </div>
                 </div>
-                <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="# Write your Java code here..."></textarea>
-                <div class="mt-2">
-                    <span class="text-xs text-gray-500">Output:</span>
-                    <div id="output" class="output-area"><span class="text-gray-600"># Output will appear here</span></div>
+                <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="// Tulis kode Java di sini..."></textarea>
+                <div class="output-section">
+                    <span class="output-label"><i class="fas fa-terminal mr-1"></i>Output:</span>
+                    <div id="output" class="output-area"><span class="text-slate-500">// Output akan muncul di sini</span></div>
                 </div>
-                <div id="validation-msg" class="mt-3 p-3 rounded hidden"></div>
+                <div id="validation-msg" class="validation-msg hidden"></div>
             </div>
 
             <!-- Quiz -->
-            <div class="quiz-section" id="quiz-section" style="max-width: 800px; margin: 24px auto; display: none;">
-                <div class="quiz-title"><i class="fas fa-question-circle mr-2 text-yellow-400"></i>Quiz</div>
+            <div class="quiz-section" id="quiz-section" style="display:none;">
+                <div class="quiz-header">
+                    <i class="fas fa-question-circle text-amber-400 mr-2"></i>
+                    <span class="quiz-title">Quiz</span>
+                </div>
                 <div id="quiz-content"></div>
-                <button class="btn-run mt-3" onclick="checkQuiz()">Submit Answer</button>
+                <button class="btn-submit-quiz" onclick="checkQuiz()"><i class="fas fa-paper-plane mr-1"></i>Submit</button>
                 <div id="quiz-result"></div>
             </div>
 
             <!-- Navigation -->
-            <div class="nav-buttons" id="nav-buttons" style="max-width: 800px; margin: 0 auto; padding: 16px 24px;">
-                <button class="btn-nav btn-prev" id="prev-btn" onclick="prevLesson()" disabled><i class="fas fa-chevron-left mr-2"></i>Previous</button>
-                <button class="btn-complete" id="complete-btn" onclick="markComplete()" style="display:none;">Mark as Complete</button>
-                <button class="btn-completed" id="completed-btn" style="display:none;"><i class="fas fa-check mr-2"></i>Completed</button>
-                <button class="btn-nav btn-next" id="next-btn" onclick="nextLesson()">Next<i class="fas fa-chevron-right ml-2"></i></button>
+            <div class="nav-buttons" id="nav-buttons" style="display:none;">
+                <button class="btn-nav btn-prev" id="prev-btn" onclick="prevLesson()" disabled>
+                    <i class="fas fa-chevron-left mr-2"></i>Sebelumnya
+                </button>
+                <div class="nav-spacer"></div>
+                <button class="btn-nav btn-next" id="next-btn" onclick="nextLesson()">
+                    Selanjutnya<i class="fas fa-chevron-right ml-2"></i>
+                </button>
             </div>
         </main>
     </div>
 
-    <script src="lesson-bridge.js"></script>
     <script src="app.js"></script>
-
-<script src="enhancement.js"></script>
 </body>
 </html>
