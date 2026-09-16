@@ -203,59 +203,15 @@ const LESSONS = [
     "hint": "Gunakan System.out.println untuk mencetak teks ke layar.",
     "quiz": [
       {
-        "question": "Apa singkatan JVM?",
+        "question": "Apa peran utama Java Virtual Machine (JVM) dalam eksekusi kode Java?",
         "options": [
-          "Java Virtual Machine",
-          "Java Version Manager",
-          "Joint Virtual Memory",
-          "Java Visual Manager"
+          "Mengeksekusi bytecode (.class) dan mengelolanya ke instruksi mesin native via JIT Compiler",
+          "Mengedit file source code .java secara otomatis",
+          "Menggantikan peran sistem operasi host",
+          "Hanya bertugas memformat string output"
         ],
         "answer": 0,
-        "explanation": "JVM (Java Virtual Machine) adalah mesin virtual yang menjalankan bytecode Java."
-      },
-      {
-        "question": "Tahun rilis pertama Java adalah?",
-        "options": [
-          "1991",
-          "1995",
-          "2000",
-          "1998"
-        ],
-        "answer": 1,
-        "explanation": "Java pertama kali dirilis oleh Sun Microsystems pada tahun 1995."
-      },
-      {
-        "question": "Siapa pencipta Java?",
-        "options": [
-          "Bjarne Stroustrup",
-          "James Gosling",
-          "Guido van Rossum",
-          "Yukihiro Matsumoto"
-        ],
-        "answer": 1,
-        "explanation": "Java dikembangkan oleh James Gosling dan tim di Sun Microsystems."
-      },
-      {
-        "question": "Prinsip Write Once Run Anywhere dimungkinkan oleh?",
-        "options": [
-          "Compiler",
-          "Interpreter",
-          "JVM",
-          "OS"
-        ],
-        "answer": 2,
-        "explanation": "JVM (Java Virtual Machine) memungkinkan program Java berjalan di berbagai platform."
-      },
-      {
-        "question": "Java termasuk paradigma bahasa?",
-        "options": [
-          "Procedural",
-          "Functional only",
-          "Object-oriented",
-          "Markup"
-        ],
-        "answer": 2,
-        "explanation": "Java adalah bahasa yang berorientasi objek (object-oriented)."
+        "explanation": "JVM mengeksekusi bytecode portabel dan mengoptimalkannya dengan JIT compiler."
       }
     ]
   },
@@ -272,60 +228,15 @@ const LESSONS = [
     "hint": "Pastikan perintah javac -version dan java -version berhasil dijalankan di terminal.",
     "quiz": [
       {
-        "question": "Apa yang dikandung dalam JDK?",
+        "question": "Apa perbedaan mendasar antara JDK, JRE, dan JVM?",
         "options": [
-          "Hanya Java Runtime Environment (JRE)",
-          "Compiler, JRE, dan library tambahan",
-          "Hanya compiler (javac)",
-          "IDE resmi Oracle"
+          "JDK memuat compiler (javac) dan developer tools; JRE memuat runtime library; JVM adalah mesin eksekusi bytecode",
+          "JDK hanya untuk Android, JRE untuk server",
+          "JVM adalah compiler, javac adalah interpreter",
+          "Ketiganya sinonim tanpa perbedaan"
         ],
-        "answer": 1,
-        "explanation": "JDK berisi JRE, compiler (javac), serta library dan tools tambahan seperti javadoc."
-      },
-      {
-        "question": "Perintah untuk mengkompilasi file Java adalah?",
-        "options": [
-          "java",
-          "javac",
-          "javaw",
-          "jvm"
-        ],
-        "answer": 1,
-        "explanation": "javac (Java compiler) digunakan untuk mengubah .java menjadi .class."
-      },
-      {
-        "question": "Apa tujuan variabel JAVA_HOME?",
-        "options": [
-          "Menentukan lokasi IDE",
-          "Menentukan lokasi JDK untuk tooling lain",
-          "Mengatur ukuran heap",
-          "Menentukan port JVM"
-        ],
-        "answer": 1,
-        "explanation": "JAVA_HOME menunjuk ke direktori instalasi JDK, digunakan oleh banyak tool (Maven, Gradle, Tomcat)."
-      },
-      {
-        "question": "IDE berikut yang POPULER untuk Java, kecuali:",
-        "options": [
-          "IntelliJ IDEA",
-          "Eclipse",
-          "NetBeans",
-          "Visual Studio Code",
-          "Vim"
-        ],
-        "answer": 4,
-        "explanation": "Vim adalah text editor, bukan IDE khusus Java (meski dapat digunakan)."
-      },
-      {
-        "question": "Setelah instalasi, perintah apa untuk memeriksa versi JDK?",
-        "options": [
-          "java -v",
-          "javac -version",
-          "java -version",
-          "Both b and c"
-        ],
-        "answer": 3,
-        "explanation": "java -version menunjukkan versi runtime, javac -version menunjukkan versi compiler. Keduanya berguna."
+        "answer": 0,
+        "explanation": "JDK adalah toolkit lengkap, JRE runtime saja, dan JVM core execution engine."
       }
     ]
   },
@@ -342,59 +253,15 @@ const LESSONS = [
     "hint": "Setiap program Java harus memiliki minimal satu class dengan method public static void main(String[] args).",
     "quiz": [
       {
-        "question": "Apa nama default package jika tidak dinyatakan?",
+        "question": "Fitur Virtual Threads di Java 21 (Project Loom) dirancang untuk apa?",
         "options": [
-          "java.lang",
-          "default package",
-          "global",
-          "null"
-        ],
-        "answer": 1,
-        "explanation": "Jika tidak ada statement package, class berada di default package (tanpa nama)."
-      },
-      {
-        "question": "Signature method main yang benar adalah?",
-        "options": [
-          "public void main(String args)",
-          "public static void main(String[] args)",
-          "static void main(String[] args)",
-          "public static main(String[] args)"
-        ],
-        "answer": 1,
-        "explanation": "Signature yang diterima JVM adalah public static void main(String[] args)."
-      },
-      {
-        "question": "Jika class dideklarasikan public, nama file harus?",
-        "options": [
-          "Sama dengan class name",
-          "Main.java",
-          "Tidak pengaruh",
-          "Bebas"
+          "Menjalankan jutaan lightweight threads dengan overhead memori sangat kecil untuk I/O-bound tasks",
+          "Menggantikan seluruh Garbage Collector",
+          "Mempercepat kompilasi javac",
+          "Menghapus keyword synchronized"
         ],
         "answer": 0,
-        "explanation": "File harus memiliki nama yang persis sama dengan public class (case-sensitive)."
-      },
-      {
-        "question": "Apa yang terjadi jika tidak ada method main?",
-        "options": [
-          "Program tetap berjalan dari atas ke bawah",
-          "JVM akan mencari metode lain",
-          "Program gagal dijalankan dengan error 'Main method not found'",
-          "Tidak ada efek"
-        ],
-        "answer": 2,
-        "explanation": "JVM mencari entry point main; jika tidak ditemukan, error MAIN CLASS NOT FOUND."
-      },
-      {
-        "question": "Modifier yang membuat method dapat diakses oleh JVM tanpa instance adalah?",
-        "options": [
-          "public",
-          "static",
-          "final",
-          "protected"
-        ],
-        "answer": 1,
-        "explanation": "static memungkinkan method dipanggil tanpa membuat instance class."
+        "explanation": "Virtual threads berjalan di atas carrier thread pool OS, sangat ideal untuk throughput I/O tinggi."
       }
     ]
   },
@@ -411,59 +278,15 @@ const LESSONS = [
     "hint": "Tipe primitif mencakup int, double, boolean, char, byte, short, long, float.",
     "quiz": [
       {
-        "question": "Tipe data primitif untuk bilangan pecahan desimal biasanya?",
+        "question": "Signature method entry point standar program Java yang benar adalah?",
         "options": [
-          "float",
-          "double",
-          "decimal",
-          "real"
-        ],
-        "answer": 1,
-        "explanation": "double digunakan untuk bilangan pecahan dengan presisi 2× lebih tinggi daripada float."
-      },
-      {
-        "question": "Range tipe byte adalah?",
-        "options": [
-          "-128 sampai 127",
-          "-256 sampai 255",
-          "0-255",
-          "-32768 sampai 32767"
+          "public static void main(String[] args)",
+          "public void main(String[] args)",
+          "static int main(String args)",
+          "public main(String[] args)"
         ],
         "answer": 0,
-        "explanation": "byte adalah 8-bit signed integer, range -128..127."
-      },
-      {
-        "question": "Apa hasil dari (int) 3.14?",
-        "options": [
-          "3",
-          "3.0",
-          "4",
-          "Error kompilasi"
-        ],
-        "answer": 0,
-        "explanation": "Cast double ke int akan memotong bagian desimal, hasil 3."
-      },
-      {
-        "question": "Kata kunci untuk membuat variabel tidak dapat diubah adalah?",
-        "options": [
-          "static",
-          "final",
-          "const",
-          "immutable"
-        ],
-        "answer": 1,
-        "explanation": "final digunakan untuk membuat variabel (atau field) konstan."
-      },
-      {
-        "question": "Manakah yang merupakan tipe reference?",
-        "options": [
-          "int",
-          "boolean",
-          "String",
-          "char"
-        ],
-        "answer": 2,
-        "explanation": "String adalah class, termasuk tipe reference."
+        "explanation": "Entry point standar mewajibkan modifier public static void main(String[] args)."
       }
     ]
   },
@@ -480,59 +303,15 @@ const LESSONS = [
     "hint": "Gunakan Scanner(System.in) untuk input real-time dari console terminal.",
     "quiz": [
       {
-        "question": "Method mana yang menambahkan newline otomatis?",
+        "question": "Keyword 'var' di Java 10+ (Local Variable Type Inference) hanya diizinkan di mana?",
         "options": [
-          "System.out.print",
-          "System.out.println",
-          "System.out.printf",
-          "System.out.write"
-        ],
-        "answer": 1,
-        "explanation": "println menambahkan newline; print tidak."
-      },
-      {
-        "question": "Kelas apa yang umum digunakan untuk membaca input keyboard?",
-        "options": [
-          "BufferedReader",
-          "Scanner",
-          "InputStreamReader",
-          "Console"
-        ],
-        "answer": 1,
-        "explanation": "Scanner (java.util.Scanner) menyediakan cara mudah membaca token dari System.in."
-      },
-      {
-        "question": "Setelah menggunakan Scanner, etika yang benar adalah?",
-        "options": [
-          "Tutup scanner dengan close()",
-          "Biarkan saja",
-          "Hancurkan dengan System.gc()",
-          "Assign ke null"
+          "Hanya untuk variabel lokal di dalam method yang langsung diinisialisasi nilainya",
+          "Untuk field class instance dan static",
+          "Untuk parameter method dan return type",
+          "Untuk deklarasi package"
         ],
         "answer": 0,
-        "explanation": "Scanner meng-wrap resource; sebaiknya ditutup dengan close() untuk melepaskan resource."
-      },
-      {
-        "question": "Kesalahan umum setelah nextInt() sebelum nextLine()?",
-        "options": [
-          "nextLine() membaca newline sisa",
-          "nextInt() lebih lambat",
-          "nextLine() tidak ada",
-          "Tidak ada masalah"
-        ],
-        "answer": 0,
-        "explanation": "nextInt() tidak mengonsumsi newline; panggilan nextLine() berikutnya akan membaca newline kosong. Gunakan scanner.nextLine() tambahan untuk consume newline."
-      },
-      {
-        "question": "Method mana untuk parsing String ke integer?",
-        "options": [
-          "Integer.parseInt()",
-          "Integer.valueOf()",
-          "Integer.decode()",
-          "Semua di atas"
-        ],
-        "answer": 0,
-        "explanation": "Integer.parseInt()是最常见的. valueOf返回Integer对象."
+        "explanation": "var hanya berlaku untuk local variables dengan initializers."
       }
     ]
   },
@@ -549,59 +328,15 @@ const LESSONS = [
     "hint": "Ketik System.out.println(\"Hello, World!\");",
     "quiz": [
       {
-        "question": "Perintah untuk mengkompilasi HelloWorld.java adalah?",
+        "question": "Mengapa String di Java bersifat IMMUTABLE?",
         "options": [
-          "java HelloWorld",
-          "javac HelloWorld.java",
-          "javaw HelloWorld",
-          "compile HelloWorld"
+          "Untuk keamanan, thread-safety, caching hash code, dan efisiensi String Constant Pool di JVM",
+          "Karena memori JVM tidak mendukung update teks",
+          "Agar String tidak bisa dimasukkan ke dalam Array",
+          "Karena String bertipe primitif"
         ],
-        "answer": 1,
-        "explanation": "javac (Java compiler) digunakan untuk mengompile .java menjadi .class."
-      },
-      {
-        "question": "Setelah kompilasi, file apa yang dihasilkan?",
-        "options": [
-          ".java",
-          ".exe",
-          ".class",
-          ".jar"
-        ],
-        "answer": 2,
-        "explanation": "Kompilasi menghasilkan bytecode dalam file .class."
-      },
-      {
-        "question": "Perintah untuk menjalankan program HelloWorld adalah?",
-        "options": [
-          "java HelloWorld.class",
-          "java HelloWorld",
-          "javaw HelloWorld",
-          "run HelloWorld"
-        ],
-        "answer": 1,
-        "explanation": "Gunakan 'java' diikuti nama class (tanpa .class)."
-      },
-      {
-        "question": "Apa yang terjadi jika nama file tidak sama dengan public class?",
-        "options": [
-          "Tidak masalah",
-          "Error kompilasi",
-          "Error saat menjalankan",
-          "Java otomatis mengganti"
-        ],
-        "answer": 1,
-        "explanation": "Compiler menolak jika public class name tidak sesuai nama file."
-      },
-      {
-        "question": "Apa fungsi method main?",
-        "options": [
-          "Menyimpan data",
-          "Entry point program",
-          "Komplier helper",
-          "None"
-        ],
-        "answer": 1,
-        "explanation": "Method main adalah entry point yang dipanggil JVM ketika program dijalankan."
+        "answer": 0,
+        "explanation": "Immutability String memastikan keamanan multi-threading dan efisiensi memory reuse."
       }
     ]
   },
@@ -618,59 +353,15 @@ const LESSONS = [
     "hint": "Wrapper classes mengubah primitif menjadi objek dan menyediakan utility parsing.",
     "quiz": [
       {
-        "question": "Wrapper class untuk tipe primitif int adalah?",
+        "question": "Karakteristik apa yang membedakan 'record' class di Java 16+ dibanding class biasa?",
         "options": [
-          "Integer",
-          "Int",
-          "Number",
-          "IntWrapper"
+          "Record adalah immutable data carrier yang otomatis menghasilkan constructor, getters, equals(), hashCode(), dan toString()",
+          "Record bisa meng-extend class lain",
+          "Record field-nya bersifat mutable",
+          "Record tidak memiliki constructor"
         ],
         "answer": 0,
-        "explanation": "Integer adalah wrapper class untuk int."
-      },
-      {
-        "question": "Apa yang terjadi saat meng-unbox sebuah Integer yang bernull?",
-        "options": [
-          "Mengembalikan 0",
-          "Melempar NullPointerException",
-          "Mengembalikan null",
-          "Tidak terjadi apa-apa"
-        ],
-        "answer": 1,
-        "explanation": "Unboxing null (Integer → int) akan menyebabkan NullPointerException."
-      },
-      {
-        "question": "Method statis untuk mengubah String ke int?",
-        "options": [
-          "Integer.parseInt()",
-          "Integer.toInt()",
-          "Int.parse()",
-          "String.toInt()"
-        ],
-        "answer": 0,
-        "explanation": "Integer.parseInt(String) digunakan untuk parsing string ke int."
-      },
-      {
-        "question": "Manakah yang termasuk wrapper class?",
-        "options": [
-          "Double",
-          "Float",
-          "Boolean",
-          "Semua di atas"
-        ],
-        "answer": 3,
-        "explanation": "Double, Float, Boolean adalahwrapper class untuk respective primitives."
-      },
-      {
-        "question": "Kapan sebaiknya menggunakan wrapper dibanding primitif?",
-        "options": [
-          "Saat bekerja dengan collections",
-          "Saat butuh performance tinggi",
-          "Sekarang sudah selalu pakai wrapper",
-          "Tidak pernah"
-        ],
-        "answer": 0,
-        "explanation": "Wrapper diperlukan ketika bekerja dengan generics/collections yang hanya menerima reference types."
+        "explanation": "Record menyederhanakan deklarasi kelas pembawa data yang murni immutable."
       }
     ]
   },
@@ -687,59 +378,15 @@ const LESSONS = [
     "hint": "Array berukuran tetap (fixed size). Gunakan Arrays.toString() untuk cetak isi array.",
     "quiz": [
       {
-        "question": "Cara membuat array of int dengan panjang 5?",
+        "question": "Sealed Classes / Interfaces di Java 17+ menggunakan keyword apa untuk membatasi class yang boleh meng-extend-nya?",
         "options": [
-          "int[5] arr;",
-          "int[] arr = new int[5];",
-          "new int[5];",
-          "int arr = new int[5];"
-        ],
-        "answer": 1,
-        "explanation": "Syntax yang benar adalah int[] arr = new int[5];"
-      },
-      {
-        "question": "Bagaimana mendapatkan panjang sebuah array?",
-        "options": [
-          "arr.length()",
-          "arr.size()",
-          "arr.length",
-          "arr.getSize()"
-        ],
-        "answer": 2,
-        "explanation": "Array memiliki field length (bukan method)."
-      },
-      {
-        "question": "Apa yang terjadi jika mengakses arr[10] pada array dengan length 5?",
-        "options": [
-          "Mengembalikan null",
-          "ArrayIndexOutOfBoundsException",
-          "IndexOutOfBoundsException",
-          "Tidak ada error"
-        ],
-        "answer": 1,
-        "explanation": "ArrayIndexOutOfBoundsException dilempar saat index di luar batas."
-      },
-      {
-        "question": "Cara iterasi array dengan enhanced for loop?",
-        "options": [
-          "for i in arr",
-          "for (int i : arr)",
-          "for each arr as x",
-          "for (int x : arr)"
-        ],
-        "answer": 3,
-        "explanation": "Enhanced for loop: for (type var : array) { ... }"
-      },
-      {
-        "question": "Method untuk mengurutkan array primitive int?",
-        "options": [
-          "Arrays.sort(arr)",
-          "arr.sort()",
-          "Collections.sort(arr)",
-          "Array.sort(arr)"
+          "permits",
+          "allows",
+          "extends only",
+          "restrict"
         ],
         "answer": 0,
-        "explanation": "java.util.Arrays.sort() digunakan untuk sorting array primitif atau objek."
+        "explanation": "Keyword 'permits' mendeklarasikan subclass resmi yang diizinkan meng-extend sealed type."
       }
     ]
   },
@@ -756,59 +403,15 @@ const LESSONS = [
     "hint": "Gunakan enum untuk mendefinisikan kumpulan konstanta bernama yang terstruktur.",
     "quiz": [
       {
-        "question": "Apa nama keyword untuk membuat enumerated type?",
+        "question": "Pada materi 'Enum & Constants', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "enum",
-          "enumerate",
-          "enumeration",
-          "constant"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Keyword 'enum' digunakan untuk mendefinisikan enumeration."
-      },
-      {
-        "question": "Bagaimana cara mendapatkan array semua constants dari enum?",
-        "options": [
-          "getValues()",
-          "values()",
-          "getEnums()",
-          "list()"
-        ],
-        "answer": 1,
-        "explanation": "Method values() mengembalikan array semua enum constants."
-      },
-      {
-        "question": "Dapatkah enum memiliki fields dan methods?",
-        "options": [
-          "Tidak",
-          "Ya, seperti class biasa",
-          "Hanya fields",
-          "Hanya methods"
-        ],
-        "answer": 1,
-        "explanation": "Enum dapat memiliki fields, constructor, dan methods (seperti class)."
-      },
-      {
-        "question": "Apa yang dikembalikan oleh ordinal()?",
-        "options": [
-          "Nama constant",
-          "Posisi ordinal (0-based)",
-          "Jumlah constants",
-          "Class object"
-        ],
-        "answer": 1,
-        "explanation": "ordinal() mengembalikan posisi ordinal (dimulai dari 0)."
-      },
-      {
-        "question": "Bisakah enum implements interface?",
-        "options": [
-          "Tidak",
-          "Ya, seperti class lain",
-          "Hanya extends enum",
-          "Tidak perlu"
-        ],
-        "answer": 1,
-        "explanation": "Enum dapat implements interface."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -825,59 +428,15 @@ const LESSONS = [
     "hint": "Gunakan void ketika sebuah method hanya melakukan tugas tanpa return statement bernilai.",
     "quiz": [
       {
-        "question": "Apa fungsi tipe void?",
+        "question": "Pada materi 'Void & Special Types', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Menyimpan bilangan bulat",
-          "Mengembalikan nilai kosong",
-          "Return type untuk method yang tidak mengembalikan nilai",
-          "Merepresentasikan null"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
-        "answer": 2,
-        "explanation": "void adalah return type yang menandakan method tidak mengembalikan nilai."
-      },
-      {
-        "question": "Apa yang terjadi jika Anda mencoba mengakses field/method dari variabel null?",
-        "options": [
-          "Mengembalikan null",
-          "NullPointerException",
-          "Compile error",
-          "Tidak terjadi apa-apa"
-        ],
-        "answer": 1,
-        "explanation": "NullPointerException dilempar saat dereferencing null."
-      },
-      {
-        "question": "Bagaimana cara memeriksa apakah sebuah variabel bertipe double adalah NaN?",
-        "options": [
-          "if (d == NaN)",
-          "if (Double.isNaN(d))",
-          "if (d.isNaN())",
-          "if (Float.isNaN(d))"
-        ],
-        "answer": 1,
-        "explanation": "Gunakan Double.isNaN() untuk memeriksa NaN."
-      },
-      {
-        "question": "Apa nilai default untuk tipe boolean?",
-        "options": [
-          "null",
-          "false",
-          "0",
-          "Tidak ada default"
-        ],
-        "answer": 1,
-        "explanation": "Primitif boolean memiliki default false selama tidak diinisialisasi."
-      },
-      {
-        "question": "Kelas apa yang merepresentasikan tipe void ketika digunakan sebagai parameter generik?",
-        "options": [
-          "Void",
-          "Void.class",
-          "java.lang.Void",
-          "void.class"
-        ],
-        "answer": 2,
-        "explanation": "java.lang.Void adalah kelas wrapper untuk tipe void, sering dipakai dalam generik."
+        "answer": 0,
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -894,59 +453,15 @@ const LESSONS = [
     "hint": "Narrowing casting membutuhkan penulisan tipe tujuan dalam tanda kurung: (tipe) nilai.",
     "quiz": [
       {
-        "question": "Apa yang terjadi saat casting double ke int secara eksplisit?",
+        "question": "Pada materi 'Type Casting', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Bulatkan ke integer terdekat",
-          "Memotong bagian desimal (truncation)",
-          "Mengembalikan nilai pecahan",
-          "Error compile"
-        ],
-        "answer": 1,
-        "explanation": "Casting double ke int memotong (truncate) bagian pecahan tanpa pembulatan."
-      },
-      {
-        "question": "Kapan cast eksplisit diperlukan?",
-        "options": [
-          "Saat widening conversion",
-          "Saat narrowing conversion",
-          "Selalu",
-          "Tidak pernah"
-        ],
-        "answer": 1,
-        "explanation": "Narrowing conversion memerlukan cast eksplisit karena berisiko kehilangan data."
-      },
-      {
-        "question": "Apa hasil dari (int) 'A'?",
-        "options": [
-          "65 (ASCII value)",
-          "A",
-          "Error",
-          "97"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "char 'A' dapat di-cast ke int menghasilkan nilai ASCII/Unicode 65."
-      },
-      {
-        "question": "Cara aman melakukan downcast pada objek?",
-        "options": [
-          "Langsung cast tanpa cek",
-          "Gunakan instanceof terlebih dahulu",
-          "Pastikan class sama",
-          "Tidak perlu"
-        ],
-        "answer": 1,
-        "explanation": "Untuk menghindari ClassCastException, cek dengan instanceof sebelum downcast."
-      },
-      {
-        "question": "Apakah autoboxing memerlukan cast eksplisit?",
-        "options": [
-          "Ya, selalu",
-          "Tidak, otomatis",
-          "Hanya untuk narrowing",
-          "Hanya untuk widening"
-        ],
-        "answer": 1,
-        "explanation": "Autoboxing dan unboxing berjalan otomatis tanpa cast eksplisit."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -963,59 +478,15 @@ const LESSONS = [
     "hint": "Kata kunci 'var' hanya dapat digunakan pada local variable yang langsung diinisialisasi.",
     "quiz": [
       {
-        "question": "Kapan var bisa digunakan?",
+        "question": "Pada materi 'Type Inference (var)', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Untuk field class",
-          "Untuk parameter method",
-          "Untuk local variable dengan initializer",
-          "Untuk return type method"
-        ],
-        "answer": 2,
-        "explanation": "var hanya berlaku untuk local variable, harus ada initializer, dan dideklarasikan di dalam method/block."
-      },
-      {
-        "question": "Apa yang terjadi jika menulis: var x = null;?",
-        "options": [
-          "x bertipe Object",
-          "Compile error: cannot infer type",
-          "x bertype Void",
-          "x bertipe null"
-        ],
-        "answer": 1,
-        "explanation": "Compile error karena tipe tidak bisa diinfer dari null."
-      },
-      {
-        "question": "Manakah yang benar tentang diamond operator?",
-        "options": [
-          "Digunakan untuk array creation",
-          "Digunakan untuk instance creation generic untuk mengurangi boilerplate",
-          "Digunakan untuk method return",
-          "Digunakan untuk var"
-        ],
-        "answer": 1,
-        "explanation": "Diamond operator <> memungkinkan compiler mendeduc tipe parameter generic dari context."
-      },
-      {
-        "question": "Contoh yang valid menggunakan var?",
-        "options": [
-          "var list = new ArrayList<String>();",
-          "var i; i = 10;",
-          "var s = null;",
-          "var m = Map.of();"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "var list = new ArrayList<String>(); legal; initializer memberikan tipe."
-      },
-      {
-        "question": "Type inference juga berlaku untuk lambda parameters?",
-        "options": [
-          "Tidak",
-          "Ya, tipe diinfer dari target functional interface",
-          "Hanya jika menggunakan var",
-          "Tidak perlu inference"
-        ],
-        "answer": 1,
-        "explanation": "Lambda expression parameters types dapat diinfer dari context (functional interface target type)."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1032,59 +503,15 @@ const LESSONS = [
     "hint": "Java modern mendukung Switch Expression dengan operator panah (->) yang ringkas.",
     "quiz": [
       {
-        "question": "Manakah yang benar tentang if-else?",
+        "question": "Pada materi 'If-Else & Switch', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Kondisi harus boolean",
-          "Bisa tanpa braces",
-          "Kondisi bisa integer",
-          "Tidak ada else opsional"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "If memerlukan kondisi bertipe boolean."
-      },
-      {
-        "question": " Pada switch, apa yang terjadi jika tidak ada break?",
-        "options": [
-          "Error compile",
-          "Lewati ke case berikutnya (fall-through)",
-          "Keluar dari switch",
-          "Tidak apa-apa"
-        ],
-        "answer": 1,
-        "explanation": "Tanpa break, eksekusi akan jatuh ke case berikutnya."
-      },
-      {
-        "question": "Tipe data yang bisa digunakan pada switch (Java 7+)?",
-        "options": [
-          "int, char, String",
-          "int, char, boolean",
-          "int, char, long",
-          "Semua tipe primitif"
-        ],
-        "answer": 0,
-        "explanation": "Switch mendukung int, char, short, byte, enum, String (sejak Java 7), serta wrapper types."
-      },
-      {
-        "question": "Switch expression (arrow) muncul dari Java version?",
-        "options": [
-          "Java 8",
-          "Java 10",
-          "Java 12/14",
-          "Java 16"
-        ],
-        "answer": 2,
-        "explanation": "Arrow syntax diperkenalkan sebagai preview di Java 12 dan final di Java 14."
-      },
-      {
-        "question": "Apa manfaat switch expression dibanding statement?",
-        "options": [
-          "Menghasilkan nilai (value)",
-          "Hanya untuk String",
-          "Tidak perlu break",
-          "Lebih cepat"
-        ],
-        "answer": 0,
-        "explanation": "Switch expression mengembalikan nilai, bisa ditugaskan ke variabel."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1101,59 +528,15 @@ const LESSONS = [
     "hint": "For loop cocok ketika jumlah iterasi diketahui; while loop cocok saat berbasis kondisi boolean.",
     "quiz": [
       {
-        "question": "Apa yang happens jika kondisi while selalu true",
+        "question": "Pada materi 'Loop Dasar (for, while)', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Loop berhenti otomatis",
-          "Infinite loop",
-          "Error compile",
-          "Tidak masalah"
-        ],
-        "answer": 1,
-        "explanation": "Kondisi selalu true menyebabkan infinite loop; program harus dihentikanmanual."
-      },
-      {
-        "question": "Perbedaan for dan for-each?",
-        "options": [
-          "For-each butuh index",
-          "For-each digunakan untuk array/collection tanpa index",
-          "For lebih cepat",
-          "Tidak ada perbedaan"
-        ],
-        "answer": 1,
-        "explanation": "For-each (enhanced for) mempermudah iterasi tanpa mengakses index."
-      },
-      {
-        "question": "Do-while Pastikan minimal berjalan berapa kali?",
-        "options": [
-          "0",
-          "1",
-          "2",
-          "Tergantung kondisi"
-        ],
-        "answer": 1,
-        "explanation": "Do-while mengeksekusi minimal sekali sebelum cek kondisi."
-      },
-      {
-        "question": "Apa sintaks for-loop lengkap?",
-        "options": [
-          "for (init; condition; update)",
-          "for condition { }",
-          "for each in",
-          "loop (condition)"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "for (inisialisasi; kondisi; update) { ... }"
-      },
-      {
-        "question": "Manakah yang tidak valid?",
-        "options": [
-          "for (int i=0; i<10; i++)",
-          "for (int i : arr)",
-          "for (;;)",
-          "for i = 0; i < 10; i++"
-        ],
-        "answer": 3,
-        "explanation": "Java tidak memiliki for style C dengan tiga ekspresi tanpa kurung; harus pakai kurung."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1170,59 +553,15 @@ const LESSONS = [
     "hint": "Continue melanjutkan ke iterasi berikutnya, break menghentikan seluruh perulangan seketika.",
     "quiz": [
       {
-        "question": "Apa yang dilakukan statement break dalam loop?",
+        "question": "Pada materi 'Break & Continue', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Melompat ke iterasi berikutnya",
-          "Menghentikan loop",
-          "Melanjutkan ke case berikutnya",
-          "Tidak ada efek"
-        ],
-        "answer": 1,
-        "explanation": "Break segera mengakhiri loop (atau switch)."
-      },
-      {
-        "question": "Continue digunakan untuk?",
-        "options": [
-          " Keluar dari loop",
-          "Melompat ke iterasi berikutnya",
-          "Menghentikan switch",
-          "Melepas resource"
-        ],
-        "answer": 1,
-        "explanation": "Continue melompat ke iterasi berikutnya dari loop."
-      },
-      {
-        "question": "Break atau continue dapat diberi label untuk?",
-        "options": [
-          "Switch saja",
-          "Loop terluar (nested)",
-          "Method",
-          "Tidak berlaku"
-        ],
-        "answer": 1,
-        "explanation": "Labeled break/continue mengontrol loop luar dalam nested loops."
-      },
-      {
-        "question": "Apa yang terjadi jika break digunakan dalam switch?",
-        "options": [
-          "Keluar dari blok switch",
-          "Melompat ke case berikutnya",
-          "Error",
-          "Tidak efek"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Break dalam switch keluar dari switch statement."
-      },
-      {
-        "question": "Perintah untuk keluar dari loop yang beriungkus (nested) tanpa countless break?",
-        "options": [
-          "break outer;",
-          "continue outer;",
-          "break label;",
-          "break alla loops;"
-        ],
-        "answer": 2,
-        "explanation": "Gunakan labeled break (misal break outerLoop;) untuk keluar dari outer loop."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1239,59 +578,15 @@ const LESSONS = [
     "hint": "Gunakan block try-catch untuk menangkap exception runtime agar aplikasi tidak berhenti mendadak.",
     "quiz": [
       {
-        "question": "Apa nama class induk semua exception?",
+        "question": "Pada materi 'Exceptions Basics', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Error",
-          "Throwable",
-          "Exception",
-          "RuntimeException"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
-        "answer": 1,
-        "explanation": "Throwable adalah base class untuk Error dan Exception."
-      },
-      {
-        "question": "Exception apa yang tidak perlu dicanangkan catches?",
-        "options": [
-          "Checked",
-          "Unchecked (RuntimeException)",
-          "IOException",
-          "SQLException"
-        ],
-        "answer": 1,
-        "explanation": "Unchecked exceptions (subclass RuntimeException) tidak perlu ditangkap atau dinyatakan."
-      },
-      {
-        "question": "Contoh checked exception adalah?",
-        "options": [
-          "NullPointerException",
-          "IllegalArgumentException",
-          "IOException",
-          "ArrayIndexOutOfBoundsException"
-        ],
-        "answer": 2,
-        "explanation": "IOException adalah checked exception; NullPointerException dan IllegalArgumentException adalah unchecked."
-      },
-      {
-        "question": "Untuk membuat custom exception yang harus ditangkap, extends mana?",
-        "options": [
-          "RuntimeException",
-          "Exception",
-          "Error",
-          "Throwable"
-        ],
-        "answer": 1,
-        "explanation": "Extends Exception (bukan RuntimeException) akan menghasilkan checked exception."
-      },
-      {
-        "question": "Kata kunci untuk melempar exception adalah?",
-        "options": [
-          "catch",
-          "throw",
-          "throws",
-          "new"
-        ],
-        "answer": 1,
-        "explanation": "Gunakan throw untuk melempar exception."
+        "answer": 0,
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1308,59 +603,15 @@ const LESSONS = [
     "hint": "Blok finally selalu dijalankan terlepas dari apakah terjadi exception atau tidak.",
     "quiz": [
       {
-        "question": "Apa yang selalu dieksekusi setelah try-catch?",
+        "question": "Pada materi 'Try-Catch-Finally', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "catch",
-          "finally",
-          "throw",
-          "return"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
-        "answer": 1,
-        "explanation": "Blok finally selalu dijalankan setelah try atau catch."
-      },
-      {
-        "question": "Manfaat utama try-with-resources?",
-        "options": [
-          "Menangkap lebih banyak exception",
-          " resources Auto-closeable tanpa finally",
-          "Menghindari所有 exception",
-          "Mengganti catch"
-        ],
-        "answer": 1,
-        "explanation": "try-with-resources menutup resources otomatis, mengkode lebih bersih."
-      },
-      {
-        "question": "Bisa ada lebih dari satu resource dalam try-with-resources?",
-        "options": [
-          "Tidak",
-          "Ya, dengan ;",
-          "Hanya satu",
-          "Tergantung Java version"
-        ],
-        "answer": 1,
-        "explanation": "Multiple resources dapat dideklarasikan dengan ; di antara (seperti try (A a = ...; B b = ...) { ... } )."
-      },
-      {
-        "question": "Jika exception terjadi di dalam try dan juga di finally, apa outcome?",
-        "options": [
-          "Exception dari try diseberkan",
-          "Exception dari finally menimpa",
-          "Keduanya disimpan (suppressed)",
-          "Program crash"
-        ],
-        "answer": 2,
-        "explanation": "Exception dari finally akan disimpan sebagai suppressed ke exception asli (jika ada)."
-      },
-      {
-        "question": "Kapan finally tidak dieksekusi?",
-        "options": [
-          "Jika ada return di try",
-          "Jika System.exit() Called",
-          "Jika exception di throw",
-          "Telah selalu dieksekusi"
-        ],
-        "answer": 1,
-        "explanation": "Jika JVM terminates (System.exit) atau kill -9, finally tidak dieksekusi; namun return dalam try tidak menghalangi finally."
+        "answer": 0,
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1377,59 +628,15 @@ const LESSONS = [
     "hint": "'throw' melempar instance exception, 'throws' mendeklarasikan exception pada method signature.",
     "quiz": [
       {
-        "question": "Kata kunci untuk deklarasikan exception pada method signature?",
+        "question": "Pada materi 'Throw & Throws', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "throw",
-          "throws",
-          "catch",
-          "finally"
-        ],
-        "answer": 1,
-        "explanation": "throws digunakan pada method untuk menyatakan exception yang mungkin dilempar."
-      },
-      {
-        "question": "Checked exception harus dinyatakan dengan?",
-        "options": [
-          "try-catch",
-          "throws atau try-catch",
-          "hanya throws",
-          "hanya try"
-        ],
-        "answer": 1,
-        "explanation": "Checked exception harus ditangkap (try-catch) atau dinyatakan (throws)."
-      },
-      {
-        "question": "Apa yang terjadi jika unchecked exception dilempar?",
-        "options": [
-          "Compile error",
-          "Tidak perlu catch/throws",
-          "Harus dicanangkan throws",
-          "Tidak bisa"
-        ],
-        "answer": 1,
-        "explanation": "Unchecked exception tidak diperiksa pada compile time, tidak perlu deklarasi throws."
-      },
-      {
-        "question": "Bisakah kita throw class Error?",
-        "options": [
-          "Ya",
-          "Tidak disarankan",
-          "Tidak, compile error",
-          "Hanya di system"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Secara teknis bisa, tapi Error mewakili condition fatal, tidak untuk dilempar aplikasi."
-      },
-      {
-        "question": "Contoh kode yang tepat untuk melempar IllegalArgumentException?",
-        "options": [
-          "throw IllegalArgumentException()",
-          "throw new IllegalArgumentException()",
-          "new throw IllegalArgumentException",
-          "throw IllegalArgumentException"
-        ],
-        "answer": 1,
-        "explanation": "Harus membuat instance dengan new, karena exception adalah object."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1446,59 +653,15 @@ const LESSONS = [
     "hint": "Class adalah cetak biru (blueprint), sedangkan Object adalah bentuk nyata (instance).",
     "quiz": [
       {
-        "question": " Apa perbedaan class dan object?",
+        "question": "Pada materi 'Class & Object Dasar', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Class adalah blueprint, object adalah instance",
-          "Object adalah blueprint, class adalah instance",
-          "Sama saja",
-          "Tidak ada perbedaan"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Class为中template, object即instance yang dibuat dari class."
-      },
-      {
-        "question": "Keyword untuk membuat class?",
-        "options": [
-          "class",
-          "struct",
-          "object",
-          "define"
-        ],
-        "answer": 0,
-        "explanation": "Java menggunakan keyword class."
-      },
-      {
-        "question": "Bagaimana membuat instance Object?",
-        "options": [
-          "object Person = new Person()",
-          "Person p = new Person()",
-          "new Person p",
-          "create Person()"
-        ],
-        "answer": 1,
-        "explanation": "Person p = new Person();"
-      },
-      {
-        "question": "Apa yang terjadi jika class tidak memiliki constructor eksplisit?",
-        "options": [
-          "Error",
-          "Java menyediakan default constructor",
-          "Tidak bisa diinstansiasi",
-          "Harus dibuat sendiri"
-        ],
-        "answer": 1,
-        "explanation": "Java menyediakan default no-arg constructor jika tidak ada constructor lain."
-      },
-      {
-        "question": "Kata kunci this digunakan untuk?",
-        "options": [
-          "Mengakses class",
-          "Mengakses instance fields",
-          "Mengakses static fields",
-          "Membuat object"
-        ],
-        "answer": 1,
-        "explanation": "this merujuk ke instance saat ini (untuk membedakan field dengan parameter)."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1515,59 +678,15 @@ const LESSONS = [
     "hint": "Prinsip enkapsulasi: deklarasikan field private dan sediakan getter/setter public.",
     "quiz": [
       {
-        "question": "Level access paling ketat?",
+        "question": "Pada materi 'Access Modifiers', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "private",
-          "protected",
-          "default",
-          "public"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "private hanya bisa diakses dalam class yang sama."
-      },
-      {
-        "question": "Apa akses default (tanpa modifier)?",
-        "options": [
-          "public",
-          "package-private",
-          "protected",
-          "none"
-        ],
-        "answer": 1,
-        "explanation": "Default (no modifier) adalah package-private."
-      },
-      {
-        "question": "Protected dapat diakses oleh?",
-        "options": [
-          "Hanya class yang sama",
-          "Package yang sama dan subclass",
-          "Semua class",
-          "Hanya interface"
-        ],
-        "answer": 1,
-        "explanation": "Protected bisa diakses di package yang sama dan oleh subclass di package lain."
-      },
-      {
-        "question": "Bisakah top-level class dideklarasikan protected?",
-        "options": [
-          "Ya",
-          "Tidak",
-          "Hanya dalam interface",
-          "Hanya abstract"
-        ],
-        "answer": 1,
-        "explanation": "Top-level class hanya bisa public atau package-private."
-      },
-      {
-        "question": "Field interface secara default?",
-        "options": [
-          "private",
-          "protected",
-          "public static final",
-          "public abstract"
-        ],
-        "answer": 2,
-        "explanation": "Fields dalam interface adalah public static final."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1584,59 +703,15 @@ const LESSONS = [
     "hint": "Kata kunci 'extends' mewarisi sifat class induk, 'super()' memanggil konstruktor induk.",
     "quiz": [
       {
-        "question": "Keyword untuk pewarisan class?",
+        "question": "Pada materi 'Inheritance & Super', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "implements",
-          "extends",
-          "inherits",
-          "super"
-        ],
-        "answer": 1,
-        "explanation": "extend digunakan untuk mewarisi dari superclass."
-      },
-      {
-        "question": "Apa yang diwariskan ke subclass?",
-        "options": [
-          "Hanya methods",
-          "Hanya fields",
-          "Methods dan fields (kecuali private)",
-          "Semua termasuk private"
-        ],
-        "answer": 2,
-        "explanation": "Subclass mewarisi semua fields dan methods, kecuali private fields tidak bisa diakses langsung."
-      },
-      {
-        "question": "Object apakah yang dapat melakukan upcast otomatis?",
-        "options": [
-          "Subclass to superclass",
-          "Superclass to subclass",
-          "Tidak ada",
-          "Hanya interface"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Upcast (subclass → superclass) implisit."
-      },
-      {
-        "question": "Annotation untuk override method?",
-        "options": [
-          "@Override",
-          "@Replace",
-          "@Inherit",
-          "@Subclass"
-        ],
-        "answer": 0,
-        "explanation": "@Override annotation menandakan method override."
-      },
-      {
-        "question": "Java support multiple class inheritance?",
-        "options": [
-          "Ya",
-          "Tidak",
-          "Hanya via interfaces",
-          "Hanya abstract classes"
-        ],
-        "answer": 1,
-        "explanation": "Java hanya satu class inheritance; multiple inheritance melalui interface."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1653,59 +728,15 @@ const LESSONS = [
     "hint": "Abstract class tidak bisa diinstansiasi langsung, dan subclass wajib mengimplementasikan method abstract.",
     "quiz": [
       {
-        "question": "Apa yang tidak boleh untuk abstract class?",
+        "question": "Pada materi 'Abstract Classes', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Digunakan sebagai superclass",
-          "Mengandung abstract method",
-          "Diinstansiasi",
-          "Memiliki concrete methods"
-        ],
-        "answer": 2,
-        "explanation": "Abstract class tidak dapat diinstansiasi (new AbstractClass() error)."
-      },
-      {
-        "question": "Abstract method dinyatakan dengan?",
-        "options": [
-          "abstract void method();",
-          "void abstract method();",
-          "abstract void method() {};",
-          "void method() abstract;"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Sintaks: abstract void methodName(); tanpa body."
-      },
-      {
-        "question": "Apakah abstract class bisa memiliki fields dan concrete methods?",
-        "options": [
-          "Tidak",
-          "Ya",
-          "Hanya fields",
-          "Hanya methods"
-        ],
-        "answer": 1,
-        "explanation": "Abstract class dapat memiliki fields dan methods konkret."
-      },
-      {
-        "question": "Subclass dari abstract class harus?",
-        "options": [
-          "Menjadi abstract juga",
-          "Mengimplementasikan semua abstract method",
-          "Memiliki constructor",
-          "Tidak diperlukan"
-        ],
-        "answer": 1,
-        "explanation": "Subclass konkret harus mengimplementasikan semua abstract methods milik superclass (atau menjadi abstract)."
-      },
-      {
-        "question": "Bisakah abstract class extends class konkret lain?",
-        "options": [
-          "Tidak",
-          "Ya",
-          "Hanya abstract",
-          "Hanya interface"
-        ],
-        "answer": 1,
-        "explanation": "Abstract class dapat extends class lain (concrete/abstract)."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1722,59 +753,15 @@ const LESSONS = [
     "hint": "Class dapat mengimplementasikan beberapa interface sekaligus menggunakan kata kunci 'implements'.",
     "quiz": [
       {
-        "question": "Method dalam interface secara default modifier-nya?",
+        "question": "Pada materi 'Interfaces Dasar', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "private",
-          "protected",
-          "public abstract",
-          "public"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
-        "answer": 2,
-        "explanation": "Methods dalam interface adalah public abstract (sebelum Java 8)."
-      },
-      {
-        "question": "Sejak Java 8, interface bisa memiliki?",
-        "options": [
-          "Hanya abstract methods",
-          "Default dan static methods",
-          "Hanya static methods",
-          "Bidang instance"
-        ],
-        "answer": 1,
-        "explanation": "Java 8 menambahkan default dan static methods ke interface."
-      },
-      {
-        "question": "Class dapat implements berapa banyak interface?",
-        "options": [
-          "Satu",
-          "Dua",
-          "Beberapa (multiple)",
-          "Tidak terbatas"
-        ],
-        "answer": 2,
-        "explanation": "Class dapat implements banyak interface."
-      },
-      {
-        "question": "Fields dalam interface secara otomatis?",
-        "options": [
-          "private",
-          "protected",
-          "public static final",
-          "public"
-        ],
-        "answer": 2,
-        "explanation": "Fields adalah public static final (constant)."
-      },
-      {
-        "question": "Functional interface memiliki?",
-        "options": [
-          "Banyak abstract methods",
-          "Precisely satu abstract method",
-          "Hanya default methods",
-          "Tidak ada method"
-        ],
-        "answer": 1,
-        "explanation": "Functional interface memiliki tepat satu abstract method (SAM)."
+        "answer": 0,
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1791,59 +778,15 @@ const LESSONS = [
     "hint": "Polimorfisme terbagi dua: Overloading (compile-time) dan Overriding (runtime).",
     "quiz": [
       {
-        "question": "Polymorphism runtime disebut juga?",
+        "question": "Pada materi 'Polymorphism', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Overloading",
-          "Overriding",
-          "Dynamic binding",
-          "Static binding"
-        ],
-        "answer": 2,
-        "explanation": "Dynamic binding (atau late binding) adalah polymorphism runtime melalui method overriding."
-      },
-      {
-        "question": "Polymorphism compile-time adalah?",
-        "options": [
-          "Overloading",
-          "Overriding",
-          "Dynamic dispatch",
-          "Method hiding"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Method overloading dipilih pada compile-time."
-      },
-      {
-        "question": "Reference Animal a = new Dog(); memungkinkan panggilan ke?",
-        "options": [
-          "Hanya Animal methods",
-          "Hanya Dog methods",
-          "Method yang didefinisikan di Animal, runtime akan pilih Dog jika override",
-          "Semua methods"
-        ],
-        "answer": 2,
-        "explanation": "Compile-time type Animal membatasi method yang bisa dipanggil; runtime memanggil implementasi Dog jika method overridden."
-      },
-      {
-        "question": "Apakah fields subject to polymorphism?",
-        "options": [
-          "Ya",
-          "Tidak",
-          "Hanya static",
-          "Hanya final"
-        ],
-        "answer": 1,
-        "explanation": "Fields tidak polymorphic; field access determined by reference type, not object type."
-      },
-      {
-        "question": "Kapan method overloading terjadi?",
-        "options": [
-          "Dalam satu class",
-          "Antara superclass-subclass",
-          "Hanya interface",
-          "Hanya abstract"
-        ],
-        "answer": 0,
-        "explanation": "Overloading occurs within the same class (or subclass) with different parameter lists."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1860,48 +803,15 @@ const LESSONS = [
     "hint": "Collections framework menyediakan struktur data dinamis yang fleksibel dibandingkan array standar.",
     "quiz": [
       {
-        "question": "Apa itu Java Collections Framework (JCF)?",
+        "question": "Pada materi 'Intro to Collections', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Kompiler alternatif untuk bahasa Java",
-          "Arsitektur terpadu untuk merepresentasikan dan memanipulasi koleksi objek",
-          "Library untuk membuat GUI di Java",
-          "Database bawaan Java"
-        ],
-        "answer": 1,
-        "explanation": "JCF menyediakan antarmuka (interfaces), implementasi konkret, dan algoritma untuk mengelola kelompok objek."
-      },
-      {
-        "question": "Root interface dari sebagian besar koleksi di Java (kecuali Map) adalah?",
-        "options": [
-          "Iterable",
-          "Collection",
-          "List",
-          "Object"
-        ],
-        "answer": 1,
-        "explanation": "java.util.Collection adalah root interface untuk List, Set, dan Queue. Sedangkan Map tidak extends Collection."
-      },
-      {
-        "question": "Mengapa Map tidak mewarisi (extends) dari Collection interface?",
-        "options": [
-          "Karena Map berisi pasangan key-value, sedangkan Collection menampung elemen individual",
-          "Karena bug arsitektur lama Java",
-          "Karena Map hanya bisa menampung String",
-          "Map sebenarnya mewarisi Collection"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Map menyimpan pemetaan key ke value (key-value pairs), strukturnya tidak cocok dengan kontrak Collection tunggal."
-      },
-      {
-        "question": "Keuntungan utama menggunakan generic dalam Collections (misal: List<String>) adalah?",
-        "options": [
-          "Program berjalan 100x lebih cepat",
-          "Compile-time type safety dan menghindari type casting manual",
-          "Mengurangi ukuran memori JVM hingga 50%",
-          "Memungkinkan koleksi menyimpan primitive types tanpa auto-boxing"
-        ],
-        "answer": 1,
-        "explanation": "Generics memberikan pemeriksaan tipe pada waktu kompilasi dan menghilangkan kebutuhan type cast eksplisit."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1918,48 +828,15 @@ const LESSONS = [
     "hint": "ArrayList memiliki ukuran dinamis yang bertambah otomatis saat elemen baru dimasukkan.",
     "quiz": [
       {
-        "question": "Apa fungsi primary method di Java?",
+        "question": "Pada materi 'List & ArrayList', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Metode yang dijalankan saat objek baru di-instanciasikan",
-          "Metode yang dijalankan saat object di-objektifikasi",
-          "Metode yang dijalankan saat object di-klonkan",
-          "Metode yang mengatur state object"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "Primary method adalah method yang dijalankan saat object baru dibuat (constructors). Ia tidak bisa di-override oleh subclass."
-      },
-      {
-        "question": "Kapan method `equals()` harus diimplementasikan di class custom?",
-        "options": [
-          "Selalu, untuk semua object",
-          "Hanya jika class harus di-equals",
-          "Hanya jika class harus di-hash",
-          "Hanya jika class harus di-sort"
-        ],
-        "answer": 1,
-        "explanation": "Method equals() harus diimplementasikan jika class ingin mendukung operator == (equality comparison). Tanpa implementasinya, == akan melakukan reference equality."
-      },
-      {
-        "question": "Apa perbedaan antara `ArrayList` dan `LinkedList`?",
-        "options": [
-          "ArrayList lebih cepat untuk insertion di tengah",
-          "LinkedList lebih cepat untuk insertion di tengah",
-          "Tidak ada perbedaan signifikan",
-          "ArrayList selalu lebih cepat"
-        ],
-        "answer": 1,
-        "explanation": "ArrayList lebih efisien untuk insertion/removal di tengah karena array di baliknya tetap terurut. LinkedList lebih efisien untuk traversal dan deletion di tengah karena linked list."
-      },
-      {
-        "question": "Apa yang terjadi jika kita menggunakan `HashMap` tanpa `equals()` dan `hashCode()`?",
-        "options": [
-          "Program akan crash",
-          "Hash map akan berfungsi normal",
-          "Program akan berjalan tapi data tidak akurat",
-          "Error runtime yang sulit diprediksi"
-        ],
-        "answer": 2,
-        "explanation": "Without proper equals/hashCode, objects dengan content berbeda bisa dianggap sama (due to identity-based hashing), causing collisions and incorrect lookup behavior."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -1976,48 +853,15 @@ const LESSONS = [
     "hint": "HashSet tidak mengizinkan elemen duplikat dan tidak menjamin urutan elemen.",
     "quiz": [
       {
-        "question": "Apa yang terjadi jika Anda menambahkan elemen duplikat ke dalam HashSet?",
+        "question": "Pada materi 'Set & HashSet', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Entry akan ditolak dan tidak ditambahkan",
-          "Entry akan ditambahkan dan HashSet akan berisi duplikat",
-          "HashSet akan mengubahnya menjadi ArrayList",
-          "Program akan crash karena duplikat"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "HashSet hanya menyimpan elemen unik. Jika elemen duplikat ditambahkan, HashSet akan menolaknya tanpa menandakan kesalahan."
-      },
-      {
-        "question": "Apa yang terjadi jika Anda memanggil remove() pada HashSet dengan elemen yang tidak ada?",
-        "options": [
-          "HashSet akan mengembalikan true",
-          "HashSet akan melempar NullPointerException",
-          "HashSet akan mengembalikan false",
-          "HashSet akan menambahkan elemen tersebut secara otomatis"
-        ],
-        "answer": 2,
-        "explanation": "HashSet.remove() mengembalikan boolean. Jika elemen tidak ditemukan, akan mengembalikan false tanpa mengubah struktur data."
-      },
-      {
-        "question": "Apa yang terjadi jika Anda memanggil clear() pada HashSet?",
-        "options": [
-          "Elemen terakhir akan dihapus",
-          "Semua elemen akan dihapus",
-          "Hanya elemen terdepan yang akan dihapus",
-          "HashSet akan di-reset dengan elemen baru"
-        ],
-        "answer": 1,
-        "explanation": "clear() menghapus semua elemen dari HashSet, membuatnya kosong kembali."
-      },
-      {
-        "question": "Apa yang terjadi jika Anda memanggil `contains()` pada HashSet setelah `add()` elemen?",
-        "options": [
-          "Mungkin mengembalikan false",
-          "Mungkin mengembalikan true",
-          "Mungkin mengembalikan true atau false tergantung pada hash code",
-          "Salah total"
-        ],
-        "answer": 0,
-        "explanation": "HashSet garansi bahwa `contains()` akan mengembalikan true setelah `add()` elemen yang sama, karena HashSet dirancang untuk itu."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -2034,48 +878,15 @@ const LESSONS = [
     "hint": "Map menyimpan data dalam format pasangan Key-Value, dengan Key yang harus unik.",
     "quiz": [
       {
-        "question": "Apa karakteristik utama dari Map di Java?",
+        "question": "Pada materi 'Map & HashMap', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Menyimpan elemen tunggal secara berurutan",
-          "Menyimpan pasangan key-value di mana key harus unik",
-          "Mengizinkan key duplikat tapi value harus unik",
-          "Hanya bisa menyimpan tipe data primitif"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
-        "answer": 1,
-        "explanation": "Map menyimpan pasangan key-value. Setiap key bersifat unik dan memetakan ke paling banyak satu value."
-      },
-      {
-        "question": "Berapa kompleksitas waktu rata-rata operasi get() dan put() pada HashMap?",
-        "options": [
-          "O(n)",
-          "O(log n)",
-          "O(1)",
-          "O(n^2)"
-        ],
-        "answer": 2,
-        "explanation": "HashMap menggunakan hashing untuk mencapai waktu operasi konstan O(1) dalam kondisi rata-rata."
-      },
-      {
-        "question": "Apa yang terjadi jika Anda memanggil put(key, newValue) dengan key yang sudah ada di HashMap?",
-        "options": [
-          "Melempar DuplicateKeyException",
-          "Mengabaikan input baru",
-          "Mengganti nilai lama dengan nilai baru dan mengembalikan nilai lama",
-          "Membuat entry baru dengan key yang sama"
-        ],
-        "answer": 2,
-        "explanation": "put() akan menimpa value lama yang diasosiasikan dengan key tersebut dan mengembalikan nilai lama."
-      },
-      {
-        "question": "Implementasi Map apa yang menjamin urutan elemen terurut berdasarkan natural ordering dari key-nya?",
-        "options": [
-          "HashMap",
-          "LinkedHashMap",
-          "TreeMap",
-          "Hashtable"
-        ],
-        "answer": 2,
-        "explanation": "TreeMap mengurutkan key berdasarkan natural order (Comparable) atau Comparator khusus."
+        "answer": 0,
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -2092,59 +903,15 @@ const LESSONS = [
     "hint": "Metode offer() menambahkan elemen di belakang, poll() mengambil dan menghapus elemen dari depan.",
     "quiz": [
       {
-        "question": "Queue biasanya menggunakan urutan?",
+        "question": "Pada materi 'Queue & Deque', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "LIFO",
-          "FIFO",
-          "Acak",
-          "Priority"
-        ],
-        "answer": 1,
-        "explanation": "Queue umumnya FIFO (first-in-first-out)."
-      },
-      {
-        "question": "Metode untuk lihat kepala queue tanpahapus?",
-        "options": [
-          "poll()",
-          "remove()",
-          "peek()",
-          "element()"
-        ],
-        "answer": 2,
-        "explanation": "peek() mengembalikan elemen pertama tanpa menghapus; null jika kosong."
-      },
-      {
-        "question": "Deque beroperasi di?",
-        "options": [
-          "Hanya kepala",
-          "Hanya ekor",
-          "Kedua ujung",
-          "Tidak ada"
-        ],
-        "answer": 2,
-        "explanation": "Deque (double-ended queue) mendukung penambahan dan penghapusan di kedua ujung."
-      },
-      {
-        "question": "Implementasi Queue default yang disarankan?",
-        "options": [
-          "LinkedList",
-          "ArrayDeque",
-          "Vector",
-          "Stack"
-        ],
-        "answer": 1,
-        "explanation": "ArrayDeque lebih cepat dan generally better daripada LinkedList untuk Queue/Deque."
-      },
-      {
-        "question": "PriorityQueue tidak guarantee?",
-        "options": [
-          "FIFO order",
-          "Order by natural/comparator",
-          "Thread safety",
-          "Null elements"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "PriorityQueue mengutamakan berdasarkan prioritas, bukan urutan masuk (FIFO)."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   },
@@ -2161,59 +928,15 @@ const LESSONS = [
     "hint": "Stream API mempermudah pemrosesan koleksi secara fungsional, dan Optional mencegah NullPointerException.",
     "quiz": [
       {
-        "question": "Tujuan Optional?",
+        "question": "Pada materi 'Optional & Streams', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
         "options": [
-          "Menyimpan banyak nilai",
-          "Menghindari null checks",
-          "Membuat thread",
-          "Mengganti List"
-        ],
-        "answer": 1,
-        "explanation": "Optional berfungsi untuk menangani kemungkinan null dengan lebihExpressif, mengurangi NullPointerException."
-      },
-      {
-        "question": "Method untuk dapat nilai dengan default?",
-        "options": [
-          "get()",
-          "orElse()",
-          "ifPresent()",
-          "map()"
-        ],
-        "answer": 1,
-        "explanation": "orElse(default) mengembalikan nilai jika ada, atau default jika kosong."
-      },
-      {
-        "question": "Operasi stream yang masih lazy?",
-        "options": [
-          "forEach()",
-          "collect()",
-          "filter()",
-          "count()"
-        ],
-        "answer": 2,
-        "explanation": "filter adalah intermediate operation (lazy); forEach, collect, count adalah terminal."
-      },
-      {
-        "question": "Cara membuat stream dari list?",
-        "options": [
-          "list.stream()",
-          "new Stream(list)",
-          "Stream.of(list)",
-          "list.getStream()"
+          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
+          "Menonaktifkan exception handling dengan blok catch kosong",
+          "Menggunakan raw types tanpa generics",
+          "Menghindari penggunaan OOP dan collections"
         ],
         "answer": 0,
-        "explanation": "list.stream() mengembalikan Stream dari elemen list."
-      },
-      {
-        "question": "Apa yang dilakukan map()?",
-        "options": [
-          "Filter",
-          "Transform",
-          "Reduce",
-          "Sort"
-        ],
-        "answer": 1,
-        "explanation": "map(Function) mengubah setiap elemen menjadi bentuk lain."
+        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
       }
     ]
   }
