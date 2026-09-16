@@ -251,8 +251,15 @@
         const icon=document.getElementById('themeToggleIcon');
         const html=document.documentElement;
         function apply(theme){
-            if(theme==='light'){ html.classList.remove('dark'); html.classList.add('light'); if(icon){ icon.className='fas fa-sun text-sm'; } }
-            else { html.classList.add('dark'); html.classList.remove('light'); if(icon){ icon.className='fas fa-moon text-sm'; } }
+            if(theme==='light'){
+                html.classList.remove('dark');
+                html.classList.add('light');
+                if(icon) icon.className='fas fa-sun text-sm text-amber-500';
+            } else {
+                html.classList.add('dark');
+                html.classList.remove('light');
+                if(icon) icon.className='fas fa-moon text-sm text-slate-400';
+            }
         }
         const saved=localStorage.getItem('java_theme')||'dark';
         apply(saved);
@@ -262,6 +269,8 @@
             localStorage.setItem('java_theme', next);
             apply(next);
         });
+    })();
+    
         // Search: filter via renderNav(filter) if supported
         const s=document.getElementById('lesson-search');
         const sm=document.getElementById('lesson-search-mobile');
