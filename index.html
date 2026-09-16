@@ -1,171 +1,429 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Java Learning Path — Tutorial Interaktif</title>
-<meta name="description" content="Belajar Java 21 LTS dari dasar hingga mahir. 30 pelajaran interaktif dengan code editor, quiz, records, sealed classes, pattern matching & virtual threads.">
-<meta name="theme-color" content="#0a0f1a">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
-<link rel="stylesheet" href="styles.css">
-<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif'],mono:['JetBrains Mono','monospace'],display:['Space Grotesk','sans-serif']}}}}</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Learning Path — Tutorial Interaktif</title>
+    <meta name="description" content="Kursus Java interaktif dari dasar sampai mahir — 30 pelajaran, editor Java live, terminal output & quiz. Modern Java 21 LTS (records, sealed, pattern matching, virtual threads).">
+    <meta name="theme-color" content="#ef4444">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter','system-ui','sans-serif'],
+                        mono: ['JetBrains Mono','monospace']
+                    },
+                    colors: {
+                        brand: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f' },
+                        surface: { 50:'#f8fafc',100:'#f1f5f9',800:'#1e293b',850:'#172033',900:'#0f172a',950:'#0a0f1a' }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Markdown & Highlight -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <!-- Icons & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="antialiased">
-<!-- Top Bar -->
-<header class="topbar">
-  <div class="topbar-inner">
-    <button id="menuToggle" class="menu-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
-    <a class="brand" href="#">
-      <span class="brand-mark"><i class="fa-brands fa-java"></i></span>
-      <span class="brand-text"><b>Java</b> Learning Path <span class="brand-badge">JAVA 21</span></span>
-    </a>
-    <div class="topbar-search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input id="searchInput" placeholder="Cari pelajaran… ( / )" autocomplete="off">
-      <kbd>/</kbd>
-    </div>
-    <div class="topbar-actions">
-      <div class="progress-wrap" title="Progress keseluruhan">
-        <span id="course-progress">0%</span>
-        <span id="mobile-progress" style="display:none">0%</span>
-        <div class="progress-track"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
-      </div>
-      <button id="themeToggle" class="icon-btn" title="Toggle theme"><i id="themeToggleIcon" class="fa-solid fa-moon"></i></button>
-      <a href="https://github.com/personalbotai/java-learning-path" target="_blank" class="icon-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
-    </div>
-  </div>
-</header>
+<body class="bg-[#0a0f1a] text-slate-200 font-['Inter',sans-serif] antialiased overflow-hidden">
 
-<div class="layout">
-  <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-head">
-      <div class="sidebar-title">Kurikulum</div>
-      <div class="sidebar-sub"><span id="stat-lessons">30</span> pelajaran • <span id="stat-modules">5</span> modul • <span id="stat-done">0</span> selesai <span id="progress-count" style="display:none">0/30</span></div>
-      <div class="sidebar-search-mobile">
-        <div style="position:relative">
-          <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-d);font-size:12px"></i>
-          <input id="searchInputMobile" placeholder="Cari…" style="width:100%;height:32px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:0 12px 0 32px;color:var(--text);font-size:12px;outline:none">
-        </div>
-      </div>
-    </div>
-    <nav id="lessons-nav" class="nav-scroll"></nav>
-    <div class="sidebar-foot">
-      <button onclick="resetProgress()" class="btn-ghost w-full"><i class="fa-solid fa-rotate-left mr-2"></i>Reset Progress</button>
-      <div class="foot-note">Progress tersimpan otomatis di browser. Java 21 LTS • records • sealed • pattern matching • virtual threads</div>
-    </div>
-  </aside>
-  <div id="backdrop" class="backdrop"></div>
-  <div id="sidebarOverlay" style="display:none"></div>
-
-  <!-- Main -->
-  <main class="content-area" id="contentArea">
-    <div id="lesson-header" class="lesson-header">
-      <div class="breadcrumb" id="breadcrumb">Pilih pelajaran untuk mulai</div>
-      <h1 id="lesson-title" class="lesson-h1">Selamat Datang, Java Developer! ☕</h1>
-      <div class="lesson-meta">
-        <span id="lesson-duration" class="meta-pill"><i class="fa-regular fa-clock"></i> —</span>
-        <span id="lesson-level" class="meta-pill level">Pemula → Mahir • Java 21 LTS</span>
-        <span id="lesson-id" class="meta-pill id"></span>
-      </div>
-    </div>
-
-    <div class="content-wrap">
-      <!-- markdown -->
-      <article id="lesson-content" class="lesson-content prose">
-        <div class="hero">
-          <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Java 21 LTS • Records • Sealed • Pattern Matching • Virtual Threads</div>
-          <h2>Belajar Java modern seperti engineer di Gojek, Tokopedia & Bank.</h2>
-          <p>Java Learning Path menyatukan <b>30 pelajaran</b> terkurasi, <b>editor Java interaktif</b>, dan <b>quiz</b> yang memvalidasi pemahamanmu — dari dasar OOP hingga <b>records, sealed classes, pattern matching & virtual threads (Project Loom)</b> di Java 21.</p>
-          <div class="hero-actions">
-            <button onclick="loadLesson(0)" class="btn-primary"><i class="fa-solid fa-play mr-2"></i>Mulai dari Awal</button>
-            <button onclick="loadLesson(6)" class="btn-secondary"><i class="fa-solid fa-rocket mr-2"></i>Lompat ke Wrapper</button>
-          </div>
-          <div class="hero-stats">
-            <div><b>30</b><span>Materi</span></div><div><b>5</b><span>Modul</span></div><div><b>21 LTS</b><span>Modern</span></div><div><b>∞</b><span>Bisa diulang</span></div>
-          </div>
-        </div>
-        <div class="cards">
-          <div class="mini-card"><i class="fa-solid fa-code"></i><h3>Editor Live</h3><p>Tulis & jalankan Java langsung. Validasi output otomatis.</p></div>
-          <div class="mini-card"><i class="fa-solid fa-cube"></i><h3>Java 21 Modern</h3><p><code>record</code>, <code>sealed</code>, pattern matching, <code>var</code>, virtual threads.</p></div>
-          <div class="mini-card"><i class="fa-solid fa-brain"></i><h3>Quiz Adaptif</h3><p>Setiap bab ada quiz — lulus untuk membuka progress berikutnya.</p></div>
-        </div>
-        <p class="text-muted">Pilih pelajaran di sidebar untuk memulai. Progress akan tersimpan otomatis.</p>
-        <div class="info-banner" id="info-banner" style="margin-top:20px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#fecaca;border-radius:10px;padding:12px 18px;font-size:13.5px;display:flex;gap:10px;align-items:flex-start;line-height:1.55"><i class="fas fa-info-circle" style="margin-top:3px;color:#f87171;flex-shrink:0"></i><span><strong>Info:</strong> Java tidak bisa dijalankan langsung di browser (butuh JVM). Tombol <strong>Run</strong> menampilkan Expected Output sebagai simulasi — termasuk untuk fitur Java 21 seperti records & virtual threads.</span></div>
-      </article>
-
-      <!-- Editor -->
-      <section id="code-section" class="panel" style="display:none">
-        <div class="panel-head">
-          <div class="tabs">
-            <button class="tab active" data-tab="editor"><i class="fa-solid fa-code"></i> Editor</button>
-            <button class="tab" data-tab="terminal"><i class="fa-solid fa-terminal"></i> Terminal</button>
-          </div>
-          <div class="panel-actions">
-            <button class="btn-ghost-sm" onclick="copyCode()"><i class="fa-regular fa-copy"></i> Copy</button>
-            <button class="btn-ghost-sm" onclick="resetCode()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
-            <button class="btn-ghost-sm" onclick="showSolution()" title="Lihat Solusi"><i class="fa-solid fa-lightbulb"></i> Solusi</button>
-            <button class="btn-primary-sm" onclick="runCode()"><i class="fa-solid fa-play"></i> Run <span class="kbd">⌘↵</span></button>
-          </div>
-        </div>
-        <div class="tab-panels">
-          <div id="tab-editor" class="tab-panel active">
-            <div class="editor-wrap">
-              <div class="editor-gutter" id="editor-gutter">1</div>
-              <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="public class Main {&#10;  public static void main(String[] args){&#10;    System.out.println(&quot;Hello, Java 21!&quot;);&#10;  }&#10;}"></textarea>
+    <!-- Sticky Header: logo SB + search + theme toggle + progress bar -->
+    <header class="sticky top-0 z-50 glass-header border-b border-white/5">
+        <div class="flex items-center gap-3 sm:gap-4 px-4 h-[56px] max-w-[1600px] mx-auto">
+            <!-- Hamburger (mobile drawer) -->
+            <button id="menuToggle" class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition shrink-0" aria-label="Toggle menu">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+            <button id="sidebar-toggle" class="hidden" aria-label="Sidebar toggle"></button>
+            <!-- Logo SB -->
+            <a href="#" class="flex items-center gap-3 shrink-0" onclick="loadLesson(0); return false;">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center font-extrabold text-sm text-white shadow-lg shadow-red-500/25">SB</div>
+                <div class="hidden sm:block leading-tight">
+                    <div class="font-bold text-sm text-white flex items-center gap-2">Java Learning Path <span class="hidden md:inline-flex text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-gradient-to-r from-red-500 to-orange-600 text-white">JAVA 21</span></div>
+                    <div class="text-[11px] text-slate-500">5 Modul • 30 Pelajaran</div>
+                </div>
+                <span class="sm:hidden font-bold text-sm bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Java LP</span>
+            </a>
+            <!-- Search -->
+            <div class="flex-1 max-w-[420px] relative hidden md:block mx-2">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                <input id="lesson-search" type="text" placeholder="Cari pelajaran… ( / )" autocomplete="off" class="w-full h-9 bg-white/5 border border-white/10 rounded-xl pl-9 pr-10 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-red-500/40 focus:ring-2 focus:ring-red-500/20 transition">
+                <kbd class="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0a0f1a] border border-white/10 text-[11px] text-slate-500 px-1.5 py-0.5 rounded font-mono hidden lg:block">/</kbd>
             </div>
-            <div class="editor-foot">
-              <span class="foot-lang"><span class="dot"></span> Java 21 LTS • javac • auto-validated</span>
-              <span class="foot-hint">Tip: tekan <b>Cmd/Ctrl + Enter</b> untuk Run</span>
+            <!-- Progress + Actions -->
+            <div class="flex items-center gap-2 sm:gap-3 ml-auto shrink-0">
+                <div class="hidden sm:flex items-center gap-3">
+                    <div class="text-right leading-none">
+                        <div class="text-[11px] text-slate-500">Progress</div>
+                        <div class="text-xs font-mono font-semibold text-red-400" id="course-progress">0%</div>
+                        <div class="hidden" id="progress-text">0%</div>
+                    </div>
+                    <div class="w-20 lg:w-28 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div id="progress-fill" class="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full transition-all duration-500" style="width:0%"></div>
+                    </div>
+                </div>
+                <span class="sm:hidden text-xs font-mono text-red-400" id="mobile-progress">0%</span>
+                <button id="themeToggle" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white transition" title="Toggle theme">
+                    <i id="themeToggleIcon" class="fas fa-moon text-sm"></i>
+                </button>
+                <a href="https://github.com/personalbotai/java-learning-path" target="_blank" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hidden sm:flex items-center justify-center text-slate-400 hover:text-white transition" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
             </div>
-          </div>
-          <div id="tab-terminal" class="tab-panel">
-            <div class="terminal">
-              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">zsh — java-learning-path</span><button class="btn-ghost-sm" onclick="clearTerminal()">Clear</button></div>
-              <div id="terminal-log" class="term-log"><div class="term-line muted">$ ketik perintah — coba: <code>javac Main.java && java Main</code> • <code>java --version</code> • <code>help</code></div></div>
-              <div class="term-input-row"><span class="prompt">➜</span><input id="terminal-input" placeholder="javac Main.java && java Main" autocomplete="off"><button onclick="runTerminal()" class="btn-primary-sm">Enter</button></div>
+        </div>
+        <!-- thin progress bar under header (mobile accent) -->
+        <div class="h-[2px] w-full bg-transparent"><div id="progress-fill-bar" class="h-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-500" style="width:0%"></div></div>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden" onclick="closeSidebar()"></div>
+    <div id="backdrop" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden" onclick="closeSidebar()"></div>
+
+    <div class="flex h-[calc(100dvh-58px)] lg:h-[calc(100vh-58px)] overflow-hidden">
+        <!-- Sidebar kiri 300px: accordion 10 modul, lesson list, completed checkmarks -->
+        <aside id="sidebar" class="fixed lg:sticky top-[58px] lg:top-0 inset-y-0 left-0 z-50 w-[300px] shrink-0 bg-[#0f172a] lg:bg-[#0f172a] border-r border-white/5 flex flex-col h-[calc(100dvh-58px)] lg:h-[calc(100vh-58px)] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-out overflow-hidden">
+            <!-- Sidebar head -->
+            <div class="p-4 border-b border-white/5">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-[11px] font-bold tracking-widest text-slate-500 uppercase">Kurikulum</span>
+                    <span class="text-[11px] font-mono text-slate-500"><span id="stat-done">0</span>/30 selesai</span>
+                </div>
+                <!-- Mobile search inside sidebar -->
+                <div class="relative md:hidden">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input id="lesson-search-mobile" type="text" placeholder="Cari pelajaran…" class="w-full h-9 bg-white/5 border border-white/10 rounded-xl pl-9 pr-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-red-500/40">
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="output-wrap">
-          <div class="output-head"><span><i class="fa-solid fa-square-poll-vertical mr-2"></i>Output</span><button class="btn-ghost-sm" onclick="clearOutput()">Clear</button></div>
-          <pre id="output" class="output"><span class="muted"># Output akan muncul di sini — klik Run atau jalankan javac di terminal</span></pre>
-          <div id="validation-msg" class="validation hidden"></div>
-        </div>
-      </section>
+            <!-- Nav accordion -->
+            <nav id="lessons-nav" class="flex-1 overflow-y-auto py-2 scrollbar-thin px-2"></nav>
+            <!-- Footer -->
+            <div class="p-4 border-t border-white/5">
+                <button onclick="resetProgress()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-xs font-medium text-slate-400 hover:text-white transition">
+                    <i class="fas fa-rotate-left"></i> Reset Progress
+                </button>
+                <p class="text-[11px] text-center text-slate-600 mt-2">Progress tersimpan otomatis</p>
+            </div>
+        </aside>
 
-      <!-- Quiz -->
-      <section id="quiz-section" class="panel hidden" style="display:none">
-        <div class="quiz-head"><i class="fa-solid fa-circle-question"></i> Quiz — uji pemahamanmu</div>
-        <div id="quiz-content" class="quiz-content"></div>
-        <div class="quiz-actions">
-          <button class="btn-primary" onclick="checkQuiz()"><i class="fa-solid fa-paper-plane mr-2"></i>Submit Jawaban</button>
-          <span id="quiz-result" class="quiz-result"></span>
-        </div>
-      </section>
+        <!-- Main Content: markdown prose + code editor panel + quiz card -->
+        <main class="flex-1 flex flex-col overflow-hidden min-w-0 bg-[#0a0f1a]">
+            <!-- Lesson Header (sticky inside main) -->
+            <div id="lesson-header" class="sticky top-0 z-20 bg-[#0a0f1a]/90 backdrop-blur-xl border-b border-white/5 px-4 sm:px-8 py-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center gap-2 text-[11px] font-medium text-red-400 uppercase tracking-wider mb-1">
+                                <span id="breadcrumb">Pilih pelajaran untuk mulai</span>
+                                <span class="hidden" id="breadcrumb-module">Python</span>
+                                <span class="hidden" id="breadcrumb-lesson"></span>
+                            </div>
+                            <h1 id="lesson-title" class="text-base sm:text-xl font-bold text-white leading-tight truncate">Selamat Datang, Javanista! ☕</h1>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span id="lesson-duration" class="hidden text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-400"></span>
+                                <span id="lesson-level" class="hidden text-xs px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-300"></span>
+                                <span id="lesson-id" class="hidden text-xs font-mono text-slate-600"></span>
+                                <span id="lesson-meta" class="text-xs text-slate-500"></span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button id="complete-btn" onclick="markComplete()" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-red-600/20">
+                                <i class="fas fa-check text-xs"></i> Tandai Selesai
+                            </button>
+                            <button id="completed-btn" class="hidden items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-xl border border-emerald-500/20">
+                                <i class="fas fa-check-double"></i> Selesai ✓
+                            </button>
+                            <button id="complete-btn-mobile" onclick="markComplete()" class="sm:hidden flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-red-500 to-orange-600 text-white text-xs font-semibold rounded-xl" style="display:none">
+                                <i class="fas fa-check"></i> Selesai
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-      <!-- Nav -->
-      <div class="nav-buttons" id="nav-buttons" style="display:none">
-        <button class="btn-secondary" id="prev-btn" onclick="prevLesson()" disabled><i class="fa-solid fa-chevron-left mr-2"></i>Sebelumnya</button>
-        <div class="nav-center">
-          <button class="btn-complete" id="complete-btn" onclick="markComplete()"><i class="fa-solid fa-check mr-2"></i>Tandai Selesai</button>
-          <button class="btn-completed" id="completed-btn" style="display:none"><i class="fa-solid fa-check-double mr-2"></i>Selesai ✓</button>
-        </div>
-        <button class="btn-primary" id="next-btn" onclick="nextLesson()">Selanjutnya<i class="fa-solid fa-chevron-right ml-2"></i></button>
-      </div>
-      <footer class="site-foot">Dibuat dengan <i class="fa-solid fa-heart text-red-400"></i> untuk komunitas Java Indonesia • <a href="https://dev.java" target="_blank">dev.java</a> • <a href="https://github.com/personalbotai/java-learning-path" target="_blank">GitHub</a> • Java 21 LTS • records • sealed • pattern matching • virtual threads</footer>
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto scroll-smooth scrollbar-thin" id="content-scroll">
+                <div class="max-w-4xl mx-auto px-4 sm:px-8 py-8">
+                    <!-- Markdown prose -->
+                    <article id="lesson-content" class="prose prose-invert max-w-none">
+                        <div class="hero text-center py-10">
+                            <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-300 mb-6"><i class="fas fa-bolt"></i> Interaktif • Modern Java 21 LTS • Gratis</div>
+                            <div class="text-6xl mb-4">☕</div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">Belajar Java seperti engineer di GoTo, Traveloka & Tokopedia.</h2>
+                            <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed">Java Learning Path menyatukan <b class="text-white">55 pelajaran</b> terkurasi, <b class="text-white">editor Python live</b> (Pyodide), <b class="text-white">terminal output</b> & <b class="text-white">quiz</b> — semua jalan di browser, tanpa install. Materi modern: <code>match/case</code>, <code>walrus :=</code>, <code>X | Y</code>, <code>f\"{x=}\"</code>.</p>
+                            <div class="flex flex-wrap gap-3 justify-center mt-8">
+                                <button onclick="loadLesson(0)" class="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-red-600/20 transition"><i class="fas fa-play mr-2"></i>Mulai dari Awal</button>
+                                <button onclick="loadLesson(5)" class="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium rounded-xl transition"><i class="fas fa-code-branch mr-2"></i>Lompat ke records</button>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 text-center">
+                                <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">30</div><div class="text-xs text-slate-500">Pelajaran</div></div>
+                                <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">5</div><div class="text-xs text-slate-500">Modul</div></div>
+                                <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">21 LTS</div><div class="text-xs text-slate-500">Modern</div></div>
+                                <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">∞</div><div class="text-xs text-slate-500">Bisa diulang</div></div>
+                            </div>
+                        </div>
+                        <div class="cards grid sm:grid-cols-3 gap-4 mt-10">
+                            <div class="bg-[#111827] border border-white/5 rounded-2xl p-5"><i class="fas fa-code text-red-400 text-xl mb-3 block"></i><h3 class="font-semibold text-white mb-1">Editor Live</h3><p class="text-sm text-slate-400">Tulis & jalankan Java langsung. Simulasi javac/java di browser.</p></div>
+                            <div class="bg-[#111827] border border-white/5 rounded-2xl p-5"><i class="fas fa-terminal text-red-400 text-xl mb-3 block"></i><h3 class="font-semibold text-white mb-1">Terminal Output</h3><p class="text-sm text-slate-400">Lihat stdout/stderr real, debug records & sealed.</p></div>
+                            <div class="bg-[#111827] border border-white/5 rounded-2xl p-5"><i class="fas fa-brain text-red-400 text-xl mb-3 block"></i><h3 class="font-semibold text-white mb-1">Quiz Adaptif</h3><p class="text-sm text-slate-400">Setiap bab ada quiz — lulus untuk simpan progress.</p></div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Code Editor Panel: run button + terminal output -->
+                <div id="code-section" class="max-w-4xl mx-auto px-4 sm:px-8 pb-4">
+                    <div class="bg-[#111827] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+                        <div class="flex items-center justify-between px-4 py-3 bg-[#172033] border-b border-white/5">
+                            <div class="flex items-center gap-3">
+                                <div class="flex gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                                </div>
+                                <span class="text-xs text-slate-400 font-mono flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Main.java — Java 21</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="copyCode()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-medium rounded-lg transition"><i class="far fa-copy"></i> Copy</button>
+                                <button onclick="runCode()" class="flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 text-white text-xs font-bold rounded-lg transition shadow-lg shadow-red-600/20">
+                                    <i class="fas fa-play text-[10px]"></i> Run <span class="hidden sm:inline font-mono text-[10px] opacity-80">⌘↵</span>
+                                </button>
+                                <button onclick="resetCode()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-400 text-xs rounded-lg transition" title="Reset code"><i class="fas fa-rotate-left"></i></button>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <textarea id="code-editor" class="w-full bg-[#0a0f1a] text-red-100 font-['JetBrains_Mono',monospace] text-sm p-5 border-none resize-y min-h-[200px] focus:outline-none focus:ring-0 placeholder-slate-600 leading-relaxed" rows="10" spellcheck="false" placeholder="// Tulis kode Java 21 di sini...
+// contoh: records, sealed, pattern matching, virtual threads ..."></textarea>
+                        </div>
+                        <div class="border-t border-white/5">
+                            <div class="px-4 py-2 flex items-center justify-between bg-[#172033]">
+                                <span class="flex items-center gap-2 text-[11px] font-semibold tracking-wider text-slate-400 uppercase"><i class="fas fa-terminal text-[10px]"></i> Output</span>
+                                <button onclick="clearOutput()" class="text-[11px] text-slate-500 hover:text-white transition">Clear</button>
+                            </div>
+                            <div id="output" class="px-5 py-4 bg-black/40 font-['JetBrains_Mono',monospace] text-sm text-emerald-400 min-h-[80px] max-h-[260px] overflow-auto whitespace-pre-wrap"><span class="text-slate-600">$ javac Main.java && java Main — tekan Run</span></div>
+                        </div>
+                    </div>
+                    <div id="validation-msg" class="mt-3 p-4 rounded-xl hidden text-sm border"></div>
+                </div>
+
+                <!-- Quiz Card -->
+                <div id="quiz-section" class="max-w-4xl mx-auto px-4 sm:px-8 pb-4 hidden">
+                    <div class="bg-[#111827] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+                        <div class="flex items-center gap-3 px-6 py-4 bg-[#172033] border-b border-white/5">
+                            <div class="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center"><i class="fas fa-brain text-red-400"></i></div>
+                            <h3 class="font-bold text-white">Quiz — uji pemahamanmu</h3>
+                        </div>
+                        <div class="p-6">
+                            <div id="quiz-content" class="space-y-3"></div>
+                            <button onclick="checkQuiz()" class="mt-5 px-6 py-2.5 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-red-600/20">
+                                <i class="fas fa-paper-plane mr-2"></i>Submit Jawaban
+                            </button>
+                            <div id="quiz-result" class="mt-4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="max-w-4xl mx-auto px-4 sm:px-8 py-6">
+                    <div class="flex items-center justify-between gap-3">
+                        <button id="prev-btn" onclick="prevLesson()" disabled class="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 text-sm font-medium rounded-xl transition disabled:opacity-30 disabled:cursor-not-allowed border border-white/5">
+                            <i class="fas fa-chevron-left text-xs"></i> Prev
+                        </button>
+                        <button id="next-btn" onclick="nextLesson()" class="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-400 hover:to-orange-500 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-red-600/20">
+                            Next <i class="fas fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="max-w-4xl mx-auto px-4 sm:px-8 pb-8 text-center text-xs text-slate-600 border-t border-white/5 pt-6 mt-2">
+                    <p>Java Learning Path — dibuat dengan <i class="fas fa-heart text-red-500/60"></i> untuk developer Indonesia • Modern Python 3.12+</p>
+                    <p class="mt-1">© 2024 personalbotai · <a href="https://github.com/personalbotai/java-learning-path" class="hover:text-red-400 transition">GitHub</a> · <a href="https://docs.oracle.com/en/java/" target="_blank" class="hover:text-red-400 transition">docs.oracle.com</a></p>
+                </footer>
+            </div>
+        </main>
     </div>
-  </main>
-</div>
 
-<script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+    <script src="app.js"></script>
+    <script>
+    // Theme toggle (light/dark) — persist
+    (function(){
+        const btn=document.getElementById('themeToggle');
+        const icon=document.getElementById('themeToggleIcon');
+        const html=document.documentElement;
+        function apply(theme){
+            if(theme==='light'){ html.classList.remove('dark'); html.classList.add('light'); if(icon){ icon.className='fas fa-sun text-sm'; } }
+            else { html.classList.add('dark'); html.classList.remove('light'); if(icon){ icon.className='fas fa-moon text-sm'; } }
+        }
+        const saved=localStorage.getItem('java_theme')||'dark';
+        apply(saved);
+        if(btn) btn.addEventListener('click',()=>{
+            const isDark=html.classList.contains('dark');
+            const next=isDark?'light':'dark';
+            localStorage.setItem('java_theme', next);
+            apply(next);
+        });
+        // Search: filter via renderNav(filter) if supported
+        const s=document.getElementById('lesson-search');
+        const sm=document.getElementById('lesson-search-mobile');
+        function bindSearch(el){
+            if(!el) return;
+            el.addEventListener('input',()=>{
+                const v=el.value;
+                // sync both inputs
+                if(s && el!==s) s.value=v;
+                if(sm && el!==sm) sm.value=v;
+                if(typeof renderNav==='function'){
+                    try{ renderNav(v); }catch(e){ renderNav(); }
+                }
+            });
+            el.addEventListener('keydown',e=>{
+                if(e.key==='Enter'){
+                    e.preventDefault();
+                    // jump to first filtered lesson
+                    const q=v=>v&&v.toLowerCase();
+                    const query=(el.value||'').toLowerCase();
+                    if(!query) return;
+                    const idx=lessons.findIndex(l=>l.title.toLowerCase().includes(query));
+                    if(idx>=0) loadLesson(idx);
+                }
+            });
+        }
+        bindSearch(s); bindSearch(sm);
+        // "/" shortcut
+        document.addEventListener('keydown',e=>{
+            if(e.key==='/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)){
+                e.preventDefault(); s?.focus();
+            }
+            if((e.metaKey||e.ctrlKey) && e.key==='Enter'){ e.preventDefault(); if(typeof runCode==='function') runCode(); }
+            if(e.key==='Escape'){ if(typeof closeSidebar==='function') closeSidebar(); }
+        });
+        // Mobile drawer toggle (both IDs)
+        const mt=document.getElementById('menuToggle');
+        const st=document.getElementById('sidebar-toggle');
+        const sb=document.getElementById('sidebar');
+        const ov=document.getElementById('sidebar-overlay');
+        const bd=document.getElementById('backdrop');
+        function openSidebar(){
+            sb?.classList.add('sidebar-open'); sb?.classList.remove('-translate-x-full');
+            ov?.classList.remove('hidden'); ov?.classList.add('overlay-open');
+            bd?.classList.remove('hidden'); bd?.classList.add('show');
+        }
+        function closeSidebarFn(){
+            sb?.classList.remove('sidebar-open'); sb?.classList.add('-translate-x-full');
+            // keep lg translate
+            if(window.innerWidth>=1024){ sb?.classList.remove('-translate-x-full'); sb?.classList.add('lg:translate-x-0'); }
+            ov?.classList.add('hidden'); ov?.classList.remove('overlay-open');
+            bd?.classList.add('hidden'); bd?.classList.remove('show');
+        }
+        window.closeSidebar=closeSidebarFn;
+        window.openSidebar=openSidebar;
+        if(mt) mt.addEventListener('click',()=>{
+            const isOpen=sb?.classList.contains('sidebar-open');
+            if(isOpen) closeSidebarFn(); else openSidebar();
+        });
+        if(st) st.addEventListener('click',()=>{
+            const isOpen=sb?.classList.contains('sidebar-open');
+            if(isOpen) closeSidebarFn(); else openSidebar();
+        });
+        if(ov) ov.addEventListener('click', closeSidebarFn);
+        if(bd) bd.addEventListener('click', closeSidebarFn);
+    })();
+    function copyCode(){
+        const ta=document.getElementById('code-editor');
+        if(!ta) return;
+        navigator.clipboard.writeText(ta.value).then(()=>{
+            const out=document.getElementById('output');
+            if(out) out.innerHTML='<span class="text-red-400">✓ Kode disalin ke clipboard</span>';
+        });
+    }
+    function clearOutput(){
+        const o=document.getElementById('output');
+        if(o) o.innerHTML='<span class="text-slate-600">// Output dibersihkan — tekan Run</span>';
+        const v=document.getElementById('validation-msg'); if(v){ v.className='hidden'; v.innerHTML=''; }
+    }
+    </script>
+
+    <script>
+    // Legacy ID aliases -> unified template mirror (auto-sync)
+    (function(){
+        const pairs = [
+            ['lessonBody','lesson-content'],
+            ['contentArea','content-scroll'],
+            ['menu-toggle','menuToggle'],
+            ['sidebar-toggle','menuToggle'],
+            ['theme-icon','themeToggleIcon'],
+            ['themeToggleIcon','theme-icon'],
+            ['searchInput','lesson-search'],
+            ['searchInputMobile','lesson-search-mobile'],
+            ['sidebar-completed-count','stat-done'],
+            ['sidebar-progress-text','course-progress'],
+            ['progress-count','stat-done'],
+            ['nav-buttons','next-btn'],
+        ];
+        for (const [oldId, newId] of pairs) {
+            if (document.getElementById(oldId)) continue;
+            const src = document.getElementById(newId);
+            if (!src) continue;
+            const tag = src.tagName.toLowerCase();
+            const alias = document.createElement(tag === 'input' ? 'input' : 'span');
+            alias.id = oldId;
+            alias.style.display = 'none';
+            alias.setAttribute('data-alias-for', newId);
+            src.parentNode.insertBefore(alias, src.nextSibling);
+            // two-way value mirror for inputs
+            if (tag === 'input') {
+                src.addEventListener('input', () => { alias.value = src.value; alias.dispatchEvent(new Event('input',{bubbles:true})); });
+                alias.addEventListener('input', () => { src.value = alias.value; src.dispatchEvent(new Event('input',{bubbles:true})); });
+            }
+        }
+        // sync text content of mirrored counters every 500ms
+        const mirrors = [['stat-done','sidebar-completed-count'],['stat-done','progress-count'],['course-progress','sidebar-progress-text']];
+        setInterval(() => {
+            for (const [a,b] of mirrors) {
+                const ea = document.getElementById(a), eb = document.getElementById(b);
+                if (ea && eb && eb.textContent !== ea.textContent) eb.textContent = ea.textContent;
+            }
+        }, 500);
+        // gutter stub: no-op updateGutter guard
+        if (!document.getElementById('editor-gutter')) {
+            const g = document.createElement('div'); g.id = 'editor-gutter'; g.style.display = 'none';
+            document.body.appendChild(g);
+        }
+        if (!document.getElementById('quiz-feedback')) {
+            const q = document.createElement('div'); q.id = 'quiz-feedback'; q.style.display = 'none';
+            const qs = document.getElementById('quiz-section');
+            (qs || document.body).appendChild(q);
+        }
+        if (!document.getElementById('terminal-input')) {
+            const t = document.createElement('input'); t.id = 'terminal-input'; t.style.display = 'none';
+            document.body.appendChild(t);
+        }
+        if (!document.getElementById('info-banner')) {
+            const ib = document.createElement('div'); ib.id = 'info-banner'; ib.style.display = 'none';
+            document.body.appendChild(ib);
+        }
+        // contentArea.scrollTo proxy -> content-scroll
+        const ca = document.getElementById('contentArea');
+        if (ca && !ca.__proxied) {
+            ca.__proxied = true;
+            const cs = document.getElementById('content-scroll');
+            if (cs) { ca.scrollTo = cs.scrollTo.bind(cs); }
+        }
+    })();
+    </script>
+
 </body>
 </html>
