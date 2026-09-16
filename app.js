@@ -2365,8 +2365,51 @@ function enhanceCodeBlocks(container) {
 }
 
 // ============ Code Execution (Simulation) ============
-function runCode() {
+async function runCode() {
     const lesson = LESSONS[currentLessonIndex];
+    // --- real compile via Judge0 CE (JDK 17), fallback to local println simulation ---
+    try {
+        const _edJ = document.getElementById('code-editor');
+        const _outJ = document.getElementById('output');
+        const _valJ = document.getElementById('validation-msg');
+        if (_edJ && _outJ) {
+            _outJ.innerHTML = '<span class="text-slate-400">\u23f3 Compiling & running (JDK 17)…</span>';
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 30000);
+            const res = await fetch('https://ce.judge0.com/submissions?base64_encoded=false&wait=true', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ language_id: 91, source_code: _edJ.value }),
+                signal: controller.signal
+            });
+            clearTimeout(timer);
+            if (res.ok) {
+                const j = await res.json();
+                const okStatus = j.status && j.status.id === 3;
+                if (okStatus && j.stdout != null) {
+                    const txt = j.stdout || '(tidak ada output — program selesai tanpa print)';
+                    _outJ.innerHTML = '<div class="mb-2 text-slate-500 text-xs">// Output — real compile JDK 17 (Judge0)</div><div class="text-emerald-400 whitespace-pre-wrap">' + escapeHtml(txt) + '</div>';
+                    const exp = (lesson.expectedOutput || '').trim();
+                    if (exp && txt.includes(exp.split('\n')[0].trim().slice(0, 40))) {
+                        _valJ.className = 'validation correct'; _valJ.classList.remove('hidden');
+                        _valJ.innerHTML = '<i class="fas fa-check-circle mr-2 text-emerald-400"></i><strong>Output sesuai!</strong> Real compile JDK 17 — progress tersimpan.';
+                        try { const prog = JSON.parse(localStorage.getItem('java_progress') || '{}'); prog[lesson.id ?? currentLessonIndex] = true; localStorage.setItem('java_progress', JSON.stringify(prog)); } catch {}
+                    } else if (exp) {
+                        _valJ.className = 'validation wrong'; _valJ.classList.remove('hidden');
+                        _valJ.innerHTML = '\U0001f4a1 Output real belum sesuai. Harus mengandung: <b>' + escapeHtml(exp.split('\n')[0].trim().slice(0, 80)) + '</b>';
+                    }
+                    try { if (typeof termLog === 'function') termLog('$ javac Main.java && java Main — real compile OK', 'success'); } catch {}
+                    return;
+                } else {
+                    const err = j.stderr || j.compile_output || j.message || (j.status && j.status.description) || 'Compile error';
+                    _outJ.innerHTML = '<div class="mb-2 text-slate-500 text-xs">// Compiler error — JDK 17</div><div class="text-rose-400 whitespace-pre-wrap">' + escapeHtml(String(err).slice(0, 1500)) + '</div>';
+                    _valJ.className = 'validation wrong'; _valJ.classList.remove('hidden');
+                    _valJ.innerHTML = '\u274c Compile error — perbaiki kode lalu Run lagi.';
+                    return;
+                }
+            }
+        }
+    } catch (e) { /* network fail -> local simulation below */ }
     const _ed=document.getElementById('code-editor');
     const userCode = _ed ? _ed.value : '';
     const output = document.getElementById('output');
