@@ -1,81 +1,110 @@
 # Throw dan Throws
 
-Kata kunci `throw` digunakan untuk melempar exception, sedangkan `throws` pada method signature untuk deklarasikan exception yang mungkin dilempar ke caller.
+`throw` **melempar** instance exception; `throws` **mendeklarasikan** di signature bahwa method dapat melempar checked exception ke caller. Keduanya adalah kontrak error handling Java.
 
-## Throw
+## Throw — melempar instance
 
-Anda dapat melempar instance dari `Throwable` (biasanya `Exception` atau subclass). Contoh:
-
-```
+```java
 public void setAge(int age) {
-    if (age < 0) {
-        throw new IllegalArgumentException("Age cannot be negative");
-    }
+    if (age < 0) throw new IllegalArgumentException("Age cannot be negative: " + age);
     this.age = age;
 }
-
-```
-
-Untuk membuat exception kustom, extends `Exception` (checked) atau `RuntimeException` (unchecked).
-
-## Throws (Method Declaration)
-
-Jika sebuah method melempan checked exception, harus dideklarasikan dengan `throws`:
-
-```
-public String readFile(String path) throws IOException {
-    Files.readString(Path.of(path));
+// custom exception
+class SaldoTidakCukupException extends RuntimeException {
+    SaldoTidakCukupException(String msg){ super(msg); }
 }
-
+void tarik(double jumlah){
+    if (jumlah > saldo) throw new SaldoTidakCukupException("Saldo kurang");
+    saldo -= jumlah;
+}
 ```
 
-Caller harus menangani atau propagasikan exception tersebut:
+Selalu `throw new XException(...)` — throw butuh objek, bukan class.
 
-```
+## Throws — deklarasi di method
+
+Jika method melempar checked exception, wajib dideklarasikan:
+
+```java
+public String readFile(String path) throws IOException {
+    return Files.readString(Path.of(path));
+}
+// caller harus handle:
 try {
-    String content = readFile("file.txt");
+    String c = readFile("file.txt");
 } catch (IOException e) {
     e.printStackTrace();
 }
-
 ```
 
-Beberapa method dapat menimbulkan lebih dari satu exception, tuliskan dengan koma:
+Multiple: `throws IOException, ParseException`. Unchecked (`RuntimeException`) tidak wajib dideklarasikan.
 
-```
-public void process() throws IOException, ParseException { ... }
+## Checked vs Unchecked — kapan pakai?
 
-```
+- **Checked**: kondisi recoverable (I/O, network, parsing) — caller diharapkan handle.
+- **Unchecked**: programming error (illegal argument, null, index) — fail fast.
 
-## Unchecked Exception (RuntimeException)
+## Throwable vs Exception — jangan throw Error
 
-Tidak perlu dideklarasikan dengan `throws`; caller tidak wajib menangkap. Contoh: `NullPointerException`, `IllegalArgumentException`.
+`Error` untuk kondisi fatal JVM (OutOfMemoryError). Aplikasi hanya throw `Exception`/`RuntimeException`.
 
-## Throwable vs Exception
+## Chaining — bungkus cause
 
-Sebaiknya jangan melempar `Error` atau `Throwable`. Gunakan only `Exception` atau subclass.
-
-## Try-catch dengan Throw
-
-Anda bisa combine:
-
-```
+```java
 try {
-    somethingRisky();
-} catch (SomeException e) {
-    throw new RuntimeException("Wrapped", e); // rethrow with cause
+    risky();
+} catch (IOException e) {
+    throw new RuntimeException("Gagal proses", e); // sertakan cause
 }
-
 ```
+
+Gunakan `e.getCause()` untuk root cause.
+
+## Sealed Exception Hierarchy (Java 17+)
+
+Untuk domain error tertutup, sealed memberi exhaustiveness di switch:
+
+```java
+public sealed class AppError extends RuntimeException permits ValidationError, NotFoundError {}
+public final class ValidationError extends AppError { ValidationError(String m){super(m);} }
+public final class NotFoundError extends AppError { NotFoundError(String m){super(m);} }
+```
+
+## Runnable — throw/throws + sealed (JDK 17)
+
+```java
+import java.io.*;
+import java.nio.file.*;
+
+public sealed class AppError extends RuntimeException permits ValidationError, NotFoundError {
+    AppError(String m){ super(m); }
+}
+final class ValidationError extends AppError { ValidationError(String m){ super(m); } }
+final class NotFoundError extends AppError { NotFoundError(String m){ super(m); } }
+
+public class Main {
+    static void validasiUmur(int umur) {
+        if (umur < 18) throw new ValidationError("Umur belum 18: " + umur);
+        System.out.println("Akses diterima umur " + umur);
+    }
+    static String baca(String p) throws IOException {
+        return Files.readString(Path.of(p)); // checked — wajib throws
+    }
+    public static void main(String[] args) {
+        try { validasiUmur(15); }
+        catch (AppError e) {
+            System.out.println("Tertangkap: " + e.getClass().getSimpleName() + " -> " + e.getMessage());
+        }
+        validasiUmur(20);
+        System.out.println("Selesai tanpa error");
+    }
+}
+```
+
+Jalankan di editor — lihat sealed hierarchy + throw/throws bekerja, compiler memverifikasi permits.
 
 ## Best Practice
 
-- Gunakan checked exception untuk recoverable conditions (seperti I/O error, file not found).
-
-- Gunakan unchecked exception untuk programming errors (illegal argument, null).
-
-- Buat custom exception jika semantics berbeda (misal `InsufficientFundsException`).
-
-- Always provide a descriptive message when constructing exception.
-
-- Sertakan cause (throw new ...(cause)) untuk wrapped exception.
+- Beri pesan deskriptif saat `throw new`.
+- Sertakan cause saat wrap exception.
+- Buat custom exception jika semantik berbeda; pertimbangkan sealed untuk set error tertutup.

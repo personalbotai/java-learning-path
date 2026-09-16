@@ -1,101 +1,107 @@
 # Interfaces Dasar
 
-**Interface** adalah kontrak yang mendefinisikan method abstract (sebelum Java 8) yang harus diimplementasikan oleh class. Sejak Java 8, interface dapat memiliki `default` dan `static` methods.
+**Interface** adalah kontrak — mendefinisikan method yang harus diimplementasikan class. Sejak Java 8, interface juga boleh memiliki `default` dan `static` methods; sejak Java 9, `private` methods.
 
-## Definisi Interface
+## Definisi
 
-```
+```java
 public interface Drawable {
-    void draw(); // implicitly public abstract
+    void draw(); // implisit public abstract
 }
-
-```
-
-Implementasi:
-
-```
 public class Circle implements Drawable {
-    @Override
-    public void draw() {
-        System.out.println("Drawing circle");
-    }
+    @Override public void draw(){ System.out.println("Drawing circle"); }
 }
-
 ```
 
 Class dapat implements multiple interfaces:
 
-```
-class MyClass implements Runnable, Serializable, Closeable { ... }
-
+```java
+class MyClass implements Runnable, AutoCloseable {
+    public void run(){}
+    public void close(){}
+}
 ```
 
 ## Default Methods (Java 8+)
 
-Interface bisa memiliki concrete method menggunakan `default`keyword:
+Memberi implementasi default tanpa memaksa semua implementor override:
 
-```
+```java
 public interface Logger {
     void log(String msg);
-    default void logInfo(String msg) {
-        log("[INFO] " + msg);
-    }
+    default void logInfo(String msg){ log("[INFO] " + msg); }
+    default void logError(String msg){ log("[ERROR] " + msg); }
 }
-
 ```
-
-Class yang implements `Logger` dapat mengambil alih `logInfo` atau menggunakan default.
 
 ## Static Methods di Interface
 
-Static methods also belong to interface, dipanggil via `InterfaceName.method()`:
-
-```
+```java
 public interface MathUtil {
-    static int square(int x) { return x*x; }
+    static int square(int x){ return x*x; }
 }
-int y = MathUtil.square(5);
-
+int y = MathUtil.square(5); // 25
 ```
+
+Dipanggil via `InterfaceName.method()`.
 
 ## Constant Fields
 
-Fields dalam interface secara otomatis `public static final`:
-
+```java
+public interface Status { int OK = 200; } // public static final implisit
 ```
-public interface Status {
-    int OK = 200; // constant
+
+## Sealed Interface (Java 17+)
+
+```java
+public sealed interface Payment permits QrisPayment, CashPayment {}
+public final class QrisPayment implements Payment {}
+public final class CashPayment implements Payment {}
+```
+
+Compiler memastikan hanya permits yang boleh implement — berguna untuk exhaustive switch.
+
+## Functional Interface
+
+Hanya satu abstract method — target untuk lambda:
+
+```java
+@FunctionalInterface interface Operasi { int hitung(int a, int b); }
+Operasi tambah = (a,b) -> a+b;
+```
+
+## Runnable — interface + records + sealed (JDK 17)
+
+```java
+public sealed interface Pembayaran permits QrisPayment, TunaiPayment {
+    void bayar(double jumlah);
+    default void struk(double jumlah){
+        System.out.println("[STRUK] Bayar: Rp " + jumlah);
+    }
 }
-
-```
-
-## Basic vs. Inheritance Differences
-
-- Interface mendukung multiple inheritance of type (class bisa implements banyak interface).
-
-- Abstract class bisa memiliki state; interface cannot have instance fields (sebelum Java 8, bisa static final).
-
-- Methods in interface are public by default (cannot be protected or private). Default methods are public.
-
-## Functional Interfaces
-
-Interface dengan tepat satu abstract method disebut *functional interface*. Dapat digunakan dengan lambda expressions.
-
-```
-@FunctionalInterface
-interface Predicate {
-    boolean test(T t);
-    // default methods also allowed, but only one abstract
+public final class QrisPayment implements Pembayaran {
+    public void bayar(double j){ System.out.println("QRIS Rp " + j + " berhasil"); }
 }
-
+public final class TunaiPayment implements Pembayaran {
+    public void bayar(double j){ System.out.println("Tunai Rp " + j + " diterima"); }
+}
+public record Transaksi(String id, double jumlah, String metode) {}
+public class Main {
+    public static void main(String[] args) {
+        Pembayaran p1 = new QrisPayment();
+        Pembayaran p2 = new TunaiPayment();
+        p1.bayar(75000); p1.struk(75000);
+        p2.bayar(50000); p2.struk(50000);
+        var t = new Transaksi("TX-001", 75000, "QRIS");
+        System.out.println("Record transaksi: " + t);
+    }
+}
 ```
+
+Sealed interface + records + default method — semua runnable di Judge0 JDK 17 tanpa flag tambahan.
 
 ## Best Practice
 
-- Use interfaces to define contracts and enable polymorphic behavior.
-
-- Prefer interface over abstract class for maximum flexibility.
-
-- Use default methods to evolve interfaces without breaking existing implementations.
-
-- Keep interfaces small and cohesive (Interface Segregation Principle).
+- Program to interface: `List` bukan `ArrayList` sebagai tipe reference.
+- Gunakan default method untuk evolusi API tanpa break implementor lama.
+- Untuk hierarki tertutup, prefer `sealed interface` agar switch exhaustive.

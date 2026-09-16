@@ -97,10 +97,12 @@ Cukup ubah `stream()` menjadi `parallelStream()` untuk memanfaatkan multiple cor
 Selain Streams untuk pemrosesan paralel data, Java 21 LTS memperkenalkan **Virtual Threads** melalui `Thread.ofVirtual().start(...)` — thread ringan (lightweight) yang memungkinkan jutaan thread konkuren tanpa overhead OS threads. Cocok untuk I/O-bound workloads yang sebelumnya membutuhkan thread pool kompleks:
 
 ```
-Thread.ofVirtual().start(() -> {
-    System.out.println("Running on Virtual Thread: " + Thread.currentThread());
-});
-// Alternatif: Executors.newVirtualThreadPerTaskExecutor()
+// Java 21 LTS (Project Loom) — Virtual Threads (runnable di JDK 21):
+// Thread.ofVirtual().start(() -> System.out.println("VT: " + Thread.currentThread()));
+// ExecutorService vExec = Executors.newVirtualThreadPerTaskExecutor();
+// Runnable di JDK 17 (Judge0 language_id 91) — platform thread sebagai analog:
+Thread t = new Thread(() -> System.out.println("Running on thread: " + Thread.currentThread().getName()));
+t.start(); try{t.join();}catch(InterruptedException e){}
 ```
 
 ## Best Practice

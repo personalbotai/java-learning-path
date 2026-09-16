@@ -1,87 +1,89 @@
 # Hello World
 
-Selamat! Anda telah mempelajari instalasi, struktur program, variabel, dan I/O. Sekarang saatnya menulis program pertama Anda: **Hello World**. Ini tradisi pemrograman sejak awal.
+Selamat! Anda telah memahami instalasi, struktur program, variabel, dan I/O. Saatnya menulis program pertama: **Hello World** — tradisi sejak Kernighan & Ritchie (1978).
 
 ## Kode Hello World
 
-Buat file bernama `HelloWorld.java` dengan isi:
+Buat file `HelloWorld.java`:
 
-```
+```java
 public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
     }
 }
-
 ```
 
-Perlu diingat:
-
-- Nama file harus persis sama dengan nama public class (`HelloWorld.java`).
-
-- Java bersifat case-sensitive.
-
-- Kode berada dalam method `main`; JVM akan memanggilnya saat program dijalankan.
+Ingat:
+- Nama file harus persis `HelloWorld.java` (case-sensitive, sesuai public class).
+- Kode berada di `main` — entry point yang dipanggil JVM.
+- Setiap statement diakhiri `;`.
 
 ## Kompilasi
 
-Buka terminal, navigasi ke direktori penyimpanan file, lalu jalankan:
-
-```
+```bash
 javac HelloWorld.java
-
 ```
 
-Jika tidak ada kesalahan, akan terbuat file `HelloWorld.class` (bytecode).
+Jika sukses, terbentuk `HelloWorld.class` (bytecode). `javac` adalah compiler, `java` adalah launcher.
 
 ## Eksekusi
 
-Jalankan program dengan perintah:
-
-```
+```bash
 java HelloWorld
-
 ```
 
-Output yang diharapkan:
+Output:
 
 ```
 Hello, World!
-
 ```
 
-Jangan tambahkan `.class` ekstensi saat menjalankan. Juga, pastikan Anda berada di direktori yang mengandung `.class` tersebut.
+Jangan tulis `java HelloWorld.class` — cukup nama class. Pastikan di direktori yang mengandung `.class`.
 
-## Penjelasan Kode
+## Penjelasan Detail
 
-- `public class HelloWorld` — mendefinisikan class yang dapat diakses dari luar.
+- `public class HelloWorld` — class publik, dapat diakses JVM.
+- `public static void main(String[] args)`:
+  - `public`: JVM dapat memanggil dari luar.
+  - `static`: tanpa instansiasi.
+  - `void`: tidak return value.
+  - `String[] args`: argumen command-line (`java HelloWorld arg1 arg2`).
+- `System.out.println(...)` — `System.out` adalah `PrintStream`, `println` cetak + newline.
 
-- `public static void main(String[] args)` — entry point program. Kata kunci:
-  
-    
-- `public`: akses dari JVM.
-    
-- `static`: tidak perlu instansiasi class.
-    
-- `void`: tidak mengembalikan nilai.
-    
-- `String[] args`: argumen command-line (belum digunakan).
-  
+## Variasi — args & printf
 
-- `System.out.println(...)` — mencetak teks ke console, followed by newline.
+```java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Args count: " + args.length);
+        for (int i=0;i<args.length;i++) System.out.printf("args[%d]=%s%n", i, args[i]);
+        System.out.println("Hello, World!");
+    }
+}
+```
 
-## Kesalahan Umum
+Jalankan: `java Main Alice Bob` → lihat args tercetak.
 
-- **Class name tidak sama dengan file name** — compiler error.
+## Runnable — Hello World + record (JDK 17)
 
-- **Tidak ada method main** — program tidak dapat dijalankan.
+```java
+public record Greeting(String message) {}
 
-- **Kompilasi dengan versi JDK berbeda` — pastikan `javac` dan `java` versinya match.
+public class Main {
+    public static void main(String[] args) {
+        var g = new Greeting("Hello, World!");
+        System.out.println(g.message());
+        System.out.println("Record: " + g);
+        System.out.printf("Args: %s%n", args.length==0 ? "(none)" : String.join(", ", args));
+    }
+}
+```
 
-- **Path atau classpath salah** — gunakan direktori saat ini atau atur `CLASSPATH` dengan benar.
+Record membuat data greeting immutable tanpa boilerplate. Copy ke editor dan Run (Judge0 JDK 17) — lihat `record` bekerja sebagai data carrier modern.
 
-## Langkah Selanjutnya
+## Error Umum
 
-Setelah Hello World berhasil, Anda siap mengeksplorasi dasar-dasar lainnya: variabel, tipe data, kontrol alur (if/else, loops), serta pengumpulan input dari pengguna. Modul-modul berikutnya akan membahas masing-masing topik secara mendalam.
-
-Selamat mengoding! Dunia Java menanti Anda.
+- `error: class HelloWorld is public, should be declared in a file named HelloWorld.java` → nama file salah.
+- `Error: Could not find or load main class` → salah direktori/classpath.
+- Lupa `;` → compile error.

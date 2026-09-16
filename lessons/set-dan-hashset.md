@@ -1,77 +1,96 @@
 # Set dan HashSet
 
-`Set<E>` adalah koleksi yang tidak mengizinkan duplikat (berdasarkan `equals` dan `hashCode`). Implementasi paling umum: `HashSet`.
+`Set<E>` adalah koleksi yang **tidak mengizinkan duplikat** (berdasarkan `equals`/`hashCode`). Implementasi utama: `HashSet` (hash table), `LinkedHashSet` (urutan insertion), `TreeSet` (terurut).
 
-## HashSet
+## HashSet — dasar
 
-Tidak mempertahankan urutan (kecuali dengan `LinkedHashSet` atau `TreeSet`).
+Tidak mempertahankan urutan. Operasi add/contains/remove rata-rata O(1).
 
-```
+```java
 Set<String> set = new HashSet<>();
 set.add("apple");
 set.add("orange");
-set.add("apple"); // ignored (duplicate)
+set.add("apple"); // diabaikan (duplikat)
 System.out.println(set.size()); // 2
-boolean hasBanana = set.contains("banana");
+System.out.println(set.contains("banana")); // false
 set.remove("orange");
-
 ```
 
-## Iterasi Set
+## Iterasi
 
-Sama seperti List, tapi tidak ada index:
-
-```
+```java
 for (String fruit : set) {
     System.out.println(fruit);
 }
-
+// atau
+set.forEach(System.out::println);
 ```
 
-## LinkedHashSet dan TreeSet
+## LinkedHashSet vs TreeSet
 
-- `LinkedHashSet`: mempertahankan urutan insertion (predictable iteration order).
+- `LinkedHashSet`: mempertahankan urutan insertion (predictable iteration).
+- `TreeSet`: urutan natural atau `Comparator` (sorted set).
 
-- `TreeSet`: urutan natural atau custom `Comparator` (sorted set).
-
-```
+```java
 Set<Integer> sorted = new TreeSet<>(List.of(3,1,2));
-System.out.println(sorted); // [1,2,3]
+System.out.println(sorted); // [1, 2, 3]
 
+Set<String> linked = new LinkedHashSet<>(List.of("c","a","b","a"));
+System.out.println(linked); // [c, a, b]
 ```
 
-## equals() dan hashCode
+## equals() dan hashCode — wajib untuk custom object
 
-Untuk kerja Set, class yang disimpan harus meng-override `equals()` dan `hashCode()` konsisten.
+Tanpa override yang konsisten, dua objek dengan nilai sama dianggap berbeda.
 
+```java
+public record Person(String name, int age) {}
+// record otomatis generate equals/hashCode berdasarkan komponen — ideal untuk Set key
 ```
+
+Jika pakai class biasa:
+
+```java
 class Person {
-    String name;
-    int age;
-    @Override public boolean equals(Object o) { ... }
-    @Override public int hashCode() { ... }
+    String name; int age;
+    Person(String n, int a){ name=n; age=a; }
+    @Override public boolean equals(Object o){
+        if(!(o instanceof Person p)) return false;
+        return age==p.age && Objects.equals(name,p.name);
+    }
+    @Override public int hashCode(){ return Objects.hash(name, age); }
 }
-
 ```
 
-Jika tidak, dua objek dengan nilai sama dianggap berbeda.
+## Operasi Himpunan
 
-## Operasi Set
+- `addAll(c)` — union, `retainAll(c)` — intersection, `removeAll(c)` — difference.
+- `Set.of("a","b","c")` — immutable set (Java 9+, null tidak diizinkan).
 
-- `set.addAll(collection)` — union.
+## Runnable — records + Set (JDK 17, Judge0 language_id 91)
 
-- `set.retainAll(collection)` — intersection.
+```java
+import java.util.*;
 
-- `set.removeAll(collection)` — difference.
+public record Person(String name, int age) {}
 
-## Performance
+public class Main {
+    public static void main(String[] args) {
+        Set<Person> team = new HashSet<>();
+        team.add(new Person("Andi", 25));
+        team.add(new Person("Budi", 25));
+        team.add(new Person("Andi", 25)); // duplikat — ditolak
+        System.out.println("Ukuran team: " + team.size()); // 2
+        team.forEach(p -> System.out.println("- " + p.name() + " " + p.age()));
+        System.out.println("Immutable: " + Set.of("Admin","User"));
+    }
+}
+```
 
-HashSet: add/remove/contains O(1) average.
+Copy-paste ke editor dan Run — lihat record menangani equals/hashCode otomatis tanpa boilerplate.
 
 ## Best Practice
 
-- Gunakan `Set` ketika perlu memastikan tidak ada duplikat.
-
-- Prioritaskan `HashSet` untuk performa; jika perlu urutan, pilih `LinkedHashSet` atau `TreeSet`.
-
-- Selalu override `equals` dan `hashCode` untuk custom objects yang digunakan di Set atau Map.
+- Gunakan `Set` ketika duplikat harus dicegah; pilih `HashSet` default.
+- Selalu override `equals`/`hashCode` untuk custom objects, atau gunakan `record`.
+- Untuk urutan, pilih `LinkedHashSet`/`TreeSet` secara eksplisit.

@@ -1,83 +1,72 @@
 # Instalasi Java & IDE
 
-Sebelum menulis kode Java, Anda perlu menginstal **Java Development Kit (JDK)**. JDK berisi compiler (`javac`), runtime (`java`), serta library standar. Versi **LTS (Long-Term Support)** seperti Java 17 atau Java 21 direkomendasikan untuk produksi.
+Sebelum menulis kode, instal **Java Development Kit (JDK)** — berisi compiler `javac`, runtime `java`, dan library standar. Rekomendasi LTS: **Java 21** (atau minimal 17 untuk Judge0).
 
 ## Langkah 1: Unduh JDK
 
-Kunjungi situs resmi Adoptium Temurin atau jdk.java.net. Pilih distribusi untuk sistem operasi Anda (Linux, Windows, macOS).
+- **Adoptium Temurin** (https://adoptium.net) — open-source, LTS.
+- **Oracle JDK** atau **OpenJDK** dari jdk.java.net.
+- Linux: `apt install openjdk-21-jdk` (Debian/Ubuntu) atau `pkg install openjdk-21` di Termux.
+- Windows/macOS: installer dari Adoptium — ikuti wizard.
 
-- Untuk Linux, gunakan package manager (misal `apt install openjdk-21-jdk` di Debian/Ubuntu).
-
-- Untuk Android/Termux, Anda bisa menjalankan `pkg install openjdk-21` (Namun, untuk pengembangan Java biasa, gunakan laptop/desktop).
-
-Setelah unduh, instal following petunjuk installer.
+Pilih versi 21 untuk virtual threads & pattern matching terbaru; 17 tetap kompatibel untuk Judge0.
 
 ## Langkah 2: Variabel Lingkungan
 
-Untuk memudahkan eksekusi, atur variabel `JAVA_HOME` ke direktori instalasi JDK, dan tambahkan `bin` ke `PATH`.
-
-```
-# Contoh Linux/macOS (~/.bashrc atau ~/.zshrc)
+```bash
+# Linux/macOS ~/.bashrc atau ~/.zshrc
 export JAVA_HOME=$HOME/opt/jdk-21
 export PATH=$JAVA_HOME/bin:$PATH
-
+# Windows: set JAVA_HOME di System Properties -> Environment Variables
 ```
 
-Setelah itu, restart terminal atau source file konfigurasi.
+Restart terminal setelahnya. `JAVA_HOME` digunakan Maven/Gradle/Tomcat.
 
-## Langkah 3: Verifikasi Instalasi
+## Langkah 3: Verifikasi
 
-Jalankan perintah:
-
-```
+```bash
 java -version
 javac -version
-
+# output: openjdk 21.0.x atau 17.0.x
 ```
 
-Output yang benar menampilkan nomor versi (misal `openjdk 21.0.1`).
+Keduanya harus menampilkan versi. Jika tidak, cek PATH.
 
-## Langkah 4: Instal IDE (Integrated Development Environment)
+## Langkah 4: IDE
 
-Meskipunmenggunakan teks editor biasa, sebuah IDE meningkatkan produktivitas. Dua pilihan populer:
+- **IntelliJ IDEA** (Community/Ultimate) — paling powerful untuk Java.
+- **Visual Studio Code** + Extension Pack for Java — ringan.
+- **Eclipse** — klasik, gratis.
 
-- **Visual Studio Code** (ringan, gratis)
-  
-    
-- Download dari code.visualstudio.com.
-    
-- Install ekstensi *Extension Pack for Java* (Microsoft).
-    
-- Ekstensi ini menyediakan IntelliSense, debugging, dan build tools.
-  
+Untuk learning path ini, cukup browser — editor & Judge0 sudah terintegrasi, tanpa instalasi lokal.
 
-- **IntelliJ IDEA Community Edition** (kayas, free)
-  
-    
-- Download dari JetBrains.
-    
-- Dukungan bawaan untuk Maven, Gradle, dan frameworks.
-  
+## Langkah 5: Build Tools (opsional)
 
-## Langkah 5: Test Instalasi dengan Hello World
+- **Maven**: `mvn -version`
+- **Gradle**: `gradle -version`
 
-Buka terminal atau IDE, buat file `Hello.java` dengan konten:
+Keduanya mengelola dependency dan build lifecycle; tidak wajib untuk 30 pelajaran awal.
 
-```
-public class Hello {
+## Runnable — cek versi (JDK 17, Judge0)
+
+```java
+public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, Java!");
+        System.out.println("java.version: " + System.getProperty("java.version"));
+        System.out.println("java.vendor : " + System.getProperty("java.vendor"));
+        System.out.println("JAVA_HOME  : " + System.getenv("JAVA_HOME"));
+        // records & sealed — bukti JDK modern
+        record Info(String jdk, String status){}
+        var info = new Info(System.getProperty("java.version"), "Setup OK");
+        System.out.println("Record cek: " + info);
     }
 }
-
 ```
 
-Kompilasi dan jalankan:
+Copy ke editor dan Run — Judge0 akan mencetak versi JDK 17 yang sebenarnya, membuktikan toolchain hidup.
 
-```
-javac Hello.java   # menghasilkan Hello.class
-java Hello         # output: Hello, Java!
+## Troubleshooting
 
-```
-
-Jika muncul output tersebut, instalasi Java dan IDE sudah berhasil.
+- `javac: command not found` → PATH belum benar atau hanya JRE terinstal (butuh JDK).
+- `UnsupportedClassVersionError` → compile dengan JDK lebih baru dari runtime; samakan versi.
+- Di Termux, pastikan `pkg update && pkg install openjdk-17` lalu `java -version`.

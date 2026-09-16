@@ -1,94 +1,104 @@
 # Struktur Program Java
 
-Program Java memiliki struktur yang ketat. Sebuah program minimal terdiri dari satu *class* yang berisi `main` method. Memahami struktur ini adalah langkah pertama sebelum menulis kode yang lebih kompleks.
+Program Java memiliki struktur ketat: minimal satu *class* berisi `main`. Memahami struktur ini kunci sebelum menulis kode kompleks dan memanfaatkan fitur modern Java 21.
 
 ## Komponen Dasar
 
 ### 1. Package (opsional)
 
-Package adalah cara mengorganisir kelas-kelas related. Jika tidak didefinisikan,program berada di *default package*. Contoh deklarasi package:
+Package mengorganisir kelas terkait. Tanpa deklarasi, class di *default package*.
 
+```java
+package com.example.app; // baris pertama file
 ```
-package com.example.app;
 
-```
-
-Harus menjadi baris pertama dalam file sumber.
+Package memengaruhi akses default dan struktur direktori (`com/example/app/Main.java`).
 
 ### 2. Class
 
-Java adalah bahasa berorientasi objek; setiap kode harus berada dalam dalam sebuah class (atau interface, enum, dll). Class didefinisikan dengan kata kunci `class`:
+Semua kode harus dalam class/interface/enum/record.
 
-```
+```java
 public class HelloWorld {
     // isi class
 }
-
 ```
 
-Nama class harus **camel case** dan sesuai dengan nama file (jika public).
+Nama class CamelCase dan jika `public`, harus sama dengan nama file.
 
-### 3. Main Method
+### 3. Main Method — entry point JVM
 
-Untuk menjalankan program, Java mencari method `main` dengan signature tertentu:
-
-```
+```java
 public static void main(String[] args)
-
 ```
 
-- `public`: dapat diakses oleh JVM.
+- `public`: JVM dapat akses.
+- `static`: tanpa instansiasi.
+- `void`: tidak return.
+- `String[] args`: argumen CLI.
 
-- `static`: tidak perlu instansiasi class.
+Sejak Java 21, ada *unnamed class* preview untuk Hello World lebih ringkas, namun untuk pembelajaran tetap gunakan struktur lengkap.
 
-- `void`: tidak mengembalikan nilai.
+## Contoh Lengkap
 
-- `String[] args`: parameter untuk menerima argumen command-line.
-
-## Contoh Program Lengkap
-
-```
+```java
 // Package declaration (optional)
 package myapp;
 
-// Import statements (optional)
 import java.util.Scanner;
 
 public class MyApp {
     public static void main(String[] args) {
         System.out.println("Selamat datang di Java!");
-        // kode lainnya
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nama: ");
+        System.out.println("Halo " + sc.nextLine());
+        sc.close();
     }
 }
-
 ```
 
-## Kompilasi dan Eksekusi
+## Kompilasi & Eksekusi
 
-Setelah menulis kode dalam file `MyApp.java`, kompilasi dengan:
-
-```
-javac MyApp.java
-
+```bash
+javac -d out src/myapp/MyApp.java
+java -cp out myapp.MyApp
 ```
 
-Perintah ini menghasilkan `MyApp.class` (bytecode). Untuk menjalankan:
+`-d` menentukan output directory, `-cp` classpath.
 
+## Struktur Modern — records & sealed
+
+Di Java 21, struktur program tidak hanya class biasa:
+
+```java
+public record Point(int x, int y) {}
+public sealed interface Shape permits Circle, Rectangle {}
+public final class Circle implements Shape { double r; Circle(double r){this.r=r;} }
+public final class Rectangle implements Shape { double w,h; }
 ```
-java myapp.MyApp   # gunakan nama package lengkap
-# atau jika tanpa package:
-java MyApp
 
+Records untuk data, sealed untuk hierarki tertutup — keduanya tetap mengikuti aturan file/class yang sama.
+
+## Runnable — struktur + records (JDK 17)
+
+```java
+public record AppInfo(String name, String version) {}
+
+public class Main {
+    public static void main(String[] args) {
+        var info = new AppInfo("Java Learning Path", "21 LTS");
+        System.out.println("App: " + info.name() + " v" + info.version());
+        System.out.println("Args: " + (args.length==0?"(none)":String.join(", ", args)));
+        System.out.println("Struktur: package -> class/record -> main");
+    }
+}
 ```
 
-Catatan: JRF:** Anda harus berada di direktori di atas package root saat menjalankan `java`.
+Jalankan via Run — lihat record sebagai bagian struktur program modern yang tetap runnable di Judge0 JDK 17.
 
-## Tips Umum
+## Best Practice
 
-- File name harus persis sama dengan nama public class (case-sensitive).
-
-- Setiap statement di dalam method diakhiri dengan titik koma `;`.
-
-- Gunakan komentar `//baris` atau `/* beberapa baris */` untuk dokumentasi.
-
-Dengan paham struktur dasar ini, Anda siap menambahkan variabel, kontrol alur, dan konsep lain.
+- Satu public class per file, nama file = nama class.
+- Package selalu lowercase (`com.company.project`).
+- Untuk DTO, prefer `record` daripada class dengan getter/setter manual.
