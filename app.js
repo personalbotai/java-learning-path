@@ -2687,22 +2687,17 @@ function checkQuiz() {
 
 // ============ Progress Management ============
 function updateButtonsState(lesson) {
-    const completeBtn = document.getElementById('complete-btn');
-    const completedBtn = document.getElementById('completed-btn');
+    const a = document.getElementById('complete-btn');
+    const b = document.getElementById('completed-btn');
+    const isDone = lesson && !!progress[lesson.id];
+    if (a) a.style.display = isDone ? 'none' : 'inline-flex';
+    if (b) b.style.display = isDone ? 'inline-flex' : 'none';
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-
-    if (progress[lesson.id]) {
-        completeBtn.style.display = 'none';
-        completedBtn.style.display = 'inline-flex';
-    } else {
-        completeBtn.style.display = 'inline-flex';
-        completedBtn.style.display = 'none';
-    }
-
-    prevBtn.disabled = currentLessonIndex === 0;
-    nextBtn.disabled = currentLessonIndex === LESSONS.length - 1;
+    if (prevBtn) prevBtn.disabled = currentLessonIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentLessonIndex === LESSONS.length - 1;
 }
+function updateCompleteButtons(){ const cur = LESSONS[currentLessonIndex]; if(cur) updateButtonsState(cur); }
 
 function markComplete(advance = true) {
     const lesson = LESSONS[currentLessonIndex];
@@ -2727,15 +2722,18 @@ function updateOverallProgress() {
 
     const fill = document.getElementById('progress-fill');
     if (fill) fill.style.width = pct + '%';
-
+    const bar  = document.getElementById('progress-fill-bar');
+    if (bar)  bar.style.width  = pct + '%';
     const text = document.getElementById('course-progress');
-    if (text) text.textContent = pct + '% selesai';
-
+    if (text) text.textContent = pct + '%';
+    const pt   = document.getElementById('progress-text');
+    if (pt)   pt.textContent   = pct + '%';
     const count = document.getElementById('progress-count');
     if (count) count.textContent = `${done}/${total}`;
-
     const mobText = document.getElementById('mobile-progress');
     if (mobText) mobText.textContent = pct + '%';
+    const sd = document.getElementById('stat-done');
+    if (sd) sd.textContent = String(done);
 }
 
 function resetProgress() {
@@ -2764,7 +2762,18 @@ function prevLesson() {
 
 // ============ Mobile Drawer ============
 
-function closeSidebar(){ try{ if(typeof closeMobileSidebar==='function') closeMobileSidebar(); }catch(e){} const _sb=document.getElementById('sidebar'); if(_sb){ _sb.classList.remove('open'); } const _bd=document.getElementById('backdrop'); if(_bd) _bd.classList.remove('show'); const _ov=document.getElementById('sidebarOverlay'); if(_ov) _ov.classList.remove('show'); }
+function closeSidebar() {
+    try { if (typeof closeMobileSidebar === 'function') closeMobileSidebar(); } catch(e){}
+    const sb = document.getElementById('sidebar');
+    const bd = document.getElementById('backdrop');
+    const ov = document.getElementById('sidebarOverlay');
+    if (sb) { sb.classList.remove('open'); sb.classList.remove('sidebar-open'); }
+    if (bd) { bd.classList.remove('show'); bd.classList.add('hidden'); }
+    if (ov) { ov.classList.remove('show'); ov.classList.add('hidden'); }
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024 && sb) {
+        sb.classList.remove('-translate-x-full');
+    }
+}
 function setupMobileMenu() {
     const toggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
@@ -2876,6 +2885,11 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('java_last_lesson', currentLessonIndex);
     });
 
-    // Expose for debugging
-    window.app = { LESSONS, MODULES, loadLesson, copyCode, clearOutput, clearTerminal, runTerminal };
+// Expose for debugging & inline handlers
+if (typeof window !== 'undefined') {
+    window.MODULES = MODULES;
+    window.LESSONS = LESSONS;
+    window.lessons = LESSONS;
+    window.app = { MODULES, LESSONS, lessons: LESSONS, loadLesson, copyCode, clearOutput, clearTerminal, runTerminal, nextLesson, prevLesson, markComplete, resetProgress, renderNav };
+}
 });
