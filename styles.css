@@ -21,253 +21,7 @@
 }
 
 /* ==========================================================================
-   LIGHT THEME OVERRIDES
-   ========================================================================== */
-html.light {
-  --bg-950: #f8fafc;
-  --bg-900: #ffffff;
-  --bg-850: #f1f5f9;
-  --bg-800: #e2e8f0;
-  --border: rgba(0,0,0,.08);
-  --border-strong: #cbd5e1;
-  --text: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #64748b;
-}
-
-html.light body {
-  background: #f8fafc !important;
-  color: #0f172a !important;
-}
-
-/* Header & Navigation */
-html.light .glass-header {
-  background: rgba(255,255,255,.94) !important;
-  border-color: rgba(0,0,0,.08) !important;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.05) !important;
-}
-html.light #sidebar {
-  background: #ffffff !important;
-  border-color: rgba(0,0,0,.08) !important;
-}
-html.light #sidebar > div:first-child {
-  border-color: rgba(0,0,0,.08) !important;
-}
-html.light #lesson-search,
-html.light #lesson-search-mobile {
-  background: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-  color: #0f172a !important;
-}
-html.light #lesson-search::placeholder,
-html.light #lesson-search-mobile::placeholder {
-  color: #94a3b8 !important;
-}
-html.light .module-header {
-  color: #475569 !important;
-}
-html.light .module-header:hover {
-  color: #0f172a !important;
-  background: rgba(0,0,0,.04) !important;
-}
-html.light .module-header.open {
-  color: var(--brand) !important;
-}
-html.light .lesson-btn {
-  color: #475569 !important;
-}
-html.light .lesson-btn:hover {
-  color: #0f172a !important;
-  background: rgba(0,0,0,.04) !important;
-}
-html.light .lesson-btn.active {
-  color: var(--brand) !important;
-  background: rgba(0,0,0,.06) !important;
-}
-
-/* Prose & Markdown Content */
-html.light .prose {
-  color: #334155 !important;
-}
-html.light .prose h1 {
-  color: #0f172a !important;
-  border-bottom-color: rgba(0,0,0,.08) !important;
-}
-html.light .prose h2 {
-  color: #dc2626 !important;
-  border-bottom-color: rgba(0,0,0,.08) !important;
-}
-html.light .prose h3 {
-  color: #1e293b !important;
-}
-html.light .prose h4 {
-  color: #334155 !important;
-}
-html.light .prose p,
-html.light .prose li {
-  color: #334155 !important;
-}
-html.light .prose strong {
-  color: #0f172a !important;
-}
-html.light .prose code:not(pre code) {
-  background: #fee2e2 !important;
-  color: #991b1b !important;
-  border-color: rgba(0,0,0,.08) !important;
-}
-html.light .prose pre {
-  background: #0f172a !important;
-  border-color: #1e293b !important;
-}
-html.light .prose pre code {
-  color: #e2e8f0 !important;
-}
-html.light .prose blockquote {
-  background: rgba(0,0,0,.03) !important;
-  color: #475569 !important;
-  border-left-color: var(--brand) !important;
-}
-html.light .prose table th {
-  background: #f1f5f9 !important;
-  color: #0f172a !important;
-  border-color: #cbd5e1 !important;
-}
-html.light .prose table td {
-  border-color: #e2e8f0 !important;
-  color: #334155 !important;
-}
-html.light .prose hr {
-  border-top-color: rgba(0,0,0,.08) !important;
-}
-
-/* Hero Section */
-html.light .hero h2 {
-  color: #0f172a !important;
-}
-html.light .hero p {
-  color: #475569 !important;
-}
-html.light .hero .bg-white\/\[0\.03\] {
-  background: #ffffff !important;
-  border-color: rgba(0,0,0,.08) !important;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.05) !important;
-}
-html.light .hero .text-white {
-  color: #0f172a !important;
-}
-html.light .hero .text-slate-500 {
-  color: #64748b !important;
-}
-
-/* Code Editor & Terminal Card */
-html.light #code-section > div {
-  background: #ffffff !important;
-  border-color: rgba(0,0,0,.1) !important;
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,.08), 0 8px 10px -6px rgba(0,0,0,.04) !important;
-}
-html.light #code-section .bg-\[\#172033\] {
-  background: #f1f5f9 !important;
-  border-color: rgba(0,0,0,.08) !important;
-}
-html.light #code-section textarea#code-editor {
-  background: #f8fafc !important;
-  color: #0f172a !important;
-}
-html.light #code-section #output {
-  background: #0f172a !important;
-  color: #34d399 !important;
-}
-
-/* Quiz Card */
-html.light #quiz-section > div {
-  background: #ffffff !important;
-  border-color: rgba(0,0,0,.1) !important;
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,.08), 0 8px 10px -6px rgba(0,0,0,.04) !important;
-}
-html.light #quiz-section .bg-\[\#172033\] {
-  background: #f1f5f9 !important;
-  border-color: rgba(0,0,0,.08) !important;
-}
-html.light #quiz-section h3 {
-  color: #0f172a !important;
-}
-html.light .quiz-option,
-html.light #quiz-content label {
-  background: #f8fafc !important;
-  border-color: #cbd5e1 !important;
-  color: #1e293b !important;
-}
-html.light .quiz-option:hover,
-html.light #quiz-content label:hover {
-  background: #f1f5f9 !important;
-  border-color: #94a3b8 !important;
-}
-html.light #quiz-content p {
-  color: #0f172a !important;
-}
-
-/* Bottom Navigation (Prev / Next) & Footer */
-html.light #prev-btn,
-html.light #next-btn {
-  background: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  color: #1e293b !important;
-}
-html.light #prev-btn:hover,
-html.light #next-btn:hover {
-  background: #f1f5f9 !important;
-}
-html.light footer {
-  border-top-color: rgba(0,0,0,.08) !important;
-}
-html.light footer p {
-  color: #64748b !important;
-}
-
-/* Command Palette (Cmd-K) */
-html.light #cmd-palette-dialog {
-  background: #ffffff !important;
-  border-color: rgba(0,0,0,.12) !important;
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,.25) !important;
-}
-html.light #cmd-palette-dialog .bg-\[\#172033\]\/60 {
-  background: #f8fafc !important;
-  border-color: rgba(0,0,0,.08) !important;
-}
-html.light #cmd-palette-dialog .bg-\[\#172033\]\/40 {
-  background: #f8fafc !important;
-  border-color: rgba(0,0,0,.08) !important;
-}
-html.light #cmd-palette-input {
-  color: #0f172a !important;
-}
-html.light #cmd-palette-input::placeholder {
-  color: #94a3b8 !important;
-}
-html.light #cmd-palette-results button {
-  color: #334155 !important;
-}
-html.light #cmd-palette-results button:hover,
-html.light #cmd-palette-results button.selected {
-  background: #f1f5f9 !important;
-  color: #0f172a !important;
-}
-
-/* UI Controls in Header */
-html.light #themeToggle,
-html.light #menuToggle {
-  background: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-  color: #475569 !important;
-}
-html.light #themeToggle:hover,
-html.light #menuToggle:hover {
-  background: #e2e8f0 !important;
-  color: #0f172a !important;
-}
-
-/* ==========================================================================
-   SHARED BASE STYLES
+   SHARED BASE STYLES (Dark Default)
    ========================================================================== */
 * { scrollbar-width: thin; scrollbar-color: #475569 transparent; }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -379,3 +133,353 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-950); c
 /* Animations */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .animate-in { animation: fadeIn .35s ease-out; }
+
+
+/* ==========================================================================
+   COMPREHENSIVE LIGHT THEME OVERRIDES (High Specificity)
+   ========================================================================== */
+html.light {
+  --bg-950: #f8fafc;
+  --bg-900: #ffffff;
+  --bg-850: #f1f5f9;
+  --bg-800: #e2e8f0;
+  --border: rgba(0,0,0,.08);
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+  scrollbar-color: #cbd5e1 transparent;
+}
+html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Page & Root Layout */
+html.light,
+html.light body {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Tailwind Background Class Overrides under html.light */
+html.light .bg-\[\#0a0f1a\],
+html.light .bg-\[\#0f172a\],
+html.light .bg-\[\#111827\] {
+  background-color: #ffffff !important;
+}
+html.light .bg-\[\#172033\],
+html.light .bg-\[\#1e293b\] {
+  background-color: #f1f5f9 !important;
+}
+html.light .bg-white\/5,
+html.light .bg-white\/10,
+html.light .bg-white\/\[0\.03\] {
+  background-color: #f1f5f9 !important;
+}
+
+/* Tailwind Text Color Class Overrides under html.light */
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-slate-300 {
+  color: #1e293b !important;
+}
+html.light .text-slate-400,
+html.light .text-slate-500 {
+  color: #475569 !important;
+}
+html.light .text-slate-600 {
+  color: #64748b !important;
+}
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+/* Tailwind Border Color Class Overrides under html.light */
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/20 {
+  border-color: #e2e8f0 !important;
+}
+html.light .border-\[\#1e293b\],
+html.light .border-slate-800 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Header & Navigation Bar */
+html.light .glass-header {
+  background: rgba(255,255,255,.94) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.06) !important;
+}
+html.light .glass-header .text-white {
+  color: #0f172a !important;
+}
+html.light .glass-header button,
+html.light .glass-header a {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+html.light .glass-header button:hover,
+html.light .glass-header a:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+html.light .glass-header .bg-white\/10 {
+  background-color: #e2e8f0 !important;
+}
+
+/* Search Inputs */
+html.light #lesson-search,
+html.light #lesson-search-mobile {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+html.light #lesson-search::placeholder,
+html.light #lesson-search-mobile::placeholder {
+  color: #94a3b8 !important;
+}
+html.light kbd {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+/* Sidebar */
+html.light #sidebar {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 4px 0 24px rgba(0,0,0,.04) !important;
+}
+html.light #sidebar > div {
+  border-color: #e2e8f0 !important;
+}
+html.light .module-header {
+  color: #475569 !important;
+}
+html.light .module-header:hover {
+  color: #0f172a !important;
+  background: #f1f5f9 !important;
+}
+html.light .module-header.open {
+  color: var(--brand) !important;
+}
+html.light .lesson-list {
+  border-left-color: #e2e8f0 !important;
+}
+html.light .lesson-btn {
+  color: #475569 !important;
+}
+html.light .lesson-btn:hover {
+  color: #0f172a !important;
+  background: #f1f5f9 !important;
+}
+html.light .lesson-btn.active {
+  color: var(--brand) !important;
+  background: rgba(0,0,0,.05) !important;
+}
+html.light .nav-check {
+  border-color: #cbd5e1 !important;
+}
+html.light .status-dot {
+  background: #cbd5e1 !important;
+}
+html.light .lesson-btn.completed .status-dot {
+  background: var(--success) !important;
+}
+
+/* Main Lesson Header & Breadcrumb */
+html.light #lesson-header {
+  background: rgba(248,250,252,.92) !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Hero Section (Welcome View) */
+html.light .hero {
+  color: #334155 !important;
+}
+html.light .hero h2 {
+  color: #0f172a !important;
+}
+html.light .hero p {
+  color: #475569 !important;
+}
+html.light .hero .bg-white\/\[0\.03\] {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.04) !important;
+}
+
+/* Markdown Prose in Light Mode */
+html.light .prose {
+  color: #334155 !important;
+}
+html.light .prose h1 {
+  color: #0f172a !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+html.light .prose h2 {
+  color: #dc2626 !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+html.light .prose h3 {
+  color: #1e293b !important;
+}
+html.light .prose h4 {
+  color: #334155 !important;
+}
+html.light .prose p,
+html.light .prose li {
+  color: #334155 !important;
+}
+html.light .prose strong {
+  color: #0f172a !important;
+}
+html.light .prose code:not(pre code) {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  border-color: rgba(0,0,0,.08) !important;
+}
+html.light .prose pre {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
+}
+html.light .prose pre code {
+  color: #e2e8f0 !important;
+}
+html.light .prose blockquote {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-left-color: var(--brand) !important;
+}
+html.light .prose table th {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+html.light .prose table td {
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+html.light .prose hr {
+  border-top-color: #e2e8f0 !important;
+}
+
+/* Code Editor Card */
+html.light #code-section > div {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 30px -5px rgba(0,0,0,.06), 0 4px 6px -2px rgba(0,0,0,.04) !important;
+}
+html.light #code-section .bg-\[\#172033\] {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+html.light #code-section textarea#code-editor {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+html.light #code-section textarea#code-editor::placeholder {
+  color: #94a3b8 !important;
+}
+html.light #code-section button:not(.bg-gradient-to-r) {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+}
+html.light #code-section button:not(.bg-gradient-to-r):hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+html.light #code-section #output {
+  background: #0f172a !important;
+  color: #34d399 !important;
+}
+
+/* Quiz Section Card */
+html.light #quiz-section > div {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 30px -5px rgba(0,0,0,.06), 0 4px 6px -2px rgba(0,0,0,.04) !important;
+}
+html.light #quiz-section .bg-\[\#172033\] {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+html.light #quiz-section h3 {
+  color: #0f172a !important;
+}
+html.light .quiz-option,
+html.light #quiz-content label {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+html.light .quiz-option:hover,
+html.light #quiz-content label:hover {
+  background: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+}
+html.light #quiz-content p {
+  color: #0f172a !important;
+}
+
+/* Bottom Navigation Buttons */
+html.light #prev-btn,
+html.light #next-btn {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05) !important;
+}
+html.light #prev-btn:hover,
+html.light #next-btn:hover {
+  background: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+}
+
+/* Footer */
+html.light footer {
+  background: #f8fafc !important;
+  border-top-color: #e2e8f0 !important;
+}
+html.light footer p {
+  color: #64748b !important;
+}
+
+/* Command Palette (Cmd-K) Dialog */
+html.light #cmd-palette-backdrop {
+  background: rgba(15,23,42,.4) !important;
+}
+html.light #cmd-palette-dialog {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,.25) !important;
+}
+html.light #cmd-palette-dialog .bg-\[\#172033\]\/60,
+html.light #cmd-palette-dialog .bg-\[\#172033\]\/40 {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+html.light #cmd-palette-input {
+  color: #0f172a !important;
+}
+html.light #cmd-palette-input::placeholder {
+  color: #94a3b8 !important;
+}
+html.light #cmd-palette-results button {
+  color: #334155 !important;
+}
+html.light #cmd-palette-results button:hover,
+html.light #cmd-palette-results button.selected {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Fix Any Text Inside Buttons/Badges */
+html.light .btn-primary {
+  color: #ffffff !important;
+}
+html.light .btn-primary .text-white {
+  color: #ffffff !important;
+}
