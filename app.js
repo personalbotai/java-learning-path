@@ -2367,8 +2367,10 @@ function enhanceCodeBlocks(container) {
 // ============ Code Execution (Simulation) ============
 function runCode() {
     const lesson = LESSONS[currentLessonIndex];
-    const userCode = document.getElementById('code-editor').value;
+    const _ed=document.getElementById('code-editor');
+    const userCode = _ed ? _ed.value : '';
     const output = document.getElementById('output');
+    if(!_ed || !output) return;
     const valMsg = document.getElementById('validation-msg');
 
     // --- extract System.out.print/println/printf strings (real simulation) ---
