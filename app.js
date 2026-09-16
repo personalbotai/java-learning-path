@@ -2355,6 +2355,7 @@ async function loadLesson(index) {
 
     // Re-render sidebar to highlight active lesson
     renderNav();
+  
     updateOverallProgress();
 
     // Scroll to top of content
@@ -2786,6 +2787,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNav();
     updateOverallProgress();
     setupMobileMenu();
+  if (typeof loadLesson === 'function') { setTimeout(() => loadLesson(0), 50); }
 
     // Editor Gutter Live
     const ed = document.getElementById('code-editor');
