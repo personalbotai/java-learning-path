@@ -1,9 +1,10 @@
 # Java Learning Path ☕
 
-> **Interactive, hands-on Java course from core OOP fundamentals to modern Java 21 features.**
+> **Interactive, hands-on Java course from core OOP fundamentals to modern Java 21 LTS features.**
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-GitHub_Pages-ea580c?style=for-the-badge&logo=github&logoColor=white)](https://personalbotai.github.io/java-learning-path/)
 [![Hub Portal](https://img.shields.io/badge/🚀_Hub_Portal-hub.syamsulbahri.dev-10b981?style=for-the-badge)](https://hub.syamsulbahri.dev)
+[![PWA Ready](https://img.shields.io/badge/📱_PWA-Installable-purple?style=for-the-badge)](https://personalbotai.github.io/java-learning-path/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 ---
@@ -18,12 +19,13 @@
 
 ## ✨ Features
 
-- 💻 **In-Browser Java Runner:** Write and test Java programs directly without needing a local JDK installation.
+- 💻 **In-Browser Java Runner:** Write and test Java programs directly without needing a local JDK installation via Judge0 JDK 17 runner.
 - 📖 **30 In-Depth Lessons:** Systematic progression covering JVM mechanics, OOP pillars, and modern standard APIs.
-- 🎯 **30 Interactive Quizzes:** Adaptive quiz challenges with instant solution verification.
-- 📊 **Progress State Persistence:** Progress is saved automatically in `localStorage`.
+- 🎯 **30 Interactive Technical Quizzes:** Adaptive quiz challenges with instant solution verification and modern Java 21 explanations.
+- 🎖️ **Graduation Certificate Generator:** High-resolution Canvas certificate generator with PNG & PDF export — unlocked upon 100% completion.
+- 📱 **PWA & Offline Support:** Service Worker offline caching and Web App Manifest.
+- 📊 **Progress State Persistence:** Progress is saved automatically in `localStorage` with resume support.
 - 🎨 **Sleek Dark Mode UI:** Responsive layout with syntax highlighting and mobile navigation.
-- ⚡ **Pure Client-Side:** Fast, zero-dependency hosting on GitHub Pages.
 
 ---
 
@@ -46,13 +48,14 @@
 
 This repository is part of the **PersonalBot Interactive Learning Series**:
 
-| Track | Language | Lessons | Live Demo |
-|---|---|---|---|
-| 🐍 | **Python** | 55 Lessons | [Open Python Path](https://personalbotai.github.io/python-learning-path/) |
-| ⚡ | **JavaScript** | 54 Lessons | [Open JavaScript Path](https://personalbotai.github.io/javascript-learning-path/) |
-| 📘 | **TypeScript** | 77 Lessons | [Open TypeScript Path](https://personalbotai.github.io/typescript-learning-path/) |
-| 🐹 | **Go (Golang)** | 69 Lessons | [Open Go Path](https://personalbotai.github.io/go-learning-path/) |
-| ☕ | **Java** | 30 Lessons | [Open Java Path](https://personalbotai.github.io/java-learning-path/) |
+| Track | Language | Scope & Lessons | Runtime Engine | Live Demo |
+|---|---|---|---|---|
+| 🐍 | **Python** | 55 In-Depth Lessons | Pyodide WASM (Lazy-Loaded) | [Open Python Path](https://personalbotai.github.io/python-learning-path/) |
+| ⚡ | **JavaScript** | 10 Modules (100 Lessons) | Native In-Browser Sandbox | [Open JavaScript Path](https://personalbotai.github.io/javascript-learning-path/) |
+| 📘 | **TypeScript** | 77 Type-Level Lessons | In-Browser TS Compiler & Transpiler | [Open TypeScript Path](https://personalbotai.github.io/typescript-learning-path/) |
+| 🐹 | **Go (Golang)** | 53 Idiomatic Lessons | Go Playground API & Sandbox | [Open Go Path](https://personalbotai.github.io/go-learning-path/) |
+| ☕ | **Java** | 30 Modern Java 21 Lessons | Judge0 CE JDK 17 Compiler | [Open Java Path](https://personalbotai.github.io/java-learning-path/) |
+
 
 ---
 
