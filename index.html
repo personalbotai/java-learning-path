@@ -426,5 +426,307 @@
     })();
     </script>
 
+
+    <!-- ================= Linear-style Command Palette (⌘K) ================= -->
+    <div id="cmd-palette-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[100] hidden items-start justify-center pt-[10vh] sm:pt-[15vh] px-4 animate-fadeIn transition-opacity duration-200">
+        <div id="cmd-palette-dialog" class="w-full max-w-xl bg-[#0f172a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[70vh] transform transition-all scale-95 opacity-0">
+            <!-- Search Header -->
+            <div class="flex items-center gap-3 px-4 py-3.5 border-b border-white/5 bg-[#172033]/60">
+                <i class="fas fa-search text-slate-400 text-sm pl-1"></i>
+                <input id="cmd-palette-input" type="text" placeholder="Cari pelajaran, modul, atau perintah… (↑↓ pilih, ↵ buka)" autocomplete="off" spellcheck="false" class="flex-1 bg-transparent text-slate-100 placeholder-slate-500 text-sm focus:outline-none">
+                <kbd class="text-[10px] font-mono font-semibold px-2 py-1 rounded-md bg-white/5 border border-white/10 text-slate-400 hidden sm:inline-block">ESC</kbd>
+            </div>
+            <!-- Results Container -->
+            <div id="cmd-palette-results" class="flex-1 overflow-y-auto p-2 space-y-1 scrollbar-thin max-h-[50vh]"></div>
+            <!-- Footer -->
+            <div class="px-4 py-2.5 bg-[#172033]/40 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                <div class="flex items-center gap-3">
+                    <span><kbd class="font-mono bg-white/5 px-1.5 py-0.5 rounded border border-white/10 text-slate-400">↑↓</kbd> Navigasi</span>
+                    <span><kbd class="font-mono bg-white/5 px-1.5 py-0.5 rounded border border-white/10 text-slate-400">↵</kbd> Buka</span>
+                    <span><kbd class="font-mono bg-white/5 px-1.5 py-0.5 rounded border border-white/10 text-slate-400">esc</kbd> Tutup</span>
+                </div>
+                <span class="text-slate-500 font-medium">Command Palette</span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    #cmd-palette-dialog.active {
+        transform: scale(1);
+        opacity: 1;
+    }
+    .cmd-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 0.875rem;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        color: #cbd5e1;
+    }
+    .cmd-item:hover, .cmd-item.selected {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+    }
+    .cmd-item.selected {
+        outline: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .cmd-item mark {
+        background: transparent;
+        color: var(--brand, #38bdf8);
+        font-weight: 700;
+    }
+    </style>
+
+    <script>
+    (function(){
+        const backdrop = document.getElementById('cmd-palette-backdrop');
+        const dialog = document.getElementById('cmd-palette-dialog');
+        const input = document.getElementById('cmd-palette-input');
+        const resultsEl = document.getElementById('cmd-palette-results');
+        let selectedIndex = 0;
+        let currentItems = [];
+
+        // Build items catalog from page data
+        function getCatalog() {
+            const items = [];
+            // Quick Actions
+            items.push({
+                type: 'action',
+                icon: 'fa-play text-emerald-400',
+                title: 'Mulai Pelajaran Pertama',
+                sub: 'Mulai kurikulum dari Lesson 1',
+                action: () => {
+                    if (typeof loadLesson === 'function') {
+                        try { loadLesson(0); } catch { try { loadLesson(1, 1); } catch(e){} }
+                    }
+                }
+            });
+            items.push({
+                type: 'action',
+                icon: 'fa-moon text-amber-400',
+                title: 'Toggle Tema (Light / Dark)',
+                sub: 'Ganti tampilan antara mode gelap dan terang',
+                action: () => {
+                    const btn = document.getElementById('themeToggle');
+                    if (btn) btn.click();
+                }
+            });
+            items.push({
+                type: 'action',
+                icon: 'fa-rotate-left text-rose-400',
+                title: 'Reset Progress Belajar',
+                sub: 'Hapus riwayat centang pelajaran yang selesai',
+                action: () => {
+                    if (confirm('Yakin ingin reset semua progress belajar?')) {
+                        localStorage.clear();
+                        location.reload();
+                    }
+                }
+            });
+
+            // Extract lessons
+            // Format 1: global 'lessons' or 'LESSONS' array
+            const lessonList = window.lessons || window.LESSONS;
+            if (Array.isArray(lessonList)) {
+                lessonList.forEach((l, idx) => {
+                    items.push({
+                        type: 'lesson',
+                        icon: 'fa-book-open text-blue-400',
+                        title: l.title || l.name || ('Lesson ' + (l.id || idx + 1)),
+                        sub: l.module || (l.duration ? (l.duration + ' • ' + (l.level || '')) : 'Pelajaran'),
+                        action: () => {
+                            if (typeof loadLesson === 'function') {
+                                loadLesson(idx);
+                            }
+                        }
+                    });
+                });
+            } else if (Array.isArray(window.MODULES)) {
+                // Format 2: MODULES tree (JavaScript format)
+                window.MODULES.forEach(mod => {
+                    (mod.lessons || []).forEach(l => {
+                        items.push({
+                            type: 'lesson',
+                            icon: 'fa-book-open text-yellow-400',
+                            title: l.title || l.name,
+                            sub: mod.title + (l.duration ? (' • ' + l.duration) : ''),
+                            action: () => {
+                                if (typeof loadLesson === 'function') {
+                                    loadLesson(mod.id, l.id);
+                                }
+                            }
+                        });
+                    });
+                });
+            }
+            return items;
+        }
+
+        function openPalette() {
+            backdrop.classList.remove('hidden');
+            backdrop.classList.add('flex');
+            requestAnimationFrame(() => {
+                dialog.classList.add('active');
+                input.focus();
+                input.value = '';
+                renderResults('');
+            });
+        }
+
+        function closePalette() {
+            dialog.classList.remove('active');
+            setTimeout(() => {
+                backdrop.classList.add('hidden');
+                backdrop.classList.remove('flex');
+            }, 150);
+        }
+
+        function highlight(text, q) {
+            if (!q) return esc(text);
+            const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            return esc(text).replace(re, '<mark>$1</mark>');
+        }
+        function esc(s) {
+            return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function renderResults(q) {
+            const catalog = getCatalog();
+            const query = q.trim().toLowerCase();
+            if (!query) {
+                currentItems = catalog.slice(0, 12);
+            } else {
+                currentItems = catalog.filter(it =>
+                    it.title.toLowerCase().includes(query) ||
+                    (it.sub && it.sub.toLowerCase().includes(query))
+                ).slice(0, 15);
+            }
+            selectedIndex = 0;
+
+            if (currentItems.length === 0) {
+                resultsEl.innerHTML = `
+                    <div class="py-8 text-center text-slate-500 text-sm">
+                        <i class="fas fa-search mb-2 text-lg opacity-40"></i>
+                        <p>Tidak ada pelajaran atau aksi yang cocok dengan "<b>${esc(query)}</b>"</p>
+                    </div>`;
+                return;
+            }
+
+            resultsEl.innerHTML = currentItems.map((it, idx) => `
+                <div class="cmd-item ${idx === 0 ? 'selected' : ''}" data-idx="${idx}">
+                    <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center shrink-0">
+                        <i class="fas ${it.icon} text-xs"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <div class="text-xs font-semibold truncate leading-tight">${highlight(it.title, query)}</div>
+                        <div class="text-[11px] text-slate-500 truncate mt-0.5">${esc(it.sub)}</div>
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-600 uppercase px-1.5 py-0.5 rounded bg-white/5">${it.type}</span>
+                </div>
+            `).join('');
+
+            // Click listener
+            resultsEl.querySelectorAll('.cmd-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const i = parseInt(el.getAttribute('data-idx'), 10);
+                    selectItem(i);
+                });
+            });
+        }
+
+        function selectItem(idx) {
+            const item = currentItems[idx];
+            if (item && item.action) {
+                closePalette();
+                item.action();
+            }
+        }
+
+        function updateSelection() {
+            const items = resultsEl.querySelectorAll('.cmd-item');
+            items.forEach((el, i) => {
+                if (i === selectedIndex) {
+                    el.classList.add('selected');
+                    el.scrollIntoView({ block: 'nearest' });
+                } else {
+                    el.classList.remove('selected');
+                }
+            });
+        }
+
+        // Global hotkey: Cmd+K / Ctrl+K / / key
+        window.addEventListener('keydown', e => {
+            // Cmd+K or Ctrl+K
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                if (backdrop.classList.contains('hidden')) openPalette();
+                else closePalette();
+                return;
+            }
+            // '/' when not in input
+            if (e.key === '/' && !['input','textarea'].includes(document.activeElement.tagName.toLowerCase())) {
+                e.preventDefault();
+                openPalette();
+                return;
+            }
+            // If palette open: keyboard navigation
+            if (!backdrop.classList.contains('hidden')) {
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    closePalette();
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (currentItems.length > 0) {
+                        selectedIndex = (selectedIndex + 1) % currentItems.length;
+                        updateSelection();
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (currentItems.length > 0) {
+                        selectedIndex = (selectedIndex - 1 + currentItems.length) % currentItems.length;
+                        updateSelection();
+                    }
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (currentItems.length > 0) {
+                        selectItem(selectedIndex);
+                    }
+                }
+            }
+        });
+
+        // Search typing
+        input.addEventListener('input', () => renderResults(input.value));
+
+        // Click outside closes
+        backdrop.addEventListener('click', e => {
+            if (e.target === backdrop) closePalette();
+        });
+
+        // Wire top search box to open this palette directly
+        const headerSearch = document.getElementById('lesson-search');
+        if (headerSearch) {
+            headerSearch.placeholder = 'Cari materi… ( ⌘K / Ctrl+K )';
+            headerSearch.addEventListener('focus', e => {
+                e.preventDefault();
+                headerSearch.blur();
+                openPalette();
+            });
+        }
+        const mobileSearch = document.getElementById('lesson-search-mobile');
+        if (mobileSearch) {
+            mobileSearch.placeholder = 'Cari materi… ( ⌘K )';
+            mobileSearch.addEventListener('focus', e => {
+                e.preventDefault();
+                mobileSearch.blur();
+                openPalette();
+            });
+        }
+    })();
+    </script>
+    <!-- ================= End Command Palette ================= -->
+
 </body>
 </html>
