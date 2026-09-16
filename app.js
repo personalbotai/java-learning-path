@@ -2896,22 +2896,58 @@ if (typeof window !== 'undefined') {
 
 
 // ============================================
-// Unified Certificate Generator & Auto-Resume
+
 // ============================================
+// Unified Certificate Generator & Gating (100% Completion Only)
+// ============================================
+
+window.isCourseFullyCompleted = function() {
+    const total = typeof LESSONS !== 'undefined' ? LESSONS.length : 30;
+    const done = Object.keys(progress || {}).filter(k => !!progress[k]).length;
+    return total > 0 && done >= total;
+};
 
 window.openCertificateModal = function() {
     const modal = document.getElementById('certificate-modal');
     if (!modal) return;
     modal.classList.remove('hidden');
     modal.classList.add('flex');
-    
-    const savedName = localStorage.getItem('user_cert_name') || 'Software Engineer';
-    const input = document.getElementById('cert-name-input');
-    if (input) input.value = savedName;
-    
-    setTimeout(() => {
-        window.drawCertificate();
-    }, 100);
+
+    const total = typeof LESSONS !== 'undefined' ? LESSONS.length : 30;
+    const done = Object.keys(progress || {}).filter(k => !!progress[k]).length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    const isCompleted = done >= total && total > 0;
+
+    const lockedView = document.getElementById('cert-locked-view');
+    const unlockedView = document.getElementById('cert-unlocked-view');
+    const unlockedFooter = document.getElementById('cert-unlocked-footer');
+
+    if (!isCompleted) {
+        // Show Locked State
+        if (lockedView) lockedView.classList.remove('hidden');
+        if (unlockedView) unlockedView.classList.add('hidden');
+        if (unlockedFooter) unlockedFooter.classList.add('hidden');
+
+        const pText = document.getElementById('cert-locked-progress-text');
+        const pBar = document.getElementById('cert-locked-progress-bar');
+        const rText = document.getElementById('cert-locked-remaining-text');
+        if (pText) pText.textContent = `${done} / ${total} (${pct}%)`;
+        if (pBar) pBar.style.width = `${pct}%`;
+        if (rText) rText.textContent = `Tersisa ${Math.max(0, total - done)} pelajaran lagi untuk membuka sertifikat.`;
+    } else {
+        // Show Unlocked State
+        if (lockedView) lockedView.classList.add('hidden');
+        if (unlockedView) unlockedView.classList.remove('hidden');
+        if (unlockedFooter) unlockedFooter.classList.remove('hidden');
+
+        const savedName = localStorage.getItem('user_cert_name') || 'Software Engineer';
+        const input = document.getElementById('cert-name-input');
+        if (input) input.value = savedName;
+
+        setTimeout(() => {
+            window.drawCertificate();
+        }, 100);
+    }
 };
 
 window.closeCertificateModal = function() {
@@ -2922,6 +2958,7 @@ window.closeCertificateModal = function() {
 };
 
 window.drawCertificate = function() {
+    if (!window.isCourseFullyCompleted()) return;
     const canvas = document.getElementById('cert-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -2996,8 +3033,8 @@ window.drawCertificate = function() {
     // Paragraph
     ctx.font = '400 18px Inter, sans-serif';
     ctx.fillStyle = '#cbd5e1';
-    ctx.fillText('Telah berhasil menyelesaikan seluruh kurikulum interaktif, latihan kode praktik,', width / 2, 400);
-    ctx.fillText('dan uji pemahaman (quiz) pada platform Java Learning Path dengan hasil memuaskan.', width / 2, 430);
+    ctx.fillText('Telah berhasil menyelesaikan 100% seluruh kurikulum interaktif, latihan kode praktik,', width / 2, 400);
+    ctx.fillText('dan uji pemahaman (quiz) pada platform Java Learning Path dengan predikat Sangat Memuaskan.', width / 2, 430);
     
     // Verification & Date Footer
     const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -3030,6 +3067,10 @@ window.drawCertificate = function() {
 };
 
 window.downloadCertificatePNG = function() {
+    if (!window.isCourseFullyCompleted()) {
+        alert('Sertifikat hanya dapat diunduh setelah menyelesaikan 100% seluruh modul!');
+        return;
+    }
     const canvas = document.getElementById('cert-canvas');
     if (!canvas) return;
     const link = document.createElement('a');
@@ -3040,6 +3081,10 @@ window.downloadCertificatePNG = function() {
 };
 
 window.printCertificate = function() {
+    if (!window.isCourseFullyCompleted()) {
+        alert('Sertifikat hanya dapat dicetak setelah menyelesaikan 100% seluruh modul!');
+        return;
+    }
     const canvas = document.getElementById('cert-canvas');
     if (!canvas) return;
     const dataUrl = canvas.toDataURL('image/png');
@@ -3065,22 +3110,4 @@ window.printCertificate = function() {
         `);
         win.document.close();
     }
-};
-
-// Subtle Toast Notification
-window.showToast = function(msg) {
-    let t = document.getElementById('app-toast');
-    if (!t) {
-        t = document.createElement('div');
-        t.id = 'app-toast';
-        t.className = 'fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-xl bg-[#1e293b] border border-white/10 text-xs text-slate-200 shadow-2xl flex items-center gap-2 transform transition-all duration-300 opacity-0 translate-y-3 pointer-events-none';
-        document.body.appendChild(t);
-    }
-    t.innerHTML = msg;
-    t.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
-    t.classList.add('opacity-100', 'translate-y-0');
-    setTimeout(() => {
-        t.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
-        t.classList.remove('opacity-100', 'translate-y-0');
-    }, 3000);
 };
