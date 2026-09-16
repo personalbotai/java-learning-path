@@ -55,7 +55,7 @@ This repository is part of the **PersonalBot Interactive Learning Series**:
 | 📘 | **TypeScript** | 77 Type-Level Lessons | In-Browser TS Compiler & Transpiler | [Open TypeScript Path](https://personalbotai.github.io/typescript-learning-path/) |
 | 🐹 | **Go (Golang)** | 53 Idiomatic Lessons | Go Playground API & Sandbox | [Open Go Path](https://personalbotai.github.io/go-learning-path/) |
 | ☕ | **Java** | 30 Modern Java 21 Lessons | Judge0 CE JDK 17 Compiler | [Open Java Path](https://personalbotai.github.io/java-learning-path/) |
-
+| 🦀 | **Rust** | 15 Systems Lessons | Rust Playground API & Sandbox | [Open Rust Path](https://personalbotai.github.io/rust-learning-path/) |
 
 ---
 
