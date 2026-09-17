@@ -73,8 +73,13 @@ const lessons = [
     "moduleId": 1,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Apa itu Java & Ekosistem Java 21 LTS\n\n- Sejarah singkat dan filosofi 'Write Once, Run Anywhere'\n- Perbedaan JDK, JRE, dan JVM\n- Keunggulan Java 21 LTS",
-    "code": "// Java 21 LTS: Apa itu Java & Ekosistem Java 21 LTS\npublic class Main { public static void main(String[] args) { System.out.println(\"Apa itu Java & Ekosistem Java 21 LTS\"); } }",
+    "content": "# Apa itu Java & Ekosistem Java 21 LTS
+
+- Sejarah singkat dan filosofi 'Write Once, Run Anywhere'
+- Perbedaan JDK, JRE, dan JVM
+- Keunggulan Java 21 LTS",
+    "code": "// Java 21 LTS: Apa itu Java & Ekosistem Java 21 LTS
+public class Main { public static void main(String[] args) { System.out.println(\"Apa itu Java & Ekosistem Java 21 LTS\"); } }",
     "quiz": {
       "question": "Komponen manakah yang bertanggung jawab mengeksekusi bytecode Java menjadi bahasa mesin? (A. JDK, B. JRE, C. JVM, D. Javac) - Kunci: C",
       "options": [
@@ -95,8 +100,13 @@ const lessons = [
     "moduleId": 1,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Program Java Pertama (Hello World)\n\n- Membuat class pertama\n- Memahami struktur public static void main\n- Mencetak teks ke console",
-    "code": "// Java 21 LTS: Program Java Pertama (Hello World)\npublic class Main { public static void main(String[] args) { System.out.println(\"Program Java Pertama (Hello World)\"); } }",
+    "content": "# Program Java Pertama (Hello World)
+
+- Membuat class pertama
+- Memahami struktur public static void main
+- Mencetak teks ke console",
+    "code": "// Java 21 LTS: Program Java Pertama (Hello World)
+public class Main { public static void main(String[] args) { System.out.println(\"Program Java Pertama (Hello World)\"); } }",
     "quiz": {
       "question": "Apa keyword yang digunakan agar method main dapat dipanggil tanpa membuat objek dari class? (A. void, B. static, C. public, D. class) - Kunci: B",
       "options": [
@@ -117,8 +127,13 @@ const lessons = [
     "moduleId": 1,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Struktur Program & Packages Dasar\n\n- Deklarasi package\n- Import statement\n- Struktur dasar file .java",
-    "code": "// Java 21 LTS: Struktur Program & Packages Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Struktur Program & Packages Dasar\"); } }",
+    "content": "# Struktur Program & Packages Dasar
+
+- Deklarasi package
+- Import statement
+- Struktur dasar file .java",
+    "code": "// Java 21 LTS: Struktur Program & Packages Dasar
+public class Main { public static void main(String[] args) { System.out.println(\"Struktur Program & Packages Dasar\"); } }",
     "quiz": {
       "question": "Keyword apa yang digunakan untuk mengelompokkan class-class Java ke dalam sebuah namespace/folder logis? (A. import, B. package, C. module, D. class) - Kunci: B",
       "options": [
@@ -139,8 +154,13 @@ const lessons = [
     "moduleId": 1,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Input dan Output Dasar\n\n- Menggunakan System.out untuk output\n- Menggunakan java.util.Scanner untuk input\n- Membaca berbagai tipe data dari user",
-    "code": "// Java 21 LTS: Input dan Output Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Input dan Output Dasar\"); } }",
+    "content": "# Input dan Output Dasar
+
+- Menggunakan System.out untuk output
+- Menggunakan java.util.Scanner untuk input
+- Membaca berbagai tipe data dari user",
+    "code": "// Java 21 LTS: Input dan Output Dasar
+public class Main { public static void main(String[] args) { System.out.println(\"Input dan Output Dasar\"); } }",
     "quiz": {
       "question": "Method manakah dari class Scanner yang digunakan untuk membaca input teks hingga baris baru? (A. next(), B. nextString(), C. nextLine(), D. readLine()) - Kunci: C",
       "options": [
@@ -161,8 +181,13 @@ const lessons = [
     "moduleId": 1,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Komentar dan Dokumentasi Code\n\n- Komentar satu baris (//)\n- Komentar multi-baris (/* */)\n- Komentar Javadoc (/** */)",
-    "code": "// Java 21 LTS: Komentar dan Dokumentasi Code\npublic class Main { public static void main(String[] args) { System.out.println(\"Komentar dan Dokumentasi Code\"); } }",
+    "content": "# Komentar dan Dokumentasi Code
+
+- Komentar satu baris (//)
+- Komentar multi-baris (/* */)
+- Komentar Javadoc (/** */)",
+    "code": "// Java 21 LTS: Komentar dan Dokumentasi Code
+public class Main { public static void main(String[] args) { System.out.println(\"Komentar dan Dokumentasi Code\"); } }",
     "quiz": {
       "question": "Format komentar manakah yang dapat diekstrak menjadi dokumentasi HTML menggunakan tools bawaan JDK? (A. //, B. /* */, C. /** */, D. <!-- -->) - Kunci: C",
       "options": [
@@ -183,8 +208,13 @@ const lessons = [
     "moduleId": 1,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Kompilasi dan Eksekusi\n\n- Menggunakan javac untuk kompilasi\n- Menggunakan java untuk menjalankan\n- Memahami file .class (Bytecode)",
-    "code": "// Java 21 LTS: Kompilasi dan Eksekusi\npublic class Main { public static void main(String[] args) { System.out.println(\"Kompilasi dan Eksekusi\"); } }",
+    "content": "# Kompilasi dan Eksekusi
+
+- Menggunakan javac untuk kompilasi
+- Menggunakan java untuk menjalankan
+- Memahami file .class (Bytecode)",
+    "code": "// Java 21 LTS: Kompilasi dan Eksekusi
+public class Main { public static void main(String[] args) { System.out.println(\"Kompilasi dan Eksekusi\"); } }",
     "quiz": {
       "question": "File dengan ekstensi apa yang dihasilkan setelah program Java dikompilasi? (A. .java, B. .exe, C. .class, D. .jar) - Kunci: C",
       "options": [
@@ -205,8 +235,13 @@ const lessons = [
     "moduleId": 2,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Tipe Data Primitif\n\n- Tipe bilangan bulat (byte, short, int, long)\n- Tipe desimal (float, double)\n- Tipe boolean dan char",
-    "code": "// Java 21 LTS: Tipe Data Primitif\npublic class Main { public static void main(String[] args) { System.out.println(\"Tipe Data Primitif\"); } }",
+    "content": "# Tipe Data Primitif
+
+- Tipe bilangan bulat (byte, short, int, long)
+- Tipe desimal (float, double)
+- Tipe boolean dan char",
+    "code": "// Java 21 LTS: Tipe Data Primitif
+public class Main { public static void main(String[] args) { System.out.println(\"Tipe Data Primitif\"); } }",
     "quiz": {
       "question": "Berapa ukuran default tipe data 'int' di Java? (A. 8 bit, B. 16 bit, C. 32 bit, D. 64 bit) - Kunci: C",
       "options": [
@@ -227,8 +262,13 @@ const lessons = [
     "moduleId": 2,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Tipe Data Referensi & String\n\n- Perbedaan primitif dan referensi\n- Pengenalan class String\n- Operasi dasar String (concat, length)",
-    "code": "// Java 21 LTS: Tipe Data Referensi & String\npublic class Main { public static void main(String[] args) { System.out.println(\"Tipe Data Referensi & String\"); } }",
+    "content": "# Tipe Data Referensi & String
+
+- Perbedaan primitif dan referensi
+- Pengenalan class String
+- Operasi dasar String (concat, length)",
+    "code": "// Java 21 LTS: Tipe Data Referensi & String
+public class Main { public static void main(String[] args) { System.out.println(\"Tipe Data Referensi & String\"); } }",
     "quiz": {
       "question": "Di Java, String adalah... (A. Tipe primitif, B. Keyword bawaan, C. Object/Class, D. Array karakter otomatis) - Kunci: C",
       "options": [
@@ -249,8 +289,13 @@ const lessons = [
     "moduleId": 2,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Deklarasi Variabel & var (Type Inference)\n\n- Aturan penamaan variabel (camelCase)\n- Inisialisasi variabel\n- Menggunakan keyword 'var' (Java 10+)",
-    "code": "// Java 21 LTS: Deklarasi Variabel & var (Type Inference)\npublic class Main { public static void main(String[] args) { System.out.println(\"Deklarasi Variabel & var (Type Inference)\"); } }",
+    "content": "# Deklarasi Variabel & var (Type Inference)
+
+- Aturan penamaan variabel (camelCase)
+- Inisialisasi variabel
+- Menggunakan keyword 'var' (Java 10+)",
+    "code": "// Java 21 LTS: Deklarasi Variabel & var (Type Inference)
+public class Main { public static void main(String[] args) { System.out.println(\"Deklarasi Variabel & var (Type Inference)\"); } }",
     "quiz": {
       "question": "Sejak Java versi berapakah keyword 'var' dapat digunakan untuk local variable type inference? (A. Java 8, B. Java 10, C. Java 11, D. Java 17) - Kunci: B",
       "options": [
@@ -271,8 +316,13 @@ const lessons = [
     "moduleId": 2,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Konstanta dengan keyword final\n\n- Apa itu konstanta\n- Menggunakan keyword final\n- Konvensi penamaan konstanta (UPPER_SNAKE_CASE)",
-    "code": "// Java 21 LTS: Konstanta dengan keyword final\npublic class Main { public static void main(String[] args) { System.out.println(\"Konstanta dengan keyword final\"); } }",
+    "content": "# Konstanta dengan keyword final
+
+- Apa itu konstanta
+- Menggunakan keyword final
+- Konvensi penamaan konstanta (UPPER_SNAKE_CASE)",
+    "code": "// Java 21 LTS: Konstanta dengan keyword final
+public class Main { public static void main(String[] args) { System.out.println(\"Konstanta dengan keyword final\"); } }",
     "quiz": {
       "question": "Apa yang terjadi jika mencoba mengubah nilai variabel yang dideklarasikan dengan 'final'? (A. Warning saat runtime, B. Nilai ditimpa, C. Compile-time error, D. Program crash saat jalan) - Kunci: C",
       "options": [
@@ -293,8 +343,13 @@ const lessons = [
     "moduleId": 2,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Type Casting (Konversi Tipe Data)\n\n- Widening Casting (Implicit)\n- Narrowing Casting (Explicit)\n- Risiko kehilangan presisi data",
-    "code": "// Java 21 LTS: Type Casting (Konversi Tipe Data)\npublic class Main { public static void main(String[] args) { System.out.println(\"Type Casting (Konversi Tipe Data)\"); } }",
+    "content": "# Type Casting (Konversi Tipe Data)
+
+- Widening Casting (Implicit)
+- Narrowing Casting (Explicit)
+- Risiko kehilangan presisi data",
+    "code": "// Java 21 LTS: Type Casting (Konversi Tipe Data)
+public class Main { public static void main(String[] args) { System.out.println(\"Type Casting (Konversi Tipe Data)\"); } }",
     "quiz": {
       "question": "Manakah sintaks eksplisit cast dari double ke int yang benar? (A. int x = d;, B. int x = int(d);, C. int x = (int) d;, D. int x = d.toInt();) - Kunci: C",
       "options": [
@@ -315,8 +370,13 @@ const lessons = [
     "moduleId": 2,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Operator Dasar\n\n- Operator Aritmatika (+, -, *, /, %)\n- Operator Penugasan (=, +=, dst)\n- Operator Increment/Decrement (++, --)",
-    "code": "// Java 21 LTS: Operator Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Operator Dasar\"); } }",
+    "content": "# Operator Dasar
+
+- Operator Aritmatika (+, -, *, /, %)
+- Operator Penugasan (=, +=, dst)
+- Operator Increment/Decrement (++, --)",
+    "code": "// Java 21 LTS: Operator Dasar
+public class Main { public static void main(String[] args) { System.out.println(\"Operator Dasar\"); } }",
     "quiz": {
       "question": "Apa hasil dari ekspresi 10 % 3? (A. 3.3, B. 3, C. 1, D. 0) - Kunci: C",
       "options": [
@@ -337,8 +397,13 @@ const lessons = [
     "moduleId": 3,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Operator Relasional & Logika\n\n- Operator perbandingan (==, !=, >, <)\n- Operator logika (&&, ||, !)\n- Short-circuit evaluation",
-    "code": "// Java 21 LTS: Operator Relasional & Logika\npublic class Main { public static void main(String[] args) { System.out.println(\"Operator Relasional & Logika\"); } }",
+    "content": "# Operator Relasional & Logika
+
+- Operator perbandingan (==, !=, >, <)
+- Operator logika (&&, ||, !)
+- Short-circuit evaluation",
+    "code": "// Java 21 LTS: Operator Relasional & Logika
+public class Main { public static void main(String[] args) { System.out.println(\"Operator Relasional & Logika\"); } }",
     "quiz": {
       "question": "Operator manakah yang mewakili logika AND? (A. ||, B. &&, C. !, D. &|) - Kunci: B",
       "options": [
@@ -359,8 +424,13 @@ const lessons = [
     "moduleId": 3,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Percabangan if, else if, else\n\n- Sintaks if-else dasar\n- Chaining else if\n- Ternary operator untuk if-else inline",
-    "code": "// Java 21 LTS: Percabangan if, else if, else\npublic class Main { public static void main(String[] args) { System.out.println(\"Percabangan if, else if, else\"); } }",
+    "content": "# Percabangan if, else if, else
+
+- Sintaks if-else dasar
+- Chaining else if
+- Ternary operator untuk if-else inline",
+    "code": "// Java 21 LTS: Percabangan if, else if, else
+public class Main { public static void main(String[] args) { System.out.println(\"Percabangan if, else if, else\"); } }",
     "quiz": {
       "question": "Ternary operator merupakan bentuk singkat dari... (A. switch, B. loop, C. while, D. if-else) - Kunci: D",
       "options": [
@@ -381,8 +451,13 @@ const lessons = [
     "moduleId": 3,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Switch Statement Tradisional\n\n- Mencocokkan nilai variabel\n- Pentingnya keyword break\n- Default case",
-    "code": "// Java 21 LTS: Switch Statement Tradisional\npublic class Main { public static void main(String[] args) { System.out.println(\"Switch Statement Tradisional\"); } }",
+    "content": "# Switch Statement Tradisional
+
+- Mencocokkan nilai variabel
+- Pentingnya keyword break
+- Default case",
+    "code": "// Java 21 LTS: Switch Statement Tradisional
+public class Main { public static void main(String[] args) { System.out.println(\"Switch Statement Tradisional\"); } }",
     "quiz": {
       "question": "Apa yang terjadi jika lupa menambahkan keyword 'break' pada case switch konvensional? (A. Error, B. Fall-through ke case bawahnya, C. Eksekusi berhenti, D. Langsung ke default) - Kunci: B",
       "options": [
@@ -403,8 +478,13 @@ const lessons = [
     "moduleId": 3,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Switch Expressions (Java 14+)\n\n- Sintaks panah (->) pengganti titik dua\n- Menghilangkan keharusan break (no fall-through)\n- Yield keyword",
-    "code": "// Java 21 LTS: Switch Expressions (Java 14+)\npublic class Main { public static void main(String[] args) { System.out.println(\"Switch Expressions (Java 14+)\"); } }",
+    "content": "# Switch Expressions (Java 14+)
+
+- Sintaks panah (->) pengganti titik dua
+- Menghilangkan keharusan break (no fall-through)
+- Yield keyword",
+    "code": "// Java 21 LTS: Switch Expressions (Java 14+)
+public class Main { public static void main(String[] args) { System.out.println(\"Switch Expressions (Java 14+)\"); } }",
     "quiz": {
       "question": "Keyword apa untuk me-return nilai dari multi-line block pada switch expression? (A. return, B. break, C. yield, D. out) - Kunci: C",
       "options": [
@@ -425,8 +505,13 @@ const lessons = [
     "moduleId": 3,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Perulangan for dan while\n\n- for loop klasik (init, kond, step)\n- while loop\n- do-while loop (minimal eksekusi sekali)",
-    "code": "// Java 21 LTS: Perulangan for dan while\npublic class Main { public static void main(String[] args) { System.out.println(\"Perulangan for dan while\"); } }",
+    "content": "# Perulangan for dan while
+
+- for loop klasik (init, kond, step)
+- while loop
+- do-while loop (minimal eksekusi sekali)",
+    "code": "// Java 21 LTS: Perulangan for dan while
+public class Main { public static void main(String[] args) { System.out.println(\"Perulangan for dan while\"); } }",
     "quiz": {
       "question": "Perulangan manakah yang dijamin berjalan minimal satu kali meskipun kondisi awalnya false? (A. for, B. while, C. do-while, D. for-each) - Kunci: C",
       "options": [
@@ -447,8 +532,13 @@ const lessons = [
     "moduleId": 3,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Break, Continue, dan Label\n\n- Menghentikan loop paksa (break)\n- Melewati iterasi (continue)\n- Labeled loops pada perulangan bersarang",
-    "code": "// Java 21 LTS: Break, Continue, dan Label\npublic class Main { public static void main(String[] args) { System.out.println(\"Break, Continue, dan Label\"); } }",
+    "content": "# Break, Continue, dan Label
+
+- Menghentikan loop paksa (break)
+- Melewati iterasi (continue)
+- Labeled loops pada perulangan bersarang",
+    "code": "// Java 21 LTS: Break, Continue, dan Label
+public class Main { public static void main(String[] args) { System.out.println(\"Break, Continue, dan Label\"); } }",
     "quiz": {
       "question": "Keyword untuk melompati sisa kode pada iterasi saat ini dan lanjut ke iterasi loop berikutnya adalah... (A. skip, B. next, C. break, D. continue) - Kunci: D",
       "options": [
@@ -469,8 +559,13 @@ const lessons = [
     "moduleId": 4,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Konsep Class dan Object\n\n- Blueprint (Class) vs Instance (Object)\n- Mendefinisikan Class\n- Keyword 'new' untuk instansiasi",
-    "code": "// Java 21 LTS: Konsep Class dan Object\npublic class Main { public static void main(String[] args) { System.out.println(\"Konsep Class dan Object\"); } }",
+    "content": "# Konsep Class dan Object
+
+- Blueprint (Class) vs Instance (Object)
+- Mendefinisikan Class
+- Keyword 'new' untuk instansiasi",
+    "code": "// Java 21 LTS: Konsep Class dan Object
+public class Main { public static void main(String[] args) { System.out.println(\"Konsep Class dan Object\"); } }",
     "quiz": {
       "question": "Keyword untuk membuat objek baru dari sebuah class adalah... (A. create, B. object, C. new, D. init) - Kunci: C",
       "options": [
@@ -491,8 +586,13 @@ const lessons = [
     "moduleId": 4,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Fields (Atribut) dan Methods\n\n- Variabel di dalam class (State)\n- Fungsi/prosedur di dalam class (Behavior)\n- Passing argumen ke method",
-    "code": "// Java 21 LTS: Fields (Atribut) dan Methods\npublic class Main { public static void main(String[] args) { System.out.println(\"Fields (Atribut) dan Methods\"); } }",
+    "content": "# Fields (Atribut) dan Methods
+
+- Variabel di dalam class (State)
+- Fungsi/prosedur di dalam class (Behavior)
+- Passing argumen ke method",
+    "code": "// Java 21 LTS: Fields (Atribut) dan Methods
+public class Main { public static void main(String[] args) { System.out.println(\"Fields (Atribut) dan Methods\"); } }",
     "quiz": {
       "question": "Jika method tidak mengembalikan nilai apapun, maka return type-nya ditulis dengan... (A. null, B. empty, C. none, D. void) - Kunci: D",
       "options": [
@@ -513,8 +613,13 @@ const lessons = [
     "moduleId": 4,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Constructor dan Keyword 'this'\n\n- Fungsi Constructor (inisialisasi awal)\n- Overloading Constructor\n- Resolusi penamaan variabel dengan 'this'",
-    "code": "// Java 21 LTS: Constructor dan Keyword 'this'\npublic class Main { public static void main(String[] args) { System.out.println(\"Constructor dan Keyword 'this'\"); } }",
+    "content": "# Constructor dan Keyword 'this'
+
+- Fungsi Constructor (inisialisasi awal)
+- Overloading Constructor
+- Resolusi penamaan variabel dengan 'this'",
+    "code": "// Java 21 LTS: Constructor dan Keyword 'this'
+public class Main { public static void main(String[] args) { System.out.println(\"Constructor dan Keyword 'this'\"); } }",
     "quiz": {
       "question": "Ciri utama Constructor dibandingkan method biasa adalah... (A. Harus private, B. Namanya persis sama dengan nama class, C. Mengembalikan int, D. Bersifat static) - Kunci: B",
       "options": [
@@ -535,8 +640,13 @@ const lessons = [
     "moduleId": 4,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Access Modifiers\n\n- Tingkat akses (Visibility)\n- public, private, protected, package-private (default)\n- Menjaga keamanan data",
-    "code": "// Java 21 LTS: Access Modifiers\npublic class Main { public static void main(String[] args) { System.out.println(\"Access Modifiers\"); } }",
+    "content": "# Access Modifiers
+
+- Tingkat akses (Visibility)
+- public, private, protected, package-private (default)
+- Menjaga keamanan data",
+    "code": "// Java 21 LTS: Access Modifiers
+public class Main { public static void main(String[] args) { System.out.println(\"Access Modifiers\"); } }",
     "quiz": {
       "question": "Modifier manakah yang membuat atribut hanya bisa diakses oleh method di dalam class itu sendiri? (A. public, B. protected, C. default, D. private) - Kunci: D",
       "options": [
@@ -557,8 +667,13 @@ const lessons = [
     "moduleId": 4,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Encapsulation (Getter dan Setter)\n\n- Menyembunyikan state internal (Data Hiding)\n- Method Getter (Aksesor)\n- Method Setter (Mutator) beserta validasi internal",
-    "code": "// Java 21 LTS: Encapsulation (Getter dan Setter)\npublic class Main { public static void main(String[] args) { System.out.println(\"Encapsulation (Getter dan Setter)\"); } }",
+    "content": "# Encapsulation (Getter dan Setter)
+
+- Menyembunyikan state internal (Data Hiding)
+- Method Getter (Aksesor)
+- Method Setter (Mutator) beserta validasi internal",
+    "code": "// Java 21 LTS: Encapsulation (Getter dan Setter)
+public class Main { public static void main(String[] args) { System.out.println(\"Encapsulation (Getter dan Setter)\"); } }",
     "quiz": {
       "question": "Tujuan utama enkapsulasi adalah... (A. Mempercepat run program, B. Mengontrol validitas perubahan data atribut dari luar, C. Membuat class abstrak, D. Menyatukan dua class) - Kunci: B",
       "options": [
@@ -579,8 +694,13 @@ const lessons = [
     "moduleId": 4,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Static Keyword\n\n- Class members vs Instance members\n- Variabel static untuk memori bersama\n- Method static untuk utility (seperti Math)",
-    "code": "// Java 21 LTS: Static Keyword\npublic class Main { public static void main(String[] args) { System.out.println(\"Static Keyword\"); } }",
+    "content": "# Static Keyword
+
+- Class members vs Instance members
+- Variabel static untuk memori bersama
+- Method static untuk utility (seperti Math)",
+    "code": "// Java 21 LTS: Static Keyword
+public class Main { public static void main(String[] args) { System.out.println(\"Static Keyword\"); } }",
     "quiz": {
       "question": "Sebuah static method DAPAT mengakses secara langsung... (A. Atribut private non-static, B. Hanya anggota static lainnya dalam class, C. Keyword 'this', D. Objek instance superclass) - Kunci: B",
       "options": [
@@ -601,8 +721,13 @@ const lessons = [
     "moduleId": 5,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Inheritance (Pewarisan)\n\n- Konsep is-a relationship\n- Menggunakan keyword 'extends'\n- Mewariskan properti dan method public/protected",
-    "code": "// Java 21 LTS: Inheritance (Pewarisan)\npublic class Main { public static void main(String[] args) { System.out.println(\"Inheritance (Pewarisan)\"); } }",
+    "content": "# Inheritance (Pewarisan)
+
+- Konsep is-a relationship
+- Menggunakan keyword 'extends'
+- Mewariskan properti dan method public/protected",
+    "code": "// Java 21 LTS: Inheritance (Pewarisan)
+public class Main { public static void main(String[] args) { System.out.println(\"Inheritance (Pewarisan)\"); } }",
     "quiz": {
       "question": "Keyword di Java untuk mendeklarasikan bahwa sebuah class mewarisi class lain adalah... (A. implements, B. inherits, C. extends, D. super) - Kunci: C",
       "options": [
@@ -623,8 +748,13 @@ const lessons = [
     "moduleId": 5,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Method Overriding dan Keyword super\n\n- Mendefinisikan ulang method parent di child\n- Anotasi @Override\n- Memanggil implementasi parent dengan super.method()",
-    "code": "// Java 21 LTS: Method Overriding dan Keyword super\npublic class Main { public static void main(String[] args) { System.out.println(\"Method Overriding dan Keyword super\"); } }",
+    "content": "# Method Overriding dan Keyword super
+
+- Mendefinisikan ulang method parent di child
+- Anotasi @Override
+- Memanggil implementasi parent dengan super.method()",
+    "code": "// Java 21 LTS: Method Overriding dan Keyword super
+public class Main { public static void main(String[] args) { System.out.println(\"Method Overriding dan Keyword super\"); } }",
     "quiz": {
       "question": "Anotasi apa yang digunakan agar compiler memvalidasi bahwa kita benar-benar menimpa method parent? (A. @Overload, B. @Extend, C. @Override, D. @Parent) - Kunci: C",
       "options": [
@@ -645,8 +775,13 @@ const lessons = [
     "moduleId": 5,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Polymorphism (Banyak Bentuk)\n\n- Overloading (Compile-time) vs Overriding (Runtime)\n- Upcasting (Child ke Parent)\n- Fleksibilitas kode via tipe referensi umum",
-    "code": "// Java 21 LTS: Polymorphism (Banyak Bentuk)\npublic class Main { public static void main(String[] args) { System.out.println(\"Polymorphism (Banyak Bentuk)\"); } }",
+    "content": "# Polymorphism (Banyak Bentuk)
+
+- Overloading (Compile-time) vs Overriding (Runtime)
+- Upcasting (Child ke Parent)
+- Fleksibilitas kode via tipe referensi umum",
+    "code": "// Java 21 LTS: Polymorphism (Banyak Bentuk)
+public class Main { public static void main(String[] args) { System.out.println(\"Polymorphism (Banyak Bentuk)\"); } }",
     "quiz": {
       "question": "Menyimpan referensi dari objek child ke dalam variabel dengan tipe parent-nya disebut dengan... (A. Downcasting, B. Upcasting, C. Overloading, D. Encapsulation) - Kunci: B",
       "options": [
@@ -667,8 +802,13 @@ const lessons = [
     "moduleId": 5,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Abstract Classes dan Methods\n\n- Class setengah jadi (tidak bisa new)\n- Method abstrak (tanpa body)\n- Memaksa child class memberikan implementasi",
-    "code": "// Java 21 LTS: Abstract Classes dan Methods\npublic class Main { public static void main(String[] args) { System.out.println(\"Abstract Classes dan Methods\"); } }",
+    "content": "# Abstract Classes dan Methods
+
+- Class setengah jadi (tidak bisa new)
+- Method abstrak (tanpa body)
+- Memaksa child class memberikan implementasi",
+    "code": "// Java 21 LTS: Abstract Classes dan Methods
+public class Main { public static void main(String[] args) { System.out.println(\"Abstract Classes dan Methods\"); } }",
     "quiz": {
       "question": "Bisakah kita menginstansiasi (membuat objek baru dengan new) dari sebuah Abstract Class? (A. Ya, selalu, B. Tidak bisa, C. Bisa jika tidak ada method abstrak, D. Bisa jika disahkan) - Kunci: B",
       "options": [
@@ -689,8 +829,13 @@ const lessons = [
     "moduleId": 5,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Interfaces Dasar\n\n- Kontrak prilaku / kapabilitas murni\n- Keyword 'interface' dan 'implements'\n- Multiple inheritance tipe di Java via interface",
-    "code": "// Java 21 LTS: Interfaces Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Interfaces Dasar\"); } }",
+    "content": "# Interfaces Dasar
+
+- Kontrak prilaku / kapabilitas murni
+- Keyword 'interface' dan 'implements'
+- Multiple inheritance tipe di Java via interface",
+    "code": "// Java 21 LTS: Interfaces Dasar
+public class Main { public static void main(String[] args) { System.out.println(\"Interfaces Dasar\"); } }",
     "quiz": {
       "question": "Sebuah class di Java dapat meng-extends satu class lain, namun dapat implements berapa interface? (A. 1, B. 2, C. Tidak ada batasan, D. 0) - Kunci: C",
       "options": [
@@ -711,8 +856,13 @@ const lessons = [
     "moduleId": 5,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Default dan Static Methods di Interface\n\n- Menambah implementasi konkret di Interface (Java 8+)\n- Menjaga backward compatibility\n- Perbedaan dengan Abstract Class semakin tipis",
-    "code": "// Java 21 LTS: Default dan Static Methods di Interface\npublic class Main { public static void main(String[] args) { System.out.println(\"Default dan Static Methods di Interface\"); } }",
+    "content": "# Default dan Static Methods di Interface
+
+- Menambah implementasi konkret di Interface (Java 8+)
+- Menjaga backward compatibility
+- Perbedaan dengan Abstract Class semakin tipis",
+    "code": "// Java 21 LTS: Default dan Static Methods di Interface
+public class Main { public static void main(String[] args) { System.out.println(\"Default dan Static Methods di Interface\"); } }",
     "quiz": {
       "question": "Sejak Java versi berapa sebuah interface bisa memiliki method dengan body/implementasi (melalui default method)? (A. Java 7, B. Java 8, C. Java 11, D. Java 17) - Kunci: B",
       "options": [
@@ -733,8 +883,13 @@ const lessons = [
     "moduleId": 6,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Pengenalan Collections & Generics\n\n- Gambaran umum hirarki Collections\n- Masalah tanpa Generics (ClassCastException)\n- Menentukan tipe aman dengan <T>",
-    "code": "// Java 21 LTS: Pengenalan Collections & Generics\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Collections & Generics\"); } }",
+    "content": "# Pengenalan Collections & Generics
+
+- Gambaran umum hirarki Collections
+- Masalah tanpa Generics (ClassCastException)
+- Menentukan tipe aman dengan <T>",
+    "code": "// Java 21 LTS: Pengenalan Collections & Generics
+public class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Collections & Generics\"); } }",
     "quiz": {
       "question": "Fungsi utama dari Generics (tanda kurung sudut < >) pada Collections adalah... (A. Kompresi data, B. Compile-time type safety, C. Bypass enkripsi, D. Multithreading) - Kunci: B",
       "options": [
@@ -755,8 +910,13 @@ const lessons = [
     "moduleId": 6,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# List dan ArrayList\n\n- Sifat List: berurutan, indeks berbasis nol, duplikat diizinkan\n- Operasi add, get, size, remove\n- Backed by array (dynamic array)",
-    "code": "// Java 21 LTS: List dan ArrayList\npublic class Main { public static void main(String[] args) { System.out.println(\"List dan ArrayList\"); } }",
+    "content": "# List dan ArrayList
+
+- Sifat List: berurutan, indeks berbasis nol, duplikat diizinkan
+- Operasi add, get, size, remove
+- Backed by array (dynamic array)",
+    "code": "// Java 21 LTS: List dan ArrayList
+public class Main { public static void main(String[] args) { System.out.println(\"List dan ArrayList\"); } }",
     "quiz": {
       "question": "Method manakah dari interface List yang digunakan untuk mengambil elemen pada indeks tertentu? (A. fetch(i), B. get(i), C. index(i), D. elementAt(i)) - Kunci: B",
       "options": [
@@ -777,8 +937,13 @@ const lessons = [
     "moduleId": 6,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Set dan HashSet\n\n- Sifat Set: elemen unik, tidak menjamin urutan\n- Mekanisme equals() dan hashCode()\n- Penyaringan elemen ganda secara natural",
-    "code": "// Java 21 LTS: Set dan HashSet\npublic class Main { public static void main(String[] args) { System.out.println(\"Set dan HashSet\"); } }",
+    "content": "# Set dan HashSet
+
+- Sifat Set: elemen unik, tidak menjamin urutan
+- Mekanisme equals() dan hashCode()
+- Penyaringan elemen ganda secara natural",
+    "code": "// Java 21 LTS: Set dan HashSet
+public class Main { public static void main(String[] args) { System.out.println(\"Set dan HashSet\"); } }",
     "quiz": {
       "question": "Koleksi mana yang menolak penambahan elemen duplikat? (A. ArrayList, B. LinkedList, C. HashSet, D. Vector) - Kunci: C",
       "options": [
@@ -799,8 +964,13 @@ const lessons = [
     "moduleId": 6,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Map dan HashMap\n\n- Key-Value pair (Kamus)\n- Bukan pewaris Collection\n- Operasi put, get, keySet, dan values",
-    "code": "// Java 21 LTS: Map dan HashMap\npublic class Main { public static void main(String[] args) { System.out.println(\"Map dan HashMap\"); } }",
+    "content": "# Map dan HashMap
+
+- Key-Value pair (Kamus)
+- Bukan pewaris Collection
+- Operasi put, get, keySet, dan values",
+    "code": "// Java 21 LTS: Map dan HashMap
+public class Main { public static void main(String[] args) { System.out.println(\"Map dan HashMap\"); } }",
     "quiz": {
       "question": "Method yang digunakan untuk menyimpan pasangan key-value baru ke dalam Map adalah... (A. add(), B. insert(), C. put(), D. set()) - Kunci: C",
       "options": [
@@ -821,8 +991,13 @@ const lessons = [
     "moduleId": 6,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Queue dan Deque\n\n- Konsep antrean FIFO (First In First Out)\n- Interface Queue, Deque, dan implementasi LinkedList/ArrayDeque\n- Method offer, poll, peek",
-    "code": "// Java 21 LTS: Queue dan Deque\npublic class Main { public static void main(String[] args) { System.out.println(\"Queue dan Deque\"); } }",
+    "content": "# Queue dan Deque
+
+- Konsep antrean FIFO (First In First Out)
+- Interface Queue, Deque, dan implementasi LinkedList/ArrayDeque
+- Method offer, poll, peek",
+    "code": "// Java 21 LTS: Queue dan Deque
+public class Main { public static void main(String[] args) { System.out.println(\"Queue dan Deque\"); } }",
     "quiz": {
       "question": "Pada Queue standar, method poll() akan mengambil dan menghapus elemen di bagian... (A. Tengah, B. Belakang, C. Acak, D. Depan / Head) - Kunci: D",
       "options": [
@@ -843,8 +1018,13 @@ const lessons = [
     "moduleId": 6,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Iterators dan Enhanced for-loop\n\n- Cara iterasi koleksi (for biasa vs for-each)\n- ConcurrentModificationException saat menghapus di for-each\n- Solusi hapus dinamis menggunakan Iterator",
-    "code": "// Java 21 LTS: Iterators dan Enhanced for-loop\npublic class Main { public static void main(String[] args) { System.out.println(\"Iterators dan Enhanced for-loop\"); } }",
+    "content": "# Iterators dan Enhanced for-loop
+
+- Cara iterasi koleksi (for biasa vs for-each)
+- ConcurrentModificationException saat menghapus di for-each
+- Solusi hapus dinamis menggunakan Iterator",
+    "code": "// Java 21 LTS: Iterators dan Enhanced for-loop
+public class Main { public static void main(String[] args) { System.out.println(\"Iterators dan Enhanced for-loop\"); } }",
     "quiz": {
       "question": "Jika kita menambah/menghapus elemen List secara langsung dalam enhanced for-loop, exception apa yang akan muncul? (A. NullPointerException, B. ConcurrentModificationException, C. IllegalStateException, D. IndexOutOfBoundsException) - Kunci: B",
       "options": [
@@ -865,8 +1045,13 @@ const lessons = [
     "moduleId": 7,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Konsep Exception dan Hirarki Throwable\n\n- Perbedaan Error (sistem crash) vs Exception (bisa ditangani)\n- Hirarki kelas Throwable -> Exception -> RuntimeException\n- Stack trace log",
-    "code": "// Java 21 LTS: Konsep Exception dan Hirarki Throwable\npublic class Main { public static void main(String[] args) { System.out.println(\"Konsep Exception dan Hirarki Throwable\"); } }",
+    "content": "# Konsep Exception dan Hirarki Throwable
+
+- Perbedaan Error (sistem crash) vs Exception (bisa ditangani)
+- Hirarki kelas Throwable -> Exception -> RuntimeException
+- Stack trace log",
+    "code": "// Java 21 LTS: Konsep Exception dan Hirarki Throwable
+public class Main { public static void main(String[] args) { System.out.println(\"Konsep Exception dan Hirarki Throwable\"); } }",
     "quiz": {
       "question": "Akar dari semua class exception dan error di Java adalah class... (A. RuntimeException, B. Exception, C. Throwable, D. Error) - Kunci: C",
       "options": [
@@ -887,8 +1072,13 @@ const lessons = [
     "moduleId": 7,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Try, Catch, dan Finally\n\n- Mencegah program crash dengan try-catch\n- Alur eksekusi saat error terjadi vs normal\n- Blok finally (selalu jalan apapun yang terjadi)",
-    "code": "// Java 21 LTS: Try, Catch, dan Finally\npublic class Main { public static void main(String[] args) { System.out.println(\"Try, Catch, dan Finally\"); } }",
+    "content": "# Try, Catch, dan Finally
+
+- Mencegah program crash dengan try-catch
+- Alur eksekusi saat error terjadi vs normal
+- Blok finally (selalu jalan apapun yang terjadi)",
+    "code": "// Java 21 LTS: Try, Catch, dan Finally
+public class Main { public static void main(String[] args) { System.out.println(\"Try, Catch, dan Finally\"); } }",
     "quiz": {
       "question": "Blok kode mana yang PASTI dieksekusi terlepas dari apakah exception terpicu atau tidak? (A. try, B. catch, C. finally, D. default) - Kunci: C",
       "options": [
@@ -909,8 +1099,13 @@ const lessons = [
     "moduleId": 7,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Checked vs Unchecked Exceptions\n\n- Checked Exceptions (Wajib di-handle/throws saat compile: IOException)\n- Unchecked (RuntimeException: NullPointer, IndexOutOfBounds)\n- Kapan membuat custom exception",
-    "code": "// Java 21 LTS: Checked vs Unchecked Exceptions\npublic class Main { public static void main(String[] args) { System.out.println(\"Checked vs Unchecked Exceptions\"); } }",
+    "content": "# Checked vs Unchecked Exceptions
+
+- Checked Exceptions (Wajib di-handle/throws saat compile: IOException)
+- Unchecked (RuntimeException: NullPointer, IndexOutOfBounds)
+- Kapan membuat custom exception",
+    "code": "// Java 21 LTS: Checked vs Unchecked Exceptions
+public class Main { public static void main(String[] args) { System.out.println(\"Checked vs Unchecked Exceptions\"); } }",
     "quiz": {
       "question": "Exception jenis apa yang dicek langsung oleh compiler dan mewajibkan penanganan sebelum kode bisa di-compile? (A. Unchecked Exception, B. Checked Exception, C. RuntimeException, D. Error) - Kunci: B",
       "options": [
@@ -931,8 +1126,13 @@ const lessons = [
     "moduleId": 7,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Keyword throw dan throws\n\n- Mendelegasikan penanganan error (throws di signature method)\n- Membangkitkan error manual (throw new Exception())\n- Validasi argumen input",
-    "code": "// Java 21 LTS: Keyword throw dan throws\npublic class Main { public static void main(String[] args) { System.out.println(\"Keyword throw dan throws\"); } }",
+    "content": "# Keyword throw dan throws
+
+- Mendelegasikan penanganan error (throws di signature method)
+- Membangkitkan error manual (throw new Exception())
+- Validasi argumen input",
+    "code": "// Java 21 LTS: Keyword throw dan throws
+public class Main { public static void main(String[] args) { System.out.println(\"Keyword throw dan throws\"); } }",
     "quiz": {
       "question": "Keyword untuk melempar/mencetuskan exception secara manual dari dalam block kode adalah... (A. throws, B. throw, C. try, D. catch) - Kunci: B",
       "options": [
@@ -953,8 +1153,13 @@ const lessons = [
     "moduleId": 7,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Multiple Catch dan Multi-catch block\n\n- Menangkap berbagai tipe exception berbeda\n- Urutan catch harus dari subclass ke superclass\n- Java 7 Multi-catch dengan simbol pipe (|)",
-    "code": "// Java 21 LTS: Multiple Catch dan Multi-catch block\npublic class Main { public static void main(String[] args) { System.out.println(\"Multiple Catch dan Multi-catch block\"); } }",
+    "content": "# Multiple Catch dan Multi-catch block
+
+- Menangkap berbagai tipe exception berbeda
+- Urutan catch harus dari subclass ke superclass
+- Java 7 Multi-catch dengan simbol pipe (|)",
+    "code": "// Java 21 LTS: Multiple Catch dan Multi-catch block
+public class Main { public static void main(String[] args) { System.out.println(\"Multiple Catch dan Multi-catch block\"); } }",
     "quiz": {
       "question": "Karakter apa yang digunakan untuk menggabungkan dua tipe exception di satu blok catch (Multi-catch)? (A. &, B. ||, C. |, D. ,) - Kunci: C",
       "options": [
@@ -975,8 +1180,13 @@ const lessons = [
     "moduleId": 7,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Try-with-resources\n\n- Automatic Resource Management (ARM)\n- Interface AutoCloseable\n- Menghindari memori/file leak tanpa finally yang panjang",
-    "code": "// Java 21 LTS: Try-with-resources\npublic class Main { public static void main(String[] args) { System.out.println(\"Try-with-resources\"); } }",
+    "content": "# Try-with-resources
+
+- Automatic Resource Management (ARM)
+- Interface AutoCloseable
+- Menghindari memori/file leak tanpa finally yang panjang",
+    "code": "// Java 21 LTS: Try-with-resources
+public class Main { public static void main(String[] args) { System.out.println(\"Try-with-resources\"); } }",
     "quiz": {
       "question": "Agar sebuah resource dapat otomatis ditutup oleh try-with-resources, objek tersebut harus mengimplementasikan interface... (A. CloseableResource, B. Serializable, C. AutoCloseable, D. Destructible) - Kunci: C",
       "options": [
@@ -997,8 +1207,13 @@ const lessons = [
     "moduleId": 8,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Pengenalan Functional Interfaces\n\n- Konsep SAM (Single Abstract Method)\n- Anotasi @FunctionalInterface\n- Interface umum: Predicate (boolean), Consumer (void), Function, Supplier",
-    "code": "// Java 21 LTS: Pengenalan Functional Interfaces\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Functional Interfaces\"); } }",
+    "content": "# Pengenalan Functional Interfaces
+
+- Konsep SAM (Single Abstract Method)
+- Anotasi @FunctionalInterface
+- Interface umum: Predicate (boolean), Consumer (void), Function, Supplier",
+    "code": "// Java 21 LTS: Pengenalan Functional Interfaces
+public class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Functional Interfaces\"); } }",
     "quiz": {
       "question": "Berapa jumlah abstract method yang boleh dimiliki oleh sebuah Functional Interface? (A. 0, B. 1, C. 2, D. Bebas) - Kunci: B",
       "options": [
@@ -1019,8 +1234,13 @@ const lessons = [
     "moduleId": 8,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Lambda Expressions\n\n- Sintaks panah (->) (parameter -> body)\n- Mengubah anonymous class menjadi lambda\n- Kejelasan kode",
-    "code": "// Java 21 LTS: Lambda Expressions\npublic class Main { public static void main(String[] args) { System.out.println(\"Lambda Expressions\"); } }",
+    "content": "# Lambda Expressions
+
+- Sintaks panah (->) (parameter -> body)
+- Mengubah anonymous class menjadi lambda
+- Kejelasan kode",
+    "code": "// Java 21 LTS: Lambda Expressions
+public class Main { public static void main(String[] args) { System.out.println(\"Lambda Expressions\"); } }",
     "quiz": {
       "question": "Bagian apa dari ekspresi lambda yang memisahkan antara parameter dan body implementasi? (A. ::, B. =>, C. ->, D. :) - Kunci: C",
       "options": [
@@ -1041,8 +1261,13 @@ const lessons = [
     "moduleId": 8,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Method References\n\n- Menggunakan lambda yang memanggil satu method spesifik\n- Sintaks Class::method\n- Reference untuk method static dan instance",
-    "code": "// Java 21 LTS: Method References\npublic class Main { public static void main(String[] args) { System.out.println(\"Method References\"); } }",
+    "content": "# Method References
+
+- Menggunakan lambda yang memanggil satu method spesifik
+- Sintaks Class::method
+- Reference untuk method static dan instance",
+    "code": "// Java 21 LTS: Method References
+public class Main { public static void main(String[] args) { System.out.println(\"Method References\"); } }",
     "quiz": {
       "question": "Simbol apa yang digunakan untuk membuat Method Reference di Java? (A. ->, B. ::, C. ., D. =>) - Kunci: B",
       "options": [
@@ -1063,8 +1288,13 @@ const lessons = [
     "moduleId": 8,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Pengenalan Stream API\n\n- Stream sebagai pipeline data fungsional (bukan Stream I/O)\n- Operasi Intermediate (lazy) vs Terminal\n- Stream tidak mengubah koleksi asli",
-    "code": "// Java 21 LTS: Pengenalan Stream API\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Stream API\"); } }",
+    "content": "# Pengenalan Stream API
+
+- Stream sebagai pipeline data fungsional (bukan Stream I/O)
+- Operasi Intermediate (lazy) vs Terminal
+- Stream tidak mengubah koleksi asli",
+    "code": "// Java 21 LTS: Pengenalan Stream API
+public class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Stream API\"); } }",
     "quiz": {
       "question": "Sifat Stream adalah lazy evaluation, artinya operasi map dan filter tidak akan berjalan sampai kita memanggil method... (A. Intermediate, B. Terminal, C. peek(), D. Builder) - Kunci: B",
       "options": [
@@ -1085,8 +1315,13 @@ const lessons = [
     "moduleId": 8,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Stream: Filter, Map, dan Collect\n\n- filter() untuk kondisi boolean\n- map() untuk transformasi data\n- collect(Collectors.toList())",
-    "code": "// Java 21 LTS: Stream: Filter, Map, dan Collect\npublic class Main { public static void main(String[] args) { System.out.println(\"Stream: Filter, Map, dan Collect\"); } }",
+    "content": "# Stream: Filter, Map, dan Collect
+
+- filter() untuk kondisi boolean
+- map() untuk transformasi data
+- collect(Collectors.toList())",
+    "code": "// Java 21 LTS: Stream: Filter, Map, dan Collect
+public class Main { public static void main(String[] args) { System.out.println(\"Stream: Filter, Map, dan Collect\"); } }",
     "quiz": {
       "question": "Method Stream apa yang dipakai untuk mengubah atau mentransformasikan setiap elemen ke bentuk tipe lain? (A. filter(), B. reduce(), C. map(), D. modify()) - Kunci: C",
       "options": [
@@ -1107,8 +1342,13 @@ const lessons = [
     "moduleId": 8,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Optional Class\n\n- Solusi modern menghindari NullPointerException\n- Method of(), ofNullable(), empty()\n- Cara aman mengekstrak nilai (orElse, ifPresent)",
-    "code": "// Java 21 LTS: Optional Class\npublic class Main { public static void main(String[] args) { System.out.println(\"Optional Class\"); } }",
+    "content": "# Optional Class
+
+- Solusi modern menghindari NullPointerException
+- Method of(), ofNullable(), empty()
+- Cara aman mengekstrak nilai (orElse, ifPresent)",
+    "code": "// Java 21 LTS: Optional Class
+public class Main { public static void main(String[] args) { System.out.println(\"Optional Class\"); } }",
     "quiz": {
       "question": "Method Optional apa yang digunakan untuk memberikan nilai default (fallback) jika data di dalamnya null/empty? (A. get(), B. isPresent(), C. orElse(), D. defaultNull()) - Kunci: C",
       "options": [
@@ -1129,8 +1369,13 @@ const lessons = [
     "moduleId": 9,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Text Blocks\n\n- Menulis String multi-baris panjang\n- Sintaks triple quotes (\"\"\")\n- Praktis untuk penulisan JSON, HTML, SQL di kode",
-    "code": "// Java 21 LTS: Text Blocks\npublic class Main { public static void main(String[] args) { System.out.println(\"Text Blocks\"); } }",
+    "content": "# Text Blocks
+
+- Menulis String multi-baris panjang
+- Sintaks triple quotes (\"\"\")
+- Praktis untuk penulisan JSON, HTML, SQL di kode",
+    "code": "// Java 21 LTS: Text Blocks
+public class Main { public static void main(String[] args) { System.out.println(\"Text Blocks\"); } }",
     "quiz": {
       "question": "Karakter apa yang mengapit String Text Block di Java 15+? (A. ```, B. ''', C. \"\"\", D. *) - Kunci: C",
       "options": [
@@ -1151,8 +1396,13 @@ const lessons = [
     "moduleId": 9,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Records (Data Classes)\n\n- Membuat class DTO (Data Transfer Object) ringkas\n- Otomatisasi constructor, getter, toString, equals\n- Bersifat immutable (tidak ada setter)",
-    "code": "// Java 21 LTS: Records (Data Classes)\npublic class Main { public static void main(String[] args) { System.out.println(\"Records (Data Classes)\"); } }",
+    "content": "# Records (Data Classes)
+
+- Membuat class DTO (Data Transfer Object) ringkas
+- Otomatisasi constructor, getter, toString, equals
+- Bersifat immutable (tidak ada setter)",
+    "code": "// Java 21 LTS: Records (Data Classes)
+public class Main { public static void main(String[] args) { System.out.println(\"Records (Data Classes)\"); } }",
     "quiz": {
       "question": "Atribut/komponen dalam class tipe Record otomatis bersifat... (A. public mutable, B. private final, C. protected statis, D. public statis) - Kunci: B",
       "options": [
@@ -1173,8 +1423,13 @@ const lessons = [
     "moduleId": 9,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Pattern Matching untuk instanceof\n\n- Menyatukan pengecekan tipe dan casting\n- Deklarasi pattern variable langsung di dalam kondisi if\n- Menghilangkan template boilerplate casting",
-    "code": "// Java 21 LTS: Pattern Matching untuk instanceof\npublic class Main { public static void main(String[] args) { System.out.println(\"Pattern Matching untuk instanceof\"); } }",
+    "content": "# Pattern Matching untuk instanceof
+
+- Menyatukan pengecekan tipe dan casting
+- Deklarasi pattern variable langsung di dalam kondisi if
+- Menghilangkan template boilerplate casting",
+    "code": "// Java 21 LTS: Pattern Matching untuk instanceof
+public class Main { public static void main(String[] args) { System.out.println(\"Pattern Matching untuk instanceof\"); } }",
     "quiz": {
       "question": "Apa tujuan Pattern Matching instanceof? (A. Membuat class baru, B. Melakukan Type Casting implisit secara aman setelah pengecekan tipe, C. Menangkap Error, D. Mencocokkan Regex) - Kunci: B",
       "options": [
@@ -1195,8 +1450,13 @@ const lessons = [
     "moduleId": 9,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Sealed Classes dan Interfaces\n\n- Membatasi inheritance secara eksplisit\n- Keyword sealed, permits, dan non-sealed\n- Pengembangan domain driven design dan library aman",
-    "code": "// Java 21 LTS: Sealed Classes dan Interfaces\npublic class Main { public static void main(String[] args) { System.out.println(\"Sealed Classes dan Interfaces\"); } }",
+    "content": "# Sealed Classes dan Interfaces
+
+- Membatasi inheritance secara eksplisit
+- Keyword sealed, permits, dan non-sealed
+- Pengembangan domain driven design dan library aman",
+    "code": "// Java 21 LTS: Sealed Classes dan Interfaces
+public class Main { public static void main(String[] args) { System.out.println(\"Sealed Classes dan Interfaces\"); } }",
     "quiz": {
       "question": "Setelah kata kunci 'sealed', keyword apa yang dipakai untuk menyebutkan daftar class yang boleh mewarisi? (A. allows, B. implements, C. permits, D. grants) - Kunci: C",
       "options": [
@@ -1217,8 +1477,13 @@ const lessons = [
     "moduleId": 9,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Pattern Matching untuk Switch\n\n- Switch case menggunakan tipe objek (contoh: case Integer i)\n- When clause (guards) dalam switch\n- Exhaustiveness: Switch tahu batas turunan class sealed",
-    "code": "// Java 21 LTS: Pattern Matching untuk Switch\npublic class Main { public static void main(String[] args) { System.out.println(\"Pattern Matching untuk Switch\"); } }",
+    "content": "# Pattern Matching untuk Switch
+
+- Switch case menggunakan tipe objek (contoh: case Integer i)
+- When clause (guards) dalam switch
+- Exhaustiveness: Switch tahu batas turunan class sealed",
+    "code": "// Java 21 LTS: Pattern Matching untuk Switch
+public class Main { public static void main(String[] args) { System.out.println(\"Pattern Matching untuk Switch\"); } }",
     "quiz": {
       "question": "Di Java 21, pattern matching switch pada Sealed class mewajibkan untuk melingkupi seluruh kemungkinan subclass-nya. Kondisi ini disebut... (A. Exhaustive, B. Infinite, C. Strict, D. Default-only) - Kunci: A",
       "options": [
@@ -1239,8 +1504,13 @@ const lessons = [
     "moduleId": 9,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Unnamed Variables & Patterns (_)\n\n- Java 21 JEP: Underscore untuk variabel terabaikan\n- Berguna dalam perulangan tak terpakai nilai iterasinya\n- Berguna di Exception catch parameter tak terpakai",
-    "code": "// Java 21 LTS: Unnamed Variables & Patterns (_)\npublic class Main { public static void main(String[] args) { System.out.println(\"Unnamed Variables & Patterns (_)\"); } }",
+    "content": "# Unnamed Variables & Patterns (_)
+
+- Java 21 JEP: Underscore untuk variabel terabaikan
+- Berguna dalam perulangan tak terpakai nilai iterasinya
+- Berguna di Exception catch parameter tak terpakai",
+    "code": "// Java 21 LTS: Unnamed Variables & Patterns (_)
+public class Main { public static void main(String[] args) { System.out.println(\"Unnamed Variables & Patterns (_)\"); } }",
     "quiz": {
       "question": "Karakter apa yang di Java 21 digunakan untuk melambangkan variabel/pattern tak bernama (sengaja tidak dipakai)? (A. *, B. ?, C. -, D. _) - Kunci: D",
       "options": [
@@ -1261,8 +1531,13 @@ const lessons = [
     "moduleId": 10,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Pengenalan Multithreading Klasik\n\n- Apa itu Concurrency (paralel task)\n- Menggunakan interface Runnable vs extends Thread\n- Memulai thread terpisah dengan start()",
-    "code": "// Java 21 LTS: Pengenalan Multithreading Klasik\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Multithreading Klasik\"); } }",
+    "content": "# Pengenalan Multithreading Klasik
+
+- Apa itu Concurrency (paralel task)
+- Menggunakan interface Runnable vs extends Thread
+- Memulai thread terpisah dengan start()",
+    "code": "// Java 21 LTS: Pengenalan Multithreading Klasik
+public class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Multithreading Klasik\"); } }",
     "quiz": {
       "question": "Untuk benar-benar menjalankan thread baru secara paralel/asinkron, kita memanggil method... (A. run(), B. execute(), C. start(), D. begin()) - Kunci: C",
       "options": [
@@ -1283,8 +1558,13 @@ const lessons = [
     "moduleId": 10,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Sinkronisasi (Race Conditions)\n\n- Masalah umum (Race Condition) jika dua thread modifikasi 1 nilai\n- Menjaga block/method dengan keyword synchronized\n- Atomic variables singkat",
-    "code": "// Java 21 LTS: Sinkronisasi (Race Conditions)\npublic class Main { public static void main(String[] args) { System.out.println(\"Sinkronisasi (Race Conditions)\"); } }",
+    "content": "# Sinkronisasi (Race Conditions)
+
+- Masalah umum (Race Condition) jika dua thread modifikasi 1 nilai
+- Menjaga block/method dengan keyword synchronized
+- Atomic variables singkat",
+    "code": "// Java 21 LTS: Sinkronisasi (Race Conditions)
+public class Main { public static void main(String[] args) { System.out.println(\"Sinkronisasi (Race Conditions)\"); } }",
     "quiz": {
       "question": "Keyword di Java untuk memastikan hanya satu thread yang bisa mengakses blok/method tertentu pada waktu yang sama adalah... (A. locked, B. synchronized, C. volatile, D. atomic) - Kunci: B",
       "options": [
@@ -1305,8 +1585,13 @@ const lessons = [
     "moduleId": 10,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Thread Pools (ExecutorService)\n\n- Biaya mahal pembuatan thread OS\n- Konsep Thread Pool (daur ulang thread)\n- Class Executors dan ExecutorService",
-    "code": "// Java 21 LTS: Thread Pools (ExecutorService)\npublic class Main { public static void main(String[] args) { System.out.println(\"Thread Pools (ExecutorService)\"); } }",
+    "content": "# Thread Pools (ExecutorService)
+
+- Biaya mahal pembuatan thread OS
+- Konsep Thread Pool (daur ulang thread)
+- Class Executors dan ExecutorService",
+    "code": "// Java 21 LTS: Thread Pools (ExecutorService)
+public class Main { public static void main(String[] args) { System.out.println(\"Thread Pools (ExecutorService)\"); } }",
     "quiz": {
       "question": "Interface utama di java.util.concurrent untuk mengelola Thread Pool adalah... (A. PoolManager, B. ExecutorService, C. ThreadGroup, D. ThreadManager) - Kunci: B",
       "options": [
@@ -1327,8 +1612,13 @@ const lessons = [
     "moduleId": 10,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Pengenalan Virtual Threads (Loom)\n\n- Masalah 'Thread-per-request' pada server tinggi (misal 10.000 user)\n- Virtual Threads: ringan, murah (di-manage oleh JVM, bukan OS)\n- Perbedaan Platform vs Virtual Thread",
-    "code": "// Java 21 LTS: Pengenalan Virtual Threads (Loom)\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Virtual Threads (Loom)\"); } }",
+    "content": "# Pengenalan Virtual Threads (Loom)
+
+- Masalah 'Thread-per-request' pada server tinggi (misal 10.000 user)
+- Virtual Threads: ringan, murah (di-manage oleh JVM, bukan OS)
+- Perbedaan Platform vs Virtual Thread",
+    "code": "// Java 21 LTS: Pengenalan Virtual Threads (Loom)
+public class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Virtual Threads (Loom)\"); } }",
     "quiz": {
       "question": "Keunggulan utama Virtual Threads (Java 21) adalah... (A. CPU core yang dipakai berlipat ganda, B. Overhead memori dan pembuatannya sangat ringan (jutaan thread), C. Otomatis mengatasi Race Condition, D. Memblokir OS Thread) - Kunci: B",
       "options": [
@@ -1349,8 +1639,13 @@ const lessons = [
     "moduleId": 10,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Virtual Threads pada ExecutorService\n\n- Memanfaatkan try-with-resources pada ExecutorService baru\n- newVirtualThreadPerTaskExecutor()\n- Kapasitas menjalankan puluhan ribu task I/O (sleep)",
-    "code": "// Java 21 LTS: Virtual Threads pada ExecutorService\npublic class Main { public static void main(String[] args) { System.out.println(\"Virtual Threads pada ExecutorService\"); } }",
+    "content": "# Virtual Threads pada ExecutorService
+
+- Memanfaatkan try-with-resources pada ExecutorService baru
+- newVirtualThreadPerTaskExecutor()
+- Kapasitas menjalankan puluhan ribu task I/O (sleep)",
+    "code": "// Java 21 LTS: Virtual Threads pada ExecutorService
+public class Main { public static void main(String[] args) { System.out.println(\"Virtual Threads pada ExecutorService\"); } }",
     "quiz": {
       "question": "Method apa pada class Executors yang menghasilkan Executor pembuat satu Virtual Thread per task? (A. newCachedThreadPool, B. newVirtualThreadPool, C. newVirtualThreadPerTaskExecutor, D. newLightweightExecutor) - Kunci: C",
       "options": [
@@ -1371,8 +1666,13 @@ const lessons = [
     "moduleId": 10,
     "duration": "15 m",
     "level": "Semua",
-    "content": "# Review Akhir & Praktik Concurrency\n\n- Mengkombinasikan Stream dengan Virtual Thread\n- Kapan butuh Thread klasik (CPU bound) vs Virtual (IO bound)\n- Masa depan concurrency Java",
-    "code": "// Java 21 LTS: Review Akhir & Praktik Concurrency\npublic class Main { public static void main(String[] args) { System.out.println(\"Review Akhir & Praktik Concurrency\"); } }",
+    "content": "# Review Akhir & Praktik Concurrency
+
+- Mengkombinasikan Stream dengan Virtual Thread
+- Kapan butuh Thread klasik (CPU bound) vs Virtual (IO bound)
+- Masa depan concurrency Java",
+    "code": "// Java 21 LTS: Review Akhir & Praktik Concurrency
+public class Main { public static void main(String[] args) { System.out.println(\"Review Akhir & Praktik Concurrency\"); } }",
     "quiz": {
       "question": "Tugas jenis apa yang PALING optimal dan merasakan keuntungan performa dari penggunaan Virtual Threads? (A. Kalkulasi matriks kompleks 3D (CPU-bound), B. Eksekusi program sekuensial sederhana, C. Pemanggilan Database/API lambat, baca tulis file (I/O-bound), D. Render Grafis) - Kunci: C",
       "options": [
