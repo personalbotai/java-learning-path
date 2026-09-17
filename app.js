@@ -5,942 +5,1388 @@
 const MODULES = [
   {
     "id": 1,
-    "title": "Dasar-Dasar Java",
-    "icon": "fas fa-play-circle",
-    "lessons": [
-      {
-        "slug": "apa-itu-java",
-        "title": "Apa itu Java?",
-        "duration": "15 min"
-      },
-      {
-        "slug": "instalasi-java",
-        "title": "Instalasi Java & IDE",
-        "duration": "20 min"
-      },
-      {
-        "slug": "struktur-program",
-        "title": "Struktur Program Java",
-        "duration": "15 min"
-      },
-      {
-        "slug": "variabel-tipe-data",
-        "title": "Variabel & Tipe Data",
-        "duration": "20 min"
-      },
-      {
-        "slug": "input-output",
-        "title": "Input & Output",
-        "duration": "15 min"
-      },
-      {
-        "slug": "hello-world",
-        "title": "Hello World",
-        "duration": "10 min"
-      }
-    ]
+    "title": "Modul 1: Dasar Java & Ekosistem",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 2,
-    "title": "Tipe Data & Operators",
-    "icon": "fas fa-cube",
-    "lessons": [
-      {
-        "slug": "wrapper-classes",
-        "title": "Wrapper Classes",
-        "duration": "15 min"
-      },
-      {
-        "slug": "arrays",
-        "title": "Array",
-        "duration": "20 min"
-      },
-      {
-        "slug": "enum-dan-constants",
-        "title": "Enum & Constants",
-        "duration": "15 min"
-      },
-      {
-        "slug": "void-dan-special-types",
-        "title": "Void & Special Types",
-        "duration": "15 min"
-      },
-      {
-        "slug": "type-casting",
-        "title": "Type Casting",
-        "duration": "20 min"
-      },
-      {
-        "slug": "type-inference",
-        "title": "Type Inference (var)",
-        "duration": "15 min"
-      }
-    ]
+    "title": "Modul 2: Variabel dan Tipe Data",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 3,
-    "title": "Kontrol Alur & Exceptions",
-    "icon": "fas fa-code-branch",
-    "lessons": [
-      {
-        "slug": "if-else-dan-switch",
-        "title": "If-Else & Switch",
-        "duration": "20 min"
-      },
-      {
-        "slug": "loops-basic",
-        "title": "Loop Dasar (for, while)",
-        "duration": "20 min"
-      },
-      {
-        "slug": "break-continue",
-        "title": "Break & Continue",
-        "duration": "15 min"
-      },
-      {
-        "slug": "exceptions-basics",
-        "title": "Exceptions Basics",
-        "duration": "20 min"
-      },
-      {
-        "slug": "try-catch-finally",
-        "title": "Try-Catch-Finally",
-        "duration": "20 min"
-      },
-      {
-        "slug": "throw-dan-throws",
-        "title": "Throw & Throws",
-        "duration": "15 min"
-      }
-    ]
+    "title": "Modul 3: Control Flow (Percabangan & Perulangan)",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 4,
-    "title": "Object-Oriented Programming",
-    "icon": "fas fa-layer-group",
-    "lessons": [
-      {
-        "slug": "class-dasar",
-        "title": "Class & Object Dasar",
-        "duration": "20 min"
-      },
-      {
-        "slug": "access-modifiers",
-        "title": "Access Modifiers",
-        "duration": "15 min"
-      },
-      {
-        "slug": "inheritance-extends-super",
-        "title": "Inheritance & Super",
-        "duration": "20 min"
-      },
-      {
-        "slug": "abstract-classes",
-        "title": "Abstract Classes",
-        "duration": "15 min"
-      },
-      {
-        "slug": "interfaces-basic",
-        "title": "Interfaces Dasar",
-        "duration": "20 min"
-      },
-      {
-        "slug": "polymorphism",
-        "title": "Polymorphism",
-        "duration": "15 min"
-      }
-    ]
+    "title": "Modul 4: Object-Oriented Programming (OOP) Dasar",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 5,
-    "title": "Collections Framework",
-    "icon": "fas fa-boxes",
-    "lessons": [
-      {
-        "slug": "intro-collections",
-        "title": "Intro to Collections",
-        "duration": "20 min"
-      },
-      {
-        "slug": "list-dan-arraylist",
-        "title": "List & ArrayList",
-        "duration": "20 min"
-      },
-      {
-        "slug": "set-dan-hashset",
-        "title": "Set & HashSet",
-        "duration": "15 min"
-      },
-      {
-        "slug": "map-dan-hashmap",
-        "title": "Map & HashMap",
-        "duration": "20 min"
-      },
-      {
-        "slug": "queue-dan-deque",
-        "title": "Queue & Deque",
-        "duration": "15 min"
-      },
-      {
-        "slug": "optional-dan-streams-dasar",
-        "title": "Optional & Streams",
-        "duration": "25 min"
-      }
-    ]
-  }
-];
-const LESSONS = [
-  {
-    "id": 1,
-    "slug": "apa-itu-java",
-    "title": "1. Apa itu Java?",
-    "module": "Dasar-Dasar Java",
-    "moduleId": 1,
-    "duration": "15 min",
-    "mdFile": "lessons/apa-itu-java.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Java: Write Once, Run Anywhere!\");\n        System.out.println(\"Versi Java aktif: \" + System.getProperty(\"java.version\"));\n    }\n}",
-    "expectedOutput": "Java: Write Once, Run Anywhere!\nVersi Java aktif: 21.0.2",
-    "hint": "Gunakan System.out.println untuk mencetak teks ke layar.",
-    "quiz": [
-      {
-        "question": "Apa peran utama Java Virtual Machine (JVM) dalam eksekusi kode Java?",
-        "options": [
-          "Mengeksekusi bytecode (.class) dan mengelolanya ke instruksi mesin native via JIT Compiler",
-          "Mengedit file source code .java secara otomatis",
-          "Menggantikan peran sistem operasi host",
-          "Hanya bertugas memformat string output"
-        ],
-        "answer": 0,
-        "explanation": "JVM mengeksekusi bytecode portabel dan mengoptimalkannya dengan JIT compiler."
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "slug": "instalasi-java",
-    "title": "2. Instalasi Java & IDE",
-    "module": "Dasar-Dasar Java",
-    "moduleId": 1,
-    "duration": "20 min",
-    "mdFile": "lessons/instalasi-java.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Cek status JDK:\");\n        System.out.println(\"- Kompiler : javac\");\n        System.out.println(\"- Runtime  : java\");\n        System.out.println(\"Setup Java selesai dan siap digunakan!\");\n    }\n}",
-    "expectedOutput": "Cek status JDK:\n- Kompiler : javac\n- Runtime  : java\nSetup Java selesai dan siap digunakan!",
-    "hint": "Pastikan perintah javac -version dan java -version berhasil dijalankan di terminal.",
-    "quiz": [
-      {
-        "question": "Apa perbedaan mendasar antara JDK, JRE, dan JVM?",
-        "options": [
-          "JDK memuat compiler (javac) dan developer tools; JRE memuat runtime library; JVM adalah mesin eksekusi bytecode",
-          "JDK hanya untuk Android, JRE untuk server",
-          "JVM adalah compiler, javac adalah interpreter",
-          "Ketiganya sinonim tanpa perbedaan"
-        ],
-        "answer": 0,
-        "explanation": "JDK adalah toolkit lengkap, JRE runtime saja, dan JVM core execution engine."
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "slug": "struktur-program",
-    "title": "3. Struktur Program Java",
-    "module": "Dasar-Dasar Java",
-    "moduleId": 1,
-    "duration": "15 min",
-    "mdFile": "lessons/struktur-program.md",
-    "defaultCode": "// File: Main.java\npublic class Main {\n    // Entry point aplikasi Java\n    public static void main(String[] args) {\n        System.out.println(\"Struktur Program Java:\");\n        System.out.println(\"1. Nama class sama dengan nama file\");\n        System.out.println(\"2. Method main dieksekusi pertama kali oleh JVM\");\n    }\n}",
-    "expectedOutput": "Struktur Program Java:\n1. Nama class sama dengan nama file\n2. Method main dieksekusi pertama kali oleh JVM",
-    "hint": "Setiap program Java harus memiliki minimal satu class dengan method public static void main(String[] args).",
-    "quiz": [
-      {
-        "question": "Fitur Virtual Threads di Java 21 (Project Loom) dirancang untuk apa?",
-        "options": [
-          "Menjalankan jutaan lightweight threads dengan overhead memori sangat kecil untuk I/O-bound tasks",
-          "Menggantikan seluruh Garbage Collector",
-          "Mempercepat kompilasi javac",
-          "Menghapus keyword synchronized"
-        ],
-        "answer": 0,
-        "explanation": "Virtual threads berjalan di atas carrier thread pool OS, sangat ideal untuk throughput I/O tinggi."
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "slug": "variabel-tipe-data",
-    "title": "4. Variabel & Tipe Data",
-    "module": "Dasar-Dasar Java",
-    "moduleId": 1,
-    "duration": "20 min",
-    "mdFile": "lessons/variabel-tipe-data.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        String nama = \"Alex\";\n        int usia = 21;\n        double ipk = 3.85;\n        boolean aktif = true;\n\n        System.out.println(\"Nama  : \" + nama);\n        System.out.println(\"Usia  : \" + usia + \" tahun\");\n        System.out.println(\"IPK   : \" + ipk);\n        System.out.println(\"Aktif : \" + aktif);\n    }\n}",
-    "expectedOutput": "Nama  : Alex\nUsia  : 21 tahun\nIPK   : 3.85\nAktif : true",
-    "hint": "Tipe primitif mencakup int, double, boolean, char, byte, short, long, float.",
-    "quiz": [
-      {
-        "question": "Signature method entry point standar program Java yang benar adalah?",
-        "options": [
-          "public static void main(String[] args)",
-          "public void main(String[] args)",
-          "static int main(String args)",
-          "public main(String[] args)"
-        ],
-        "answer": 0,
-        "explanation": "Entry point standar mewajibkan modifier public static void main(String[] args)."
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "slug": "input-output",
-    "title": "5. Input & Output",
-    "module": "Dasar-Dasar Java",
-    "moduleId": 1,
-    "duration": "15 min",
-    "mdFile": "lessons/input-output.md",
-    "defaultCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        // Simulasi input menggunakan scanner string\n        String data = \"Budi 25\";\n        Scanner sc = new Scanner(data);\n\n        String nama = sc.next();\n        int umur = sc.nextInt();\n\n        System.out.printf(\"Halo %s, umur Anda %d tahun!%n\", nama, umur);\n        sc.close();\n    }\n}",
-    "expectedOutput": "Halo Budi, umur Anda 25 tahun!",
-    "hint": "Gunakan Scanner(System.in) untuk input real-time dari console terminal.",
-    "quiz": [
-      {
-        "question": "Keyword 'var' di Java 10+ (Local Variable Type Inference) hanya diizinkan di mana?",
-        "options": [
-          "Hanya untuk variabel lokal di dalam method yang langsung diinisialisasi nilainya",
-          "Untuk field class instance dan static",
-          "Untuk parameter method dan return type",
-          "Untuk deklarasi package"
-        ],
-        "answer": 0,
-        "explanation": "var hanya berlaku untuk local variables dengan initializers."
-      }
-    ]
+    "title": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 6,
-    "slug": "hello-world",
-    "title": "6. Hello World",
-    "module": "Dasar-Dasar Java",
-    "moduleId": 1,
-    "duration": "10 min",
-    "mdFile": "lessons/hello-world.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}",
-    "expectedOutput": "Hello, World!",
-    "hint": "Ketik System.out.println(\"Hello, World!\");",
-    "quiz": [
-      {
-        "question": "Mengapa String di Java bersifat IMMUTABLE?",
-        "options": [
-          "Untuk keamanan, thread-safety, caching hash code, dan efisiensi String Constant Pool di JVM",
-          "Karena memori JVM tidak mendukung update teks",
-          "Agar String tidak bisa dimasukkan ke dalam Array",
-          "Karena String bertipe primitif"
-        ],
-        "answer": 0,
-        "explanation": "Immutability String memastikan keamanan multi-threading dan efisiensi memory reuse."
-      }
-    ]
+    "title": "Modul 6: Java Collections Framework",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 7,
-    "slug": "wrapper-classes",
-    "title": "7. Wrapper Classes",
-    "module": "Tipe Data & Operators",
-    "moduleId": 2,
-    "duration": "15 min",
-    "mdFile": "lessons/wrapper-classes.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        // Autoboxing: primitif -> wrapper\n        Integer angkaObj = 100;\n        \n        // Unboxing: wrapper -> primitif\n        int angkaPrim = angkaObj;\n\n        // Utility method\n        int parsed = Integer.parseInt(\"250\");\n        String biner = Integer.toBinaryString(10);\n\n        System.out.println(\"Unboxed      : \" + angkaPrim);\n        System.out.println(\"Parsed int   : \" + parsed);\n        System.out.println(\"Biner dari 10: \" + biner);\n    }\n}",
-    "expectedOutput": "Unboxed      : 100\nParsed int   : 250\nBiner dari 10: 1010",
-    "hint": "Wrapper classes mengubah primitif menjadi objek dan menyediakan utility parsing.",
-    "quiz": [
-      {
-        "question": "Karakteristik apa yang membedakan 'record' class di Java 16+ dibanding class biasa?",
-        "options": [
-          "Record adalah immutable data carrier yang otomatis menghasilkan constructor, getters, equals(), hashCode(), dan toString()",
-          "Record bisa meng-extend class lain",
-          "Record field-nya bersifat mutable",
-          "Record tidak memiliki constructor"
-        ],
-        "answer": 0,
-        "explanation": "Record menyederhanakan deklarasi kelas pembawa data yang murni immutable."
-      }
-    ]
+    "title": "Modul 7: Error Handling & Exceptions",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 8,
-    "slug": "arrays",
-    "title": "8. Array",
-    "module": "Tipe Data & Operators",
-    "moduleId": 2,
-    "duration": "20 min",
-    "mdFile": "lessons/arrays.md",
-    "defaultCode": "import java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        int[] numbers = {12, 5, 89, 1, 45};\n\n        System.out.println(\"Original: \" + Arrays.toString(numbers));\n        Arrays.sort(numbers);\n        System.out.println(\"Sorted  : \" + Arrays.toString(numbers));\n        System.out.println(\"Panjang : \" + numbers.length);\n    }\n}",
-    "expectedOutput": "Original: [12, 5, 89, 1, 45]\nSorted  : [1, 5, 12, 45, 89]\nPanjang : 5",
-    "hint": "Array berukuran tetap (fixed size). Gunakan Arrays.toString() untuk cetak isi array.",
-    "quiz": [
-      {
-        "question": "Sealed Classes / Interfaces di Java 17+ menggunakan keyword apa untuk membatasi class yang boleh meng-extend-nya?",
-        "options": [
-          "permits",
-          "allows",
-          "extends only",
-          "restrict"
-        ],
-        "answer": 0,
-        "explanation": "Keyword 'permits' mendeklarasikan subclass resmi yang diizinkan meng-extend sealed type."
-      }
-    ]
+    "title": "Modul 8: Modern Java (Functional & Streams)",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 9,
-    "slug": "enum-dan-constants",
-    "title": "9. Enum & Constants",
-    "module": "Tipe Data & Operators",
-    "moduleId": 2,
-    "duration": "15 min",
-    "mdFile": "lessons/enum-dan-constants.md",
-    "defaultCode": "public class Main {\n    enum Level {\n        LOW, MEDIUM, HIGH\n    }\n\n    public static final double PI = 3.14159;\n\n    public static void main(String[] args) {\n        Level status = Level.HIGH;\n        System.out.println(\"Status level : \" + status);\n        System.out.println(\"Nilai PI     : \" + PI);\n    }\n}",
-    "expectedOutput": "Status level : HIGH\nNilai PI     : 3.14159",
-    "hint": "Gunakan enum untuk mendefinisikan kumpulan konstanta bernama yang terstruktur.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Enum & Constants', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "title": "Modul 9: Fitur Baru Java (Java 14 - 21)",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
   },
   {
     "id": 10,
-    "slug": "void-dan-special-types",
-    "title": "10. Void & Special Types",
-    "module": "Tipe Data & Operators",
+    "title": "Modul 10: Concurrency Modern & Virtual Threads",
+    "desc": "Java 21 LTS",
+    "icon": "fa-solid fa-code"
+  }
+];
+const lessons = [
+  {
+    "id": 1,
+    "slug": "java-1",
+    "title": "1. Apa itu Java & Ekosistem Java 21 LTS",
+    "module": "Modul 1: Dasar Java & Ekosistem",
+    "moduleId": 1,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Apa itu Java & Ekosistem Java 21 LTS\n\n- Sejarah singkat dan filosofi 'Write Once, Run Anywhere'\n- Perbedaan JDK, JRE, dan JVM\n- Keunggulan Java 21 LTS",
+    "code": "// Java 21 LTS: Apa itu Java & Ekosistem Java 21 LTS\npublic class Main { public static void main(String[] args) { System.out.println(\"Apa itu Java & Ekosistem Java 21 LTS\"); } }",
+    "quiz": {
+      "question": "Komponen manakah yang bertanggung jawab mengeksekusi bytecode Java menjadi bahasa mesin? (A. JDK, B. JRE, C. JVM, D. Javac) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 2,
+    "slug": "java-2",
+    "title": "2. Program Java Pertama (Hello World)",
+    "module": "Modul 1: Dasar Java & Ekosistem",
+    "moduleId": 1,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Program Java Pertama (Hello World)\n\n- Membuat class pertama\n- Memahami struktur public static void main\n- Mencetak teks ke console",
+    "code": "// Java 21 LTS: Program Java Pertama (Hello World)\npublic class Main { public static void main(String[] args) { System.out.println(\"Program Java Pertama (Hello World)\"); } }",
+    "quiz": {
+      "question": "Apa keyword yang digunakan agar method main dapat dipanggil tanpa membuat objek dari class? (A. void, B. static, C. public, D. class) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 3,
+    "slug": "java-3",
+    "title": "3. Struktur Program & Packages Dasar",
+    "module": "Modul 1: Dasar Java & Ekosistem",
+    "moduleId": 1,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Struktur Program & Packages Dasar\n\n- Deklarasi package\n- Import statement\n- Struktur dasar file .java",
+    "code": "// Java 21 LTS: Struktur Program & Packages Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Struktur Program & Packages Dasar\"); } }",
+    "quiz": {
+      "question": "Keyword apa yang digunakan untuk mengelompokkan class-class Java ke dalam sebuah namespace/folder logis? (A. import, B. package, C. module, D. class) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 4,
+    "slug": "java-4",
+    "title": "4. Input dan Output Dasar",
+    "module": "Modul 1: Dasar Java & Ekosistem",
+    "moduleId": 1,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Input dan Output Dasar\n\n- Menggunakan System.out untuk output\n- Menggunakan java.util.Scanner untuk input\n- Membaca berbagai tipe data dari user",
+    "code": "// Java 21 LTS: Input dan Output Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Input dan Output Dasar\"); } }",
+    "quiz": {
+      "question": "Method manakah dari class Scanner yang digunakan untuk membaca input teks hingga baris baru? (A. next(), B. nextString(), C. nextLine(), D. readLine()) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 5,
+    "slug": "java-5",
+    "title": "5. Komentar dan Dokumentasi Code",
+    "module": "Modul 1: Dasar Java & Ekosistem",
+    "moduleId": 1,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Komentar dan Dokumentasi Code\n\n- Komentar satu baris (//)\n- Komentar multi-baris (/* */)\n- Komentar Javadoc (/** */)",
+    "code": "// Java 21 LTS: Komentar dan Dokumentasi Code\npublic class Main { public static void main(String[] args) { System.out.println(\"Komentar dan Dokumentasi Code\"); } }",
+    "quiz": {
+      "question": "Format komentar manakah yang dapat diekstrak menjadi dokumentasi HTML menggunakan tools bawaan JDK? (A. //, B. /* */, C. /** */, D. <!-- -->) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 6,
+    "slug": "java-6",
+    "title": "6. Kompilasi dan Eksekusi",
+    "module": "Modul 1: Dasar Java & Ekosistem",
+    "moduleId": 1,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Kompilasi dan Eksekusi\n\n- Menggunakan javac untuk kompilasi\n- Menggunakan java untuk menjalankan\n- Memahami file .class (Bytecode)",
+    "code": "// Java 21 LTS: Kompilasi dan Eksekusi\npublic class Main { public static void main(String[] args) { System.out.println(\"Kompilasi dan Eksekusi\"); } }",
+    "quiz": {
+      "question": "File dengan ekstensi apa yang dihasilkan setelah program Java dikompilasi? (A. .java, B. .exe, C. .class, D. .jar) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 7,
+    "slug": "java-7",
+    "title": "7. Tipe Data Primitif",
+    "module": "Modul 2: Variabel dan Tipe Data",
     "moduleId": 2,
-    "duration": "15 min",
-    "mdFile": "lessons/void-dan-special-types.md",
-    "defaultCode": "public class Main {\n    // method void tidak mengembalikan nilai\n    static void sapaPengguna(String user) {\n        System.out.println(\"Halo, \" + user + \"!\");\n    }\n\n    public static void main(String[] args) {\n        sapaPengguna(\"Developer Java\");\n        System.out.println(\"Void method selesai dieksekusi.\");\n    }\n}",
-    "expectedOutput": "Halo, Developer Java!\nVoid method selesai dieksekusi.",
-    "hint": "Gunakan void ketika sebuah method hanya melakukan tugas tanpa return statement bernilai.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Void & Special Types', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Tipe Data Primitif\n\n- Tipe bilangan bulat (byte, short, int, long)\n- Tipe desimal (float, double)\n- Tipe boolean dan char",
+    "code": "// Java 21 LTS: Tipe Data Primitif\npublic class Main { public static void main(String[] args) { System.out.println(\"Tipe Data Primitif\"); } }",
+    "quiz": {
+      "question": "Berapa ukuran default tipe data 'int' di Java? (A. 8 bit, B. 16 bit, C. 32 bit, D. 64 bit) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 8,
+    "slug": "java-8",
+    "title": "8. Tipe Data Referensi & String",
+    "module": "Modul 2: Variabel dan Tipe Data",
+    "moduleId": 2,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Tipe Data Referensi & String\n\n- Perbedaan primitif dan referensi\n- Pengenalan class String\n- Operasi dasar String (concat, length)",
+    "code": "// Java 21 LTS: Tipe Data Referensi & String\npublic class Main { public static void main(String[] args) { System.out.println(\"Tipe Data Referensi & String\"); } }",
+    "quiz": {
+      "question": "Di Java, String adalah... (A. Tipe primitif, B. Keyword bawaan, C. Object/Class, D. Array karakter otomatis) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 9,
+    "slug": "java-9",
+    "title": "9. Deklarasi Variabel & var (Type Inference)",
+    "module": "Modul 2: Variabel dan Tipe Data",
+    "moduleId": 2,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Deklarasi Variabel & var (Type Inference)\n\n- Aturan penamaan variabel (camelCase)\n- Inisialisasi variabel\n- Menggunakan keyword 'var' (Java 10+)",
+    "code": "// Java 21 LTS: Deklarasi Variabel & var (Type Inference)\npublic class Main { public static void main(String[] args) { System.out.println(\"Deklarasi Variabel & var (Type Inference)\"); } }",
+    "quiz": {
+      "question": "Sejak Java versi berapakah keyword 'var' dapat digunakan untuk local variable type inference? (A. Java 8, B. Java 10, C. Java 11, D. Java 17) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 10,
+    "slug": "java-10",
+    "title": "10. Konstanta dengan keyword final",
+    "module": "Modul 2: Variabel dan Tipe Data",
+    "moduleId": 2,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Konstanta dengan keyword final\n\n- Apa itu konstanta\n- Menggunakan keyword final\n- Konvensi penamaan konstanta (UPPER_SNAKE_CASE)",
+    "code": "// Java 21 LTS: Konstanta dengan keyword final\npublic class Main { public static void main(String[] args) { System.out.println(\"Konstanta dengan keyword final\"); } }",
+    "quiz": {
+      "question": "Apa yang terjadi jika mencoba mengubah nilai variabel yang dideklarasikan dengan 'final'? (A. Warning saat runtime, B. Nilai ditimpa, C. Compile-time error, D. Program crash saat jalan) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 11,
-    "slug": "type-casting",
-    "title": "11. Type Casting",
-    "module": "Tipe Data & Operators",
+    "slug": "java-11",
+    "title": "11. Type Casting (Konversi Tipe Data)",
+    "module": "Modul 2: Variabel dan Tipe Data",
     "moduleId": 2,
-    "duration": "20 min",
-    "mdFile": "lessons/type-casting.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        // Widening casting (otomatis): int -> double\n        int angkaInt = 9;\n        double angkaDouble = angkaInt;\n\n        // Narrowing casting (manual): double -> int\n        double pecahan = 9.78;\n        int bulat = (int) pecahan;\n\n        System.out.println(\"Widening : \" + angkaDouble);\n        System.out.println(\"Narrowing: \" + bulat);\n    }\n}",
-    "expectedOutput": "Widening : 9.0\nNarrowing: 9",
-    "hint": "Narrowing casting membutuhkan penulisan tipe tujuan dalam tanda kurung: (tipe) nilai.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Type Casting', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Type Casting (Konversi Tipe Data)\n\n- Widening Casting (Implicit)\n- Narrowing Casting (Explicit)\n- Risiko kehilangan presisi data",
+    "code": "// Java 21 LTS: Type Casting (Konversi Tipe Data)\npublic class Main { public static void main(String[] args) { System.out.println(\"Type Casting (Konversi Tipe Data)\"); } }",
+    "quiz": {
+      "question": "Manakah sintaks eksplisit cast dari double ke int yang benar? (A. int x = d;, B. int x = int(d);, C. int x = (int) d;, D. int x = d.toInt();) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 12,
-    "slug": "type-inference",
-    "title": "12. Type Inference (var)",
-    "module": "Tipe Data & Operators",
+    "slug": "java-12",
+    "title": "12. Operator Dasar",
+    "module": "Modul 2: Variabel dan Tipe Data",
     "moduleId": 2,
-    "duration": "15 min",
-    "mdFile": "lessons/type-inference.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        // Local variable type inference (Java 10+)\n        var nama = \"Java 21\";\n        var versi = 21;\n        var rilis = true;\n\n        System.out.println(\"Nama  : \" + nama);\n        System.out.println(\"Versi : \" + versi);\n        System.out.println(\"Rilis : \" + rilis);\n    }\n}",
-    "expectedOutput": "Nama  : Java 21\nVersi : 21\nRilis : true",
-    "hint": "Kata kunci 'var' hanya dapat digunakan pada local variable yang langsung diinisialisasi.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Type Inference (var)', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Operator Dasar\n\n- Operator Aritmatika (+, -, *, /, %)\n- Operator Penugasan (=, +=, dst)\n- Operator Increment/Decrement (++, --)",
+    "code": "// Java 21 LTS: Operator Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Operator Dasar\"); } }",
+    "quiz": {
+      "question": "Apa hasil dari ekspresi 10 % 3? (A. 3.3, B. 3, C. 1, D. 0) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 13,
-    "slug": "if-else-dan-switch",
-    "title": "13. If-Else & Switch",
-    "module": "Kontrol Alur & Exceptions",
+    "slug": "java-13",
+    "title": "13. Operator Relasional & Logika",
+    "module": "Modul 3: Control Flow (Percabangan & Perulangan)",
     "moduleId": 3,
-    "duration": "20 min",
-    "mdFile": "lessons/if-else-dan-switch.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        int skor = 85;\n\n        // If-Else\n        if (skor >= 90) {\n            System.out.println(\"Grade: A\");\n        } else if (skor >= 80) {\n            System.out.println(\"Grade: B\");\n        } else {\n            System.out.println(\"Grade: C\");\n        }\n\n        // Switch expression\n        String predikat = switch (skor / 10) {\n            case 10, 9 -> \"Sangat Baik\";\n            case 8 -> \"Baik\";\n            default -> \"Cukup\";\n        };\n        System.out.println(\"Predikat: \" + predikat);\n    }\n}",
-    "expectedOutput": "Grade: B\nPredikat: Baik",
-    "hint": "Java modern mendukung Switch Expression dengan operator panah (->) yang ringkas.",
-    "quiz": [
-      {
-        "question": "Pada materi 'If-Else & Switch', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Operator Relasional & Logika\n\n- Operator perbandingan (==, !=, >, <)\n- Operator logika (&&, ||, !)\n- Short-circuit evaluation",
+    "code": "// Java 21 LTS: Operator Relasional & Logika\npublic class Main { public static void main(String[] args) { System.out.println(\"Operator Relasional & Logika\"); } }",
+    "quiz": {
+      "question": "Operator manakah yang mewakili logika AND? (A. ||, B. &&, C. !, D. &|) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 14,
-    "slug": "loops-basic",
-    "title": "14. Loop Dasar (for, while)",
-    "module": "Kontrol Alur & Exceptions",
+    "slug": "java-14",
+    "title": "14. Percabangan if, else if, else",
+    "module": "Modul 3: Control Flow (Percabangan & Perulangan)",
     "moduleId": 3,
-    "duration": "20 min",
-    "mdFile": "lessons/loops-basic.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        // For loop\n        System.out.print(\"For loop  : \");\n        for (int i = 1; i <= 3; i++) {\n            System.out.print(i + \" \");\n        }\n        System.out.println();\n\n        // While loop\n        System.out.print(\"While loop: \");\n        int w = 3;\n        while (w > 0) {\n            System.out.print(w + \" \");\n            w--;\n        }\n        System.out.println();\n    }\n}",
-    "expectedOutput": "For loop  : 1 2 3 \nWhile loop: 3 2 1 ",
-    "hint": "For loop cocok ketika jumlah iterasi diketahui; while loop cocok saat berbasis kondisi boolean.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Loop Dasar (for, while)', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Percabangan if, else if, else\n\n- Sintaks if-else dasar\n- Chaining else if\n- Ternary operator untuk if-else inline",
+    "code": "// Java 21 LTS: Percabangan if, else if, else\npublic class Main { public static void main(String[] args) { System.out.println(\"Percabangan if, else if, else\"); } }",
+    "quiz": {
+      "question": "Ternary operator merupakan bentuk singkat dari... (A. switch, B. loop, C. while, D. if-else) - Kunci: D",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 15,
-    "slug": "break-continue",
-    "title": "15. Break & Continue",
-    "module": "Kontrol Alur & Exceptions",
+    "slug": "java-15",
+    "title": "15. Switch Statement Tradisional",
+    "module": "Modul 3: Control Flow (Percabangan & Perulangan)",
     "moduleId": 3,
-    "duration": "15 min",
-    "mdFile": "lessons/break-continue.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        System.out.print(\"Continue lewati angka genap: \");\n        for (int i = 1; i <= 6; i++) {\n            if (i % 2 == 0) continue;\n            System.out.print(i + \" \");\n        }\n        System.out.println();\n\n        System.out.print(\"Break berhenti di 4: \");\n        for (int i = 1; i <= 10; i++) {\n            if (i == 4) break;\n            System.out.print(i + \" \");\n        }\n        System.out.println();\n    }\n}",
-    "expectedOutput": "Continue lewati angka genap: 1 3 5 \nBreak berhenti di 4: 1 2 3 ",
-    "hint": "Continue melanjutkan ke iterasi berikutnya, break menghentikan seluruh perulangan seketika.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Break & Continue', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Switch Statement Tradisional\n\n- Mencocokkan nilai variabel\n- Pentingnya keyword break\n- Default case",
+    "code": "// Java 21 LTS: Switch Statement Tradisional\npublic class Main { public static void main(String[] args) { System.out.println(\"Switch Statement Tradisional\"); } }",
+    "quiz": {
+      "question": "Apa yang terjadi jika lupa menambahkan keyword 'break' pada case switch konvensional? (A. Error, B. Fall-through ke case bawahnya, C. Eksekusi berhenti, D. Langsung ke default) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 16,
-    "slug": "exceptions-basics",
-    "title": "16. Exceptions Basics",
-    "module": "Kontrol Alur & Exceptions",
+    "slug": "java-16",
+    "title": "16. Switch Expressions (Java 14+)",
+    "module": "Modul 3: Control Flow (Percabangan & Perulangan)",
     "moduleId": 3,
-    "duration": "20 min",
-    "mdFile": "lessons/exceptions-basics.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        try {\n            int hasil = 10 / 0;\n            System.out.println(\"Hasil: \" + hasil);\n        } catch (ArithmeticException e) {\n            System.out.println(\"Terjadi error: \" + e.getMessage());\n        }\n        System.out.println(\"Program tetap berjalan lancar setelah error ditangani.\");\n    }\n}",
-    "expectedOutput": "Terjadi error: / by zero\nProgram tetap berjalan lancar setelah error ditangani.",
-    "hint": "Gunakan block try-catch untuk menangkap exception runtime agar aplikasi tidak berhenti mendadak.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Exceptions Basics', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Switch Expressions (Java 14+)\n\n- Sintaks panah (->) pengganti titik dua\n- Menghilangkan keharusan break (no fall-through)\n- Yield keyword",
+    "code": "// Java 21 LTS: Switch Expressions (Java 14+)\npublic class Main { public static void main(String[] args) { System.out.println(\"Switch Expressions (Java 14+)\"); } }",
+    "quiz": {
+      "question": "Keyword apa untuk me-return nilai dari multi-line block pada switch expression? (A. return, B. break, C. yield, D. out) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 17,
-    "slug": "try-catch-finally",
-    "title": "17. Try-Catch-Finally",
-    "module": "Kontrol Alur & Exceptions",
+    "slug": "java-17",
+    "title": "17. Perulangan for dan while",
+    "module": "Modul 3: Control Flow (Percabangan & Perulangan)",
     "moduleId": 3,
-    "duration": "20 min",
-    "mdFile": "lessons/try-catch-finally.md",
-    "defaultCode": "public class Main {\n    public static void main(String[] args) {\n        try {\n            int[] arr = {1, 2, 3};\n            System.out.println(\"Elemen: \" + arr[5]);\n        } catch (ArrayIndexOutOfBoundsException e) {\n            System.out.println(\"Catch: Index di luar batas array!\");\n        } finally {\n            System.out.println(\"Finally: Blok ini selalu dieksekusi.\");\n        }\n    }\n}",
-    "expectedOutput": "Catch: Index di luar batas array!\nFinally: Blok ini selalu dieksekusi.",
-    "hint": "Blok finally selalu dijalankan terlepas dari apakah terjadi exception atau tidak.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Try-Catch-Finally', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Perulangan for dan while\n\n- for loop klasik (init, kond, step)\n- while loop\n- do-while loop (minimal eksekusi sekali)",
+    "code": "// Java 21 LTS: Perulangan for dan while\npublic class Main { public static void main(String[] args) { System.out.println(\"Perulangan for dan while\"); } }",
+    "quiz": {
+      "question": "Perulangan manakah yang dijamin berjalan minimal satu kali meskipun kondisi awalnya false? (A. for, B. while, C. do-while, D. for-each) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 18,
-    "slug": "throw-dan-throws",
-    "title": "18. Throw & Throws",
-    "module": "Kontrol Alur & Exceptions",
+    "slug": "java-18",
+    "title": "18. Break, Continue, dan Label",
+    "module": "Modul 3: Control Flow (Percabangan & Perulangan)",
     "moduleId": 3,
-    "duration": "15 min",
-    "mdFile": "lessons/throw-dan-throws.md",
-    "defaultCode": "public class Main {\n    static void validasiUmur(int umur) throws IllegalArgumentException {\n        if (umur < 18) {\n            throw new IllegalArgumentException(\"Umur belum mencukupi (minimal 18)\");\n        }\n        System.out.println(\"Akses diterima!\");\n    }\n\n    public static void main(String[] args) {\n        try {\n            validasiUmur(15);\n        } catch (IllegalArgumentException e) {\n            System.out.println(\"Exception ditangkap: \" + e.getMessage());\n        }\n    }\n}",
-    "expectedOutput": "Exception ditangkap: Umur belum mencukupi (minimal 18)",
-    "hint": "'throw' melempar instance exception, 'throws' mendeklarasikan exception pada method signature.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Throw & Throws', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Break, Continue, dan Label\n\n- Menghentikan loop paksa (break)\n- Melewati iterasi (continue)\n- Labeled loops pada perulangan bersarang",
+    "code": "// Java 21 LTS: Break, Continue, dan Label\npublic class Main { public static void main(String[] args) { System.out.println(\"Break, Continue, dan Label\"); } }",
+    "quiz": {
+      "question": "Keyword untuk melompati sisa kode pada iterasi saat ini dan lanjut ke iterasi loop berikutnya adalah... (A. skip, B. next, C. break, D. continue) - Kunci: D",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 19,
-    "slug": "class-dasar",
-    "title": "19. Class & Object Dasar",
-    "module": "Object-Oriented Programming",
+    "slug": "java-19",
+    "title": "19. Konsep Class dan Object",
+    "module": "Modul 4: Object-Oriented Programming (OOP) Dasar",
     "moduleId": 4,
-    "duration": "20 min",
-    "mdFile": "lessons/class-dasar.md",
-    "defaultCode": "class Mobil {\n    String merk;\n    int tahun;\n\n    Mobil(String merk, int tahun) {\n        this.merk = merk;\n        this.tahun = tahun;\n    }\n\n    void klakson() {\n        System.out.println(merk + \" (\" + tahun + \"): Tiiin tiiin!\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Mobil avanza = new Mobil(\"Toyota\", 2022);\n        avanza.klakson();\n    }\n}",
-    "expectedOutput": "Toyota (2022): Tiiin tiiin!",
-    "hint": "Class adalah cetak biru (blueprint), sedangkan Object adalah bentuk nyata (instance).",
-    "quiz": [
-      {
-        "question": "Pada materi 'Class & Object Dasar', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Konsep Class dan Object\n\n- Blueprint (Class) vs Instance (Object)\n- Mendefinisikan Class\n- Keyword 'new' untuk instansiasi",
+    "code": "// Java 21 LTS: Konsep Class dan Object\npublic class Main { public static void main(String[] args) { System.out.println(\"Konsep Class dan Object\"); } }",
+    "quiz": {
+      "question": "Keyword untuk membuat objek baru dari sebuah class adalah... (A. create, B. object, C. new, D. init) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 20,
-    "slug": "access-modifiers",
-    "title": "20. Access Modifiers",
-    "module": "Object-Oriented Programming",
+    "slug": "java-20",
+    "title": "20. Fields (Atribut) dan Methods",
+    "module": "Modul 4: Object-Oriented Programming (OOP) Dasar",
     "moduleId": 4,
-    "duration": "15 min",
-    "mdFile": "lessons/access-modifiers.md",
-    "defaultCode": "class AkunBank {\n    private double saldo = 500000;\n\n    public double getSaldo() {\n        return saldo;\n    }\n\n    public void setor(double jumlah) {\n        if (jumlah > 0) saldo += jumlah;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        AkunBank akun = new AkunBank();\n        akun.setor(150000);\n        System.out.println(\"Saldo saat ini: Rp \" + akun.getSaldo());\n    }\n}",
-    "expectedOutput": "Saldo saat ini: Rp 650000.0",
-    "hint": "Prinsip enkapsulasi: deklarasikan field private dan sediakan getter/setter public.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Access Modifiers', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Fields (Atribut) dan Methods\n\n- Variabel di dalam class (State)\n- Fungsi/prosedur di dalam class (Behavior)\n- Passing argumen ke method",
+    "code": "// Java 21 LTS: Fields (Atribut) dan Methods\npublic class Main { public static void main(String[] args) { System.out.println(\"Fields (Atribut) dan Methods\"); } }",
+    "quiz": {
+      "question": "Jika method tidak mengembalikan nilai apapun, maka return type-nya ditulis dengan... (A. null, B. empty, C. none, D. void) - Kunci: D",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 21,
-    "slug": "inheritance-extends-super",
-    "title": "21. Inheritance & Super",
-    "module": "Object-Oriented Programming",
+    "slug": "java-21",
+    "title": "21. Constructor dan Keyword 'this'",
+    "module": "Modul 4: Object-Oriented Programming (OOP) Dasar",
     "moduleId": 4,
-    "duration": "20 min",
-    "mdFile": "lessons/inheritance-extends-super.md",
-    "defaultCode": "class Hewan {\n    String nama;\n    Hewan(String nama) { this.nama = nama; }\n    void bersuara() { System.out.println(nama + \" bersuara\"); }\n}\n\nclass Kucing extends Hewan {\n    Kucing(String nama) { super(nama); }\n\n    @Override\n    void bersuara() {\n        System.out.println(nama + \": Meoow!\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Kucing k = new Kucing(\"Mimi\");\n        k.bersuara();\n    }\n}",
-    "expectedOutput": "Mimi: Meoow!",
-    "hint": "Kata kunci 'extends' mewarisi sifat class induk, 'super()' memanggil konstruktor induk.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Inheritance & Super', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Constructor dan Keyword 'this'\n\n- Fungsi Constructor (inisialisasi awal)\n- Overloading Constructor\n- Resolusi penamaan variabel dengan 'this'",
+    "code": "// Java 21 LTS: Constructor dan Keyword 'this'\npublic class Main { public static void main(String[] args) { System.out.println(\"Constructor dan Keyword 'this'\"); } }",
+    "quiz": {
+      "question": "Ciri utama Constructor dibandingkan method biasa adalah... (A. Harus private, B. Namanya persis sama dengan nama class, C. Mengembalikan int, D. Bersifat static) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 22,
-    "slug": "abstract-classes",
-    "title": "22. Abstract Classes",
-    "module": "Object-Oriented Programming",
+    "slug": "java-22",
+    "title": "22. Access Modifiers",
+    "module": "Modul 4: Object-Oriented Programming (OOP) Dasar",
     "moduleId": 4,
-    "duration": "15 min",
-    "mdFile": "lessons/abstract-classes.md",
-    "defaultCode": "abstract class Bentuk {\n    abstract double hitungLuas();\n    void info() { System.out.println(\"Menghitung luas bentuk geometris:\"); }\n}\n\nclass Persegi extends Bentuk {\n    double sisi;\n    Persegi(double sisi) { this.sisi = sisi; }\n\n    @Override\n    double hitungLuas() { return sisi * sisi; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Persegi p = new Persegi(6);\n        p.info();\n        System.out.println(\"Luas Persegi (sisi 6) = \" + p.hitungLuas());\n    }\n}",
-    "expectedOutput": "Menghitung luas bentuk geometris:\nLuas Persegi (sisi 6) = 36.0",
-    "hint": "Abstract class tidak bisa diinstansiasi langsung, dan subclass wajib mengimplementasikan method abstract.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Abstract Classes', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Access Modifiers\n\n- Tingkat akses (Visibility)\n- public, private, protected, package-private (default)\n- Menjaga keamanan data",
+    "code": "// Java 21 LTS: Access Modifiers\npublic class Main { public static void main(String[] args) { System.out.println(\"Access Modifiers\"); } }",
+    "quiz": {
+      "question": "Modifier manakah yang membuat atribut hanya bisa diakses oleh method di dalam class itu sendiri? (A. public, B. protected, C. default, D. private) - Kunci: D",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 23,
-    "slug": "interfaces-basic",
-    "title": "23. Interfaces Dasar",
-    "module": "Object-Oriented Programming",
+    "slug": "java-23",
+    "title": "23. Encapsulation (Getter dan Setter)",
+    "module": "Modul 4: Object-Oriented Programming (OOP) Dasar",
     "moduleId": 4,
-    "duration": "20 min",
-    "mdFile": "lessons/interfaces-basic.md",
-    "defaultCode": "interface Pembayaran {\n    void bayar(double jumlah);\n}\n\nclass QrisPayment implements Pembayaran {\n    @Override\n    public void bayar(double jumlah) {\n        System.out.println(\"Pembayaran QRIS berhasil sejumlah: Rp \" + jumlah);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Pembayaran p = new QrisPayment();\n        p.bayar(75000);\n    }\n}",
-    "expectedOutput": "Pembayaran QRIS berhasil sejumlah: Rp 75000.0",
-    "hint": "Class dapat mengimplementasikan beberapa interface sekaligus menggunakan kata kunci 'implements'.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Interfaces Dasar', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Encapsulation (Getter dan Setter)\n\n- Menyembunyikan state internal (Data Hiding)\n- Method Getter (Aksesor)\n- Method Setter (Mutator) beserta validasi internal",
+    "code": "// Java 21 LTS: Encapsulation (Getter dan Setter)\npublic class Main { public static void main(String[] args) { System.out.println(\"Encapsulation (Getter dan Setter)\"); } }",
+    "quiz": {
+      "question": "Tujuan utama enkapsulasi adalah... (A. Mempercepat run program, B. Mengontrol validitas perubahan data atribut dari luar, C. Membuat class abstrak, D. Menyatukan dua class) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 24,
-    "slug": "polymorphism",
-    "title": "24. Polymorphism",
-    "module": "Object-Oriented Programming",
+    "slug": "java-24",
+    "title": "24. Static Keyword",
+    "module": "Modul 4: Object-Oriented Programming (OOP) Dasar",
     "moduleId": 4,
-    "duration": "15 min",
-    "mdFile": "lessons/polymorphism.md",
-    "defaultCode": "class Kalkulator {\n    // Method overloading (Polimorfisme Compile-time)\n    int tambah(int a, int b) { return a + b; }\n    double tambah(double a, double b) { return a + b; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Kalkulator calc = new Kalkulator();\n        System.out.println(\"Tambah int   : \" + calc.tambah(10, 20));\n        System.out.println(\"Tambah double: \" + calc.tambah(4.5, 2.5));\n    }\n}",
-    "expectedOutput": "Tambah int   : 30\nTambah double: 7.0",
-    "hint": "Polimorfisme terbagi dua: Overloading (compile-time) dan Overriding (runtime).",
-    "quiz": [
-      {
-        "question": "Pada materi 'Polymorphism', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Static Keyword\n\n- Class members vs Instance members\n- Variabel static untuk memori bersama\n- Method static untuk utility (seperti Math)",
+    "code": "// Java 21 LTS: Static Keyword\npublic class Main { public static void main(String[] args) { System.out.println(\"Static Keyword\"); } }",
+    "quiz": {
+      "question": "Sebuah static method DAPAT mengakses secara langsung... (A. Atribut private non-static, B. Hanya anggota static lainnya dalam class, C. Keyword 'this', D. Objek instance superclass) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 25,
-    "slug": "intro-collections",
-    "title": "25. Intro to Collections",
-    "module": "Collections Framework",
+    "slug": "java-25",
+    "title": "25. Inheritance (Pewarisan)",
+    "module": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
     "moduleId": 5,
-    "duration": "20 min",
-    "mdFile": "lessons/intro-collections.md",
-    "defaultCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Java Collections Framework:\");\n        List<String> list = List.of(\"List (Terurut)\", \"Set (Unik)\", \"Map (Key-Value)\");\n        list.forEach(item -> System.out.println(\"- \" + item));\n    }\n}",
-    "expectedOutput": "Java Collections Framework:\n- List (Terurut)\n- Set (Unik)\n- Map (Key-Value)",
-    "hint": "Collections framework menyediakan struktur data dinamis yang fleksibel dibandingkan array standar.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Intro to Collections', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Inheritance (Pewarisan)\n\n- Konsep is-a relationship\n- Menggunakan keyword 'extends'\n- Mewariskan properti dan method public/protected",
+    "code": "// Java 21 LTS: Inheritance (Pewarisan)\npublic class Main { public static void main(String[] args) { System.out.println(\"Inheritance (Pewarisan)\"); } }",
+    "quiz": {
+      "question": "Keyword di Java untuk mendeklarasikan bahwa sebuah class mewarisi class lain adalah... (A. implements, B. inherits, C. extends, D. super) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 26,
-    "slug": "list-dan-arraylist",
-    "title": "26. List & ArrayList",
-    "module": "Collections Framework",
+    "slug": "java-26",
+    "title": "26. Method Overriding dan Keyword super",
+    "module": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
     "moduleId": 5,
-    "duration": "20 min",
-    "mdFile": "lessons/list-dan-arraylist.md",
-    "defaultCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> bahasa = new ArrayList<>();\n        bahasa.add(\"Java\");\n        bahasa.add(\"Kotlin\");\n        bahasa.add(\"Python\");\n\n        System.out.println(\"Jumlah bahasa: \" + bahasa.size());\n        System.out.println(\"Elemen pertama: \" + bahasa.get(0));\n        System.out.println(\"Semua elemen : \" + String.join(\", \", bahasa));\n    }\n}",
-    "expectedOutput": "Jumlah bahasa: 3\nElemen pertama: Java\nSemua elemen : Java, Kotlin, Python",
-    "hint": "ArrayList memiliki ukuran dinamis yang bertambah otomatis saat elemen baru dimasukkan.",
-    "quiz": [
-      {
-        "question": "Pada materi 'List & ArrayList', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Method Overriding dan Keyword super\n\n- Mendefinisikan ulang method parent di child\n- Anotasi @Override\n- Memanggil implementasi parent dengan super.method()",
+    "code": "// Java 21 LTS: Method Overriding dan Keyword super\npublic class Main { public static void main(String[] args) { System.out.println(\"Method Overriding dan Keyword super\"); } }",
+    "quiz": {
+      "question": "Anotasi apa yang digunakan agar compiler memvalidasi bahwa kita benar-benar menimpa method parent? (A. @Overload, B. @Extend, C. @Override, D. @Parent) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 27,
-    "slug": "set-dan-hashset",
-    "title": "27. Set & HashSet",
-    "module": "Collections Framework",
+    "slug": "java-27",
+    "title": "27. Polymorphism (Banyak Bentuk)",
+    "module": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
     "moduleId": 5,
-    "duration": "15 min",
-    "mdFile": "lessons/set-dan-hashset.md",
-    "defaultCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Set<String> roles = new HashSet<>();\n        roles.add(\"Admin\");\n        roles.add(\"User\");\n        roles.add(\"Admin\"); // duplikat otomatis diabaikan\n\n        System.out.println(\"Isi Set (tanpa duplikat): \" + roles);\n        System.out.println(\"Jumlah role unik: \" + roles.size());\n    }\n}",
-    "expectedOutput": "Isi Set (tanpa duplikat): [User, Admin]\nJumlah role unik: 2",
-    "hint": "HashSet tidak mengizinkan elemen duplikat dan tidak menjamin urutan elemen.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Set & HashSet', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Polymorphism (Banyak Bentuk)\n\n- Overloading (Compile-time) vs Overriding (Runtime)\n- Upcasting (Child ke Parent)\n- Fleksibilitas kode via tipe referensi umum",
+    "code": "// Java 21 LTS: Polymorphism (Banyak Bentuk)\npublic class Main { public static void main(String[] args) { System.out.println(\"Polymorphism (Banyak Bentuk)\"); } }",
+    "quiz": {
+      "question": "Menyimpan referensi dari objek child ke dalam variabel dengan tipe parent-nya disebut dengan... (A. Downcasting, B. Upcasting, C. Overloading, D. Encapsulation) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 28,
-    "slug": "map-dan-hashmap",
-    "title": "28. Map & HashMap",
-    "module": "Collections Framework",
+    "slug": "java-28",
+    "title": "28. Abstract Classes dan Methods",
+    "module": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
     "moduleId": 5,
-    "duration": "20 min",
-    "mdFile": "lessons/map-dan-hashmap.md",
-    "defaultCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, String> kamus = new HashMap<>();\n        kamus.put(\"id\", \"Bahasa Indonesia\");\n        kamus.put(\"en\", \"English\");\n        kamus.put(\"jp\", \"Japanese\");\n\n        System.out.println(\"Kode 'id' => \" + kamus.get(\"id\"));\n        System.out.println(\"Apakah punya key 'en'? \" + kamus.containsKey(\"en\"));\n        System.out.println(\"Total pasangan: \" + kamus.size());\n    }\n}",
-    "expectedOutput": "Kode 'id' => Bahasa Indonesia\nApakah punya key 'en'? true\nTotal pasangan: 3",
-    "hint": "Map menyimpan data dalam format pasangan Key-Value, dengan Key yang harus unik.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Map & HashMap', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Abstract Classes dan Methods\n\n- Class setengah jadi (tidak bisa new)\n- Method abstrak (tanpa body)\n- Memaksa child class memberikan implementasi",
+    "code": "// Java 21 LTS: Abstract Classes dan Methods\npublic class Main { public static void main(String[] args) { System.out.println(\"Abstract Classes dan Methods\"); } }",
+    "quiz": {
+      "question": "Bisakah kita menginstansiasi (membuat objek baru dengan new) dari sebuah Abstract Class? (A. Ya, selalu, B. Tidak bisa, C. Bisa jika tidak ada method abstrak, D. Bisa jika disahkan) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 29,
-    "slug": "queue-dan-deque",
-    "title": "29. Queue & Deque",
-    "module": "Collections Framework",
+    "slug": "java-29",
+    "title": "29. Interfaces Dasar",
+    "module": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
     "moduleId": 5,
-    "duration": "15 min",
-    "mdFile": "lessons/queue-dan-deque.md",
-    "defaultCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        // Queue: FIFO (First-In First-Out)\n        Queue<String> antrian = new LinkedList<>();\n        antrian.offer(\"Nasabah 1\");\n        antrian.offer(\"Nasabah 2\");\n        antrian.offer(\"Nasabah 3\");\n\n        System.out.println(\"Dilayani: \" + antrian.poll());\n        System.out.println(\"Sisa antrian: \" + antrian);\n    }\n}",
-    "expectedOutput": "Dilayani: Nasabah 1\nSisa antrian: [Nasabah 2, Nasabah 3]",
-    "hint": "Metode offer() menambahkan elemen di belakang, poll() mengambil dan menghapus elemen dari depan.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Queue & Deque', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Interfaces Dasar\n\n- Kontrak prilaku / kapabilitas murni\n- Keyword 'interface' dan 'implements'\n- Multiple inheritance tipe di Java via interface",
+    "code": "// Java 21 LTS: Interfaces Dasar\npublic class Main { public static void main(String[] args) { System.out.println(\"Interfaces Dasar\"); } }",
+    "quiz": {
+      "question": "Sebuah class di Java dapat meng-extends satu class lain, namun dapat implements berapa interface? (A. 1, B. 2, C. Tidak ada batasan, D. 0) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   },
   {
     "id": 30,
-    "slug": "optional-dan-streams-dasar",
-    "title": "30. Optional & Streams",
-    "module": "Collections Framework",
+    "slug": "java-30",
+    "title": "30. Default dan Static Methods di Interface",
+    "module": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
     "moduleId": 5,
-    "duration": "25 min",
-    "mdFile": "lessons/optional-dan-streams-dasar.md",
-    "defaultCode": "import java.util.*;\nimport java.util.stream.Collectors;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> names = List.of(\"Andi\", \"Budi\", \"Cindy\", \"Agus\", \"Dewi\");\n\n        // Filter nama berawalan 'A' dan uppercase\n        List<String> filtered = names.stream()\n            .filter(n -> n.startsWith(\"A\"))\n            .map(String::toUpperCase)\n            .collect(Collectors.toList());\n\n        System.out.println(\"Nama awalan 'A': \" + filtered);\n\n        // Optional handling\n        Optional<String> first = names.stream().findFirst();\n        System.out.println(\"Nama pertama : \" + first.orElse(\"Tidak ada\"));\n    }\n}",
-    "expectedOutput": "Nama awalan 'A': [ANDI, AGUS]\nNama pertama : Andi",
-    "hint": "Stream API mempermudah pemrosesan koleksi secara fungsional, dan Optional mencegah NullPointerException.",
-    "quiz": [
-      {
-        "question": "Pada materi 'Optional & Streams', manakah prinsip arsitektur Modern Java 21 LTS yang benar?",
-        "options": [
-          "Memanfaatkan type-safety ketat, immutability (Records/Sealed), dan garbage collection efisien",
-          "Menonaktifkan exception handling dengan blok catch kosong",
-          "Menggunakan raw types tanpa generics",
-          "Menghindari penggunaan OOP dan collections"
-        ],
-        "answer": 0,
-        "explanation": "Modern Java 21 LTS mengedepankan type-safety, immutability, dan performa GC modern."
-      }
-    ]
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Default dan Static Methods di Interface\n\n- Menambah implementasi konkret di Interface (Java 8+)\n- Menjaga backward compatibility\n- Perbedaan dengan Abstract Class semakin tipis",
+    "code": "// Java 21 LTS: Default dan Static Methods di Interface\npublic class Main { public static void main(String[] args) { System.out.println(\"Default dan Static Methods di Interface\"); } }",
+    "quiz": {
+      "question": "Sejak Java versi berapa sebuah interface bisa memiliki method dengan body/implementasi (melalui default method)? (A. Java 7, B. Java 8, C. Java 11, D. Java 17) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 31,
+    "slug": "java-31",
+    "title": "31. Pengenalan Collections & Generics",
+    "module": "Modul 6: Java Collections Framework",
+    "moduleId": 6,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Pengenalan Collections & Generics\n\n- Gambaran umum hirarki Collections\n- Masalah tanpa Generics (ClassCastException)\n- Menentukan tipe aman dengan <T>",
+    "code": "// Java 21 LTS: Pengenalan Collections & Generics\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Collections & Generics\"); } }",
+    "quiz": {
+      "question": "Fungsi utama dari Generics (tanda kurung sudut < >) pada Collections adalah... (A. Kompresi data, B. Compile-time type safety, C. Bypass enkripsi, D. Multithreading) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 32,
+    "slug": "java-32",
+    "title": "32. List dan ArrayList",
+    "module": "Modul 6: Java Collections Framework",
+    "moduleId": 6,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# List dan ArrayList\n\n- Sifat List: berurutan, indeks berbasis nol, duplikat diizinkan\n- Operasi add, get, size, remove\n- Backed by array (dynamic array)",
+    "code": "// Java 21 LTS: List dan ArrayList\npublic class Main { public static void main(String[] args) { System.out.println(\"List dan ArrayList\"); } }",
+    "quiz": {
+      "question": "Method manakah dari interface List yang digunakan untuk mengambil elemen pada indeks tertentu? (A. fetch(i), B. get(i), C. index(i), D. elementAt(i)) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 33,
+    "slug": "java-33",
+    "title": "33. Set dan HashSet",
+    "module": "Modul 6: Java Collections Framework",
+    "moduleId": 6,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Set dan HashSet\n\n- Sifat Set: elemen unik, tidak menjamin urutan\n- Mekanisme equals() dan hashCode()\n- Penyaringan elemen ganda secara natural",
+    "code": "// Java 21 LTS: Set dan HashSet\npublic class Main { public static void main(String[] args) { System.out.println(\"Set dan HashSet\"); } }",
+    "quiz": {
+      "question": "Koleksi mana yang menolak penambahan elemen duplikat? (A. ArrayList, B. LinkedList, C. HashSet, D. Vector) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 34,
+    "slug": "java-34",
+    "title": "34. Map dan HashMap",
+    "module": "Modul 6: Java Collections Framework",
+    "moduleId": 6,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Map dan HashMap\n\n- Key-Value pair (Kamus)\n- Bukan pewaris Collection\n- Operasi put, get, keySet, dan values",
+    "code": "// Java 21 LTS: Map dan HashMap\npublic class Main { public static void main(String[] args) { System.out.println(\"Map dan HashMap\"); } }",
+    "quiz": {
+      "question": "Method yang digunakan untuk menyimpan pasangan key-value baru ke dalam Map adalah... (A. add(), B. insert(), C. put(), D. set()) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 35,
+    "slug": "java-35",
+    "title": "35. Queue dan Deque",
+    "module": "Modul 6: Java Collections Framework",
+    "moduleId": 6,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Queue dan Deque\n\n- Konsep antrean FIFO (First In First Out)\n- Interface Queue, Deque, dan implementasi LinkedList/ArrayDeque\n- Method offer, poll, peek",
+    "code": "// Java 21 LTS: Queue dan Deque\npublic class Main { public static void main(String[] args) { System.out.println(\"Queue dan Deque\"); } }",
+    "quiz": {
+      "question": "Pada Queue standar, method poll() akan mengambil dan menghapus elemen di bagian... (A. Tengah, B. Belakang, C. Acak, D. Depan / Head) - Kunci: D",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 36,
+    "slug": "java-36",
+    "title": "36. Iterators dan Enhanced for-loop",
+    "module": "Modul 6: Java Collections Framework",
+    "moduleId": 6,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Iterators dan Enhanced for-loop\n\n- Cara iterasi koleksi (for biasa vs for-each)\n- ConcurrentModificationException saat menghapus di for-each\n- Solusi hapus dinamis menggunakan Iterator",
+    "code": "// Java 21 LTS: Iterators dan Enhanced for-loop\npublic class Main { public static void main(String[] args) { System.out.println(\"Iterators dan Enhanced for-loop\"); } }",
+    "quiz": {
+      "question": "Jika kita menambah/menghapus elemen List secara langsung dalam enhanced for-loop, exception apa yang akan muncul? (A. NullPointerException, B. ConcurrentModificationException, C. IllegalStateException, D. IndexOutOfBoundsException) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 37,
+    "slug": "java-37",
+    "title": "37. Konsep Exception dan Hirarki Throwable",
+    "module": "Modul 7: Error Handling & Exceptions",
+    "moduleId": 7,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Konsep Exception dan Hirarki Throwable\n\n- Perbedaan Error (sistem crash) vs Exception (bisa ditangani)\n- Hirarki kelas Throwable -> Exception -> RuntimeException\n- Stack trace log",
+    "code": "// Java 21 LTS: Konsep Exception dan Hirarki Throwable\npublic class Main { public static void main(String[] args) { System.out.println(\"Konsep Exception dan Hirarki Throwable\"); } }",
+    "quiz": {
+      "question": "Akar dari semua class exception dan error di Java adalah class... (A. RuntimeException, B. Exception, C. Throwable, D. Error) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 38,
+    "slug": "java-38",
+    "title": "38. Try, Catch, dan Finally",
+    "module": "Modul 7: Error Handling & Exceptions",
+    "moduleId": 7,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Try, Catch, dan Finally\n\n- Mencegah program crash dengan try-catch\n- Alur eksekusi saat error terjadi vs normal\n- Blok finally (selalu jalan apapun yang terjadi)",
+    "code": "// Java 21 LTS: Try, Catch, dan Finally\npublic class Main { public static void main(String[] args) { System.out.println(\"Try, Catch, dan Finally\"); } }",
+    "quiz": {
+      "question": "Blok kode mana yang PASTI dieksekusi terlepas dari apakah exception terpicu atau tidak? (A. try, B. catch, C. finally, D. default) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 39,
+    "slug": "java-39",
+    "title": "39. Checked vs Unchecked Exceptions",
+    "module": "Modul 7: Error Handling & Exceptions",
+    "moduleId": 7,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Checked vs Unchecked Exceptions\n\n- Checked Exceptions (Wajib di-handle/throws saat compile: IOException)\n- Unchecked (RuntimeException: NullPointer, IndexOutOfBounds)\n- Kapan membuat custom exception",
+    "code": "// Java 21 LTS: Checked vs Unchecked Exceptions\npublic class Main { public static void main(String[] args) { System.out.println(\"Checked vs Unchecked Exceptions\"); } }",
+    "quiz": {
+      "question": "Exception jenis apa yang dicek langsung oleh compiler dan mewajibkan penanganan sebelum kode bisa di-compile? (A. Unchecked Exception, B. Checked Exception, C. RuntimeException, D. Error) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 40,
+    "slug": "java-40",
+    "title": "40. Keyword throw dan throws",
+    "module": "Modul 7: Error Handling & Exceptions",
+    "moduleId": 7,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Keyword throw dan throws\n\n- Mendelegasikan penanganan error (throws di signature method)\n- Membangkitkan error manual (throw new Exception())\n- Validasi argumen input",
+    "code": "// Java 21 LTS: Keyword throw dan throws\npublic class Main { public static void main(String[] args) { System.out.println(\"Keyword throw dan throws\"); } }",
+    "quiz": {
+      "question": "Keyword untuk melempar/mencetuskan exception secara manual dari dalam block kode adalah... (A. throws, B. throw, C. try, D. catch) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 41,
+    "slug": "java-41",
+    "title": "41. Multiple Catch dan Multi-catch block",
+    "module": "Modul 7: Error Handling & Exceptions",
+    "moduleId": 7,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Multiple Catch dan Multi-catch block\n\n- Menangkap berbagai tipe exception berbeda\n- Urutan catch harus dari subclass ke superclass\n- Java 7 Multi-catch dengan simbol pipe (|)",
+    "code": "// Java 21 LTS: Multiple Catch dan Multi-catch block\npublic class Main { public static void main(String[] args) { System.out.println(\"Multiple Catch dan Multi-catch block\"); } }",
+    "quiz": {
+      "question": "Karakter apa yang digunakan untuk menggabungkan dua tipe exception di satu blok catch (Multi-catch)? (A. &, B. ||, C. |, D. ,) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 42,
+    "slug": "java-42",
+    "title": "42. Try-with-resources",
+    "module": "Modul 7: Error Handling & Exceptions",
+    "moduleId": 7,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Try-with-resources\n\n- Automatic Resource Management (ARM)\n- Interface AutoCloseable\n- Menghindari memori/file leak tanpa finally yang panjang",
+    "code": "// Java 21 LTS: Try-with-resources\npublic class Main { public static void main(String[] args) { System.out.println(\"Try-with-resources\"); } }",
+    "quiz": {
+      "question": "Agar sebuah resource dapat otomatis ditutup oleh try-with-resources, objek tersebut harus mengimplementasikan interface... (A. CloseableResource, B. Serializable, C. AutoCloseable, D. Destructible) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 43,
+    "slug": "java-43",
+    "title": "43. Pengenalan Functional Interfaces",
+    "module": "Modul 8: Modern Java (Functional & Streams)",
+    "moduleId": 8,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Pengenalan Functional Interfaces\n\n- Konsep SAM (Single Abstract Method)\n- Anotasi @FunctionalInterface\n- Interface umum: Predicate (boolean), Consumer (void), Function, Supplier",
+    "code": "// Java 21 LTS: Pengenalan Functional Interfaces\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Functional Interfaces\"); } }",
+    "quiz": {
+      "question": "Berapa jumlah abstract method yang boleh dimiliki oleh sebuah Functional Interface? (A. 0, B. 1, C. 2, D. Bebas) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 44,
+    "slug": "java-44",
+    "title": "44. Lambda Expressions",
+    "module": "Modul 8: Modern Java (Functional & Streams)",
+    "moduleId": 8,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Lambda Expressions\n\n- Sintaks panah (->) (parameter -> body)\n- Mengubah anonymous class menjadi lambda\n- Kejelasan kode",
+    "code": "// Java 21 LTS: Lambda Expressions\npublic class Main { public static void main(String[] args) { System.out.println(\"Lambda Expressions\"); } }",
+    "quiz": {
+      "question": "Bagian apa dari ekspresi lambda yang memisahkan antara parameter dan body implementasi? (A. ::, B. =>, C. ->, D. :) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 45,
+    "slug": "java-45",
+    "title": "45. Method References",
+    "module": "Modul 8: Modern Java (Functional & Streams)",
+    "moduleId": 8,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Method References\n\n- Menggunakan lambda yang memanggil satu method spesifik\n- Sintaks Class::method\n- Reference untuk method static dan instance",
+    "code": "// Java 21 LTS: Method References\npublic class Main { public static void main(String[] args) { System.out.println(\"Method References\"); } }",
+    "quiz": {
+      "question": "Simbol apa yang digunakan untuk membuat Method Reference di Java? (A. ->, B. ::, C. ., D. =>) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 46,
+    "slug": "java-46",
+    "title": "46. Pengenalan Stream API",
+    "module": "Modul 8: Modern Java (Functional & Streams)",
+    "moduleId": 8,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Pengenalan Stream API\n\n- Stream sebagai pipeline data fungsional (bukan Stream I/O)\n- Operasi Intermediate (lazy) vs Terminal\n- Stream tidak mengubah koleksi asli",
+    "code": "// Java 21 LTS: Pengenalan Stream API\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Stream API\"); } }",
+    "quiz": {
+      "question": "Sifat Stream adalah lazy evaluation, artinya operasi map dan filter tidak akan berjalan sampai kita memanggil method... (A. Intermediate, B. Terminal, C. peek(), D. Builder) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 47,
+    "slug": "java-47",
+    "title": "47. Stream: Filter, Map, dan Collect",
+    "module": "Modul 8: Modern Java (Functional & Streams)",
+    "moduleId": 8,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Stream: Filter, Map, dan Collect\n\n- filter() untuk kondisi boolean\n- map() untuk transformasi data\n- collect(Collectors.toList())",
+    "code": "// Java 21 LTS: Stream: Filter, Map, dan Collect\npublic class Main { public static void main(String[] args) { System.out.println(\"Stream: Filter, Map, dan Collect\"); } }",
+    "quiz": {
+      "question": "Method Stream apa yang dipakai untuk mengubah atau mentransformasikan setiap elemen ke bentuk tipe lain? (A. filter(), B. reduce(), C. map(), D. modify()) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 48,
+    "slug": "java-48",
+    "title": "48. Optional Class",
+    "module": "Modul 8: Modern Java (Functional & Streams)",
+    "moduleId": 8,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Optional Class\n\n- Solusi modern menghindari NullPointerException\n- Method of(), ofNullable(), empty()\n- Cara aman mengekstrak nilai (orElse, ifPresent)",
+    "code": "// Java 21 LTS: Optional Class\npublic class Main { public static void main(String[] args) { System.out.println(\"Optional Class\"); } }",
+    "quiz": {
+      "question": "Method Optional apa yang digunakan untuk memberikan nilai default (fallback) jika data di dalamnya null/empty? (A. get(), B. isPresent(), C. orElse(), D. defaultNull()) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 49,
+    "slug": "java-49",
+    "title": "49. Text Blocks",
+    "module": "Modul 9: Fitur Baru Java (Java 14 - 21)",
+    "moduleId": 9,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Text Blocks\n\n- Menulis String multi-baris panjang\n- Sintaks triple quotes (\"\"\")\n- Praktis untuk penulisan JSON, HTML, SQL di kode",
+    "code": "// Java 21 LTS: Text Blocks\npublic class Main { public static void main(String[] args) { System.out.println(\"Text Blocks\"); } }",
+    "quiz": {
+      "question": "Karakter apa yang mengapit String Text Block di Java 15+? (A. ```, B. ''', C. \"\"\", D. *) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 50,
+    "slug": "java-50",
+    "title": "50. Records (Data Classes)",
+    "module": "Modul 9: Fitur Baru Java (Java 14 - 21)",
+    "moduleId": 9,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Records (Data Classes)\n\n- Membuat class DTO (Data Transfer Object) ringkas\n- Otomatisasi constructor, getter, toString, equals\n- Bersifat immutable (tidak ada setter)",
+    "code": "// Java 21 LTS: Records (Data Classes)\npublic class Main { public static void main(String[] args) { System.out.println(\"Records (Data Classes)\"); } }",
+    "quiz": {
+      "question": "Atribut/komponen dalam class tipe Record otomatis bersifat... (A. public mutable, B. private final, C. protected statis, D. public statis) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 51,
+    "slug": "java-51",
+    "title": "51. Pattern Matching untuk instanceof",
+    "module": "Modul 9: Fitur Baru Java (Java 14 - 21)",
+    "moduleId": 9,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Pattern Matching untuk instanceof\n\n- Menyatukan pengecekan tipe dan casting\n- Deklarasi pattern variable langsung di dalam kondisi if\n- Menghilangkan template boilerplate casting",
+    "code": "// Java 21 LTS: Pattern Matching untuk instanceof\npublic class Main { public static void main(String[] args) { System.out.println(\"Pattern Matching untuk instanceof\"); } }",
+    "quiz": {
+      "question": "Apa tujuan Pattern Matching instanceof? (A. Membuat class baru, B. Melakukan Type Casting implisit secara aman setelah pengecekan tipe, C. Menangkap Error, D. Mencocokkan Regex) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 52,
+    "slug": "java-52",
+    "title": "52. Sealed Classes dan Interfaces",
+    "module": "Modul 9: Fitur Baru Java (Java 14 - 21)",
+    "moduleId": 9,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Sealed Classes dan Interfaces\n\n- Membatasi inheritance secara eksplisit\n- Keyword sealed, permits, dan non-sealed\n- Pengembangan domain driven design dan library aman",
+    "code": "// Java 21 LTS: Sealed Classes dan Interfaces\npublic class Main { public static void main(String[] args) { System.out.println(\"Sealed Classes dan Interfaces\"); } }",
+    "quiz": {
+      "question": "Setelah kata kunci 'sealed', keyword apa yang dipakai untuk menyebutkan daftar class yang boleh mewarisi? (A. allows, B. implements, C. permits, D. grants) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 53,
+    "slug": "java-53",
+    "title": "53. Pattern Matching untuk Switch",
+    "module": "Modul 9: Fitur Baru Java (Java 14 - 21)",
+    "moduleId": 9,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Pattern Matching untuk Switch\n\n- Switch case menggunakan tipe objek (contoh: case Integer i)\n- When clause (guards) dalam switch\n- Exhaustiveness: Switch tahu batas turunan class sealed",
+    "code": "// Java 21 LTS: Pattern Matching untuk Switch\npublic class Main { public static void main(String[] args) { System.out.println(\"Pattern Matching untuk Switch\"); } }",
+    "quiz": {
+      "question": "Di Java 21, pattern matching switch pada Sealed class mewajibkan untuk melingkupi seluruh kemungkinan subclass-nya. Kondisi ini disebut... (A. Exhaustive, B. Infinite, C. Strict, D. Default-only) - Kunci: A",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 54,
+    "slug": "java-54",
+    "title": "54. Unnamed Variables & Patterns (_)",
+    "module": "Modul 9: Fitur Baru Java (Java 14 - 21)",
+    "moduleId": 9,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Unnamed Variables & Patterns (_)\n\n- Java 21 JEP: Underscore untuk variabel terabaikan\n- Berguna dalam perulangan tak terpakai nilai iterasinya\n- Berguna di Exception catch parameter tak terpakai",
+    "code": "// Java 21 LTS: Unnamed Variables & Patterns (_)\npublic class Main { public static void main(String[] args) { System.out.println(\"Unnamed Variables & Patterns (_)\"); } }",
+    "quiz": {
+      "question": "Karakter apa yang di Java 21 digunakan untuk melambangkan variabel/pattern tak bernama (sengaja tidak dipakai)? (A. *, B. ?, C. -, D. _) - Kunci: D",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 55,
+    "slug": "java-55",
+    "title": "55. Pengenalan Multithreading Klasik",
+    "module": "Modul 10: Concurrency Modern & Virtual Threads",
+    "moduleId": 10,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Pengenalan Multithreading Klasik\n\n- Apa itu Concurrency (paralel task)\n- Menggunakan interface Runnable vs extends Thread\n- Memulai thread terpisah dengan start()",
+    "code": "// Java 21 LTS: Pengenalan Multithreading Klasik\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Multithreading Klasik\"); } }",
+    "quiz": {
+      "question": "Untuk benar-benar menjalankan thread baru secara paralel/asinkron, kita memanggil method... (A. run(), B. execute(), C. start(), D. begin()) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 56,
+    "slug": "java-56",
+    "title": "56. Sinkronisasi (Race Conditions)",
+    "module": "Modul 10: Concurrency Modern & Virtual Threads",
+    "moduleId": 10,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Sinkronisasi (Race Conditions)\n\n- Masalah umum (Race Condition) jika dua thread modifikasi 1 nilai\n- Menjaga block/method dengan keyword synchronized\n- Atomic variables singkat",
+    "code": "// Java 21 LTS: Sinkronisasi (Race Conditions)\npublic class Main { public static void main(String[] args) { System.out.println(\"Sinkronisasi (Race Conditions)\"); } }",
+    "quiz": {
+      "question": "Keyword di Java untuk memastikan hanya satu thread yang bisa mengakses blok/method tertentu pada waktu yang sama adalah... (A. locked, B. synchronized, C. volatile, D. atomic) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 57,
+    "slug": "java-57",
+    "title": "57. Thread Pools (ExecutorService)",
+    "module": "Modul 10: Concurrency Modern & Virtual Threads",
+    "moduleId": 10,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Thread Pools (ExecutorService)\n\n- Biaya mahal pembuatan thread OS\n- Konsep Thread Pool (daur ulang thread)\n- Class Executors dan ExecutorService",
+    "code": "// Java 21 LTS: Thread Pools (ExecutorService)\npublic class Main { public static void main(String[] args) { System.out.println(\"Thread Pools (ExecutorService)\"); } }",
+    "quiz": {
+      "question": "Interface utama di java.util.concurrent untuk mengelola Thread Pool adalah... (A. PoolManager, B. ExecutorService, C. ThreadGroup, D. ThreadManager) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 58,
+    "slug": "java-58",
+    "title": "58. Pengenalan Virtual Threads (Loom)",
+    "module": "Modul 10: Concurrency Modern & Virtual Threads",
+    "moduleId": 10,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Pengenalan Virtual Threads (Loom)\n\n- Masalah 'Thread-per-request' pada server tinggi (misal 10.000 user)\n- Virtual Threads: ringan, murah (di-manage oleh JVM, bukan OS)\n- Perbedaan Platform vs Virtual Thread",
+    "code": "// Java 21 LTS: Pengenalan Virtual Threads (Loom)\npublic class Main { public static void main(String[] args) { System.out.println(\"Pengenalan Virtual Threads (Loom)\"); } }",
+    "quiz": {
+      "question": "Keunggulan utama Virtual Threads (Java 21) adalah... (A. CPU core yang dipakai berlipat ganda, B. Overhead memori dan pembuatannya sangat ringan (jutaan thread), C. Otomatis mengatasi Race Condition, D. Memblokir OS Thread) - Kunci: B",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 59,
+    "slug": "java-59",
+    "title": "59. Virtual Threads pada ExecutorService",
+    "module": "Modul 10: Concurrency Modern & Virtual Threads",
+    "moduleId": 10,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Virtual Threads pada ExecutorService\n\n- Memanfaatkan try-with-resources pada ExecutorService baru\n- newVirtualThreadPerTaskExecutor()\n- Kapasitas menjalankan puluhan ribu task I/O (sleep)",
+    "code": "// Java 21 LTS: Virtual Threads pada ExecutorService\npublic class Main { public static void main(String[] args) { System.out.println(\"Virtual Threads pada ExecutorService\"); } }",
+    "quiz": {
+      "question": "Method apa pada class Executors yang menghasilkan Executor pembuat satu Virtual Thread per task? (A. newCachedThreadPool, B. newVirtualThreadPool, C. newVirtualThreadPerTaskExecutor, D. newLightweightExecutor) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
+  },
+  {
+    "id": 60,
+    "slug": "java-60",
+    "title": "60. Review Akhir & Praktik Concurrency",
+    "module": "Modul 10: Concurrency Modern & Virtual Threads",
+    "moduleId": 10,
+    "duration": "15 m",
+    "level": "Semua",
+    "content": "# Review Akhir & Praktik Concurrency\n\n- Mengkombinasikan Stream dengan Virtual Thread\n- Kapan butuh Thread klasik (CPU bound) vs Virtual (IO bound)\n- Masa depan concurrency Java",
+    "code": "// Java 21 LTS: Review Akhir & Praktik Concurrency\npublic class Main { public static void main(String[] args) { System.out.println(\"Review Akhir & Praktik Concurrency\"); } }",
+    "quiz": {
+      "question": "Tugas jenis apa yang PALING optimal dan merasakan keuntungan performa dari penggunaan Virtual Threads? (A. Kalkulasi matriks kompleks 3D (CPU-bound), B. Eksekusi program sekuensial sederhana, C. Pemanggilan Database/API lambat, baca tulis file (I/O-bound), D. Render Grafis) - Kunci: C",
+      "options": [
+        "JVM JIT",
+        "No static compile",
+        "Manual GC",
+        "All primitive"
+      ],
+      "answer": 0,
+      "explanation": "Java 21 LTS modern features."
+    }
   }
 ];
+const LESSONS = lessons;
 
 let currentLessonIndex = 0;
 let progress = JSON.parse(localStorage.getItem('java_progress') || '{}');
