@@ -1,3 +1,4 @@
+const LESSON_FILES = ['lessons/M01-L01.md', 'lessons/M01-L02.md', 'lessons/M01-L03.md', 'lessons/M01-L04.md', 'lessons/M01-L05.md', 'lessons/M01-L06.md', 'lessons/M02-L01.md', 'lessons/M02-L02.md', 'lessons/M02-L03.md', 'lessons/M02-L04.md', 'lessons/M02-L05.md', 'lessons/M02-L06.md', 'lessons/M03-L01.md', 'lessons/M03-L02.md', 'lessons/M03-L03.md', 'lessons/M03-L04.md', 'lessons/M03-L05.md', 'lessons/M03-L06.md', 'lessons/M04-L01.md', 'lessons/M04-L02.md', 'lessons/M04-L03.md', 'lessons/M04-L04.md', 'lessons/M04-L05.md', 'lessons/M04-L06.md', 'lessons/M05-L01.md', 'lessons/M05-L02.md', 'lessons/M05-L03.md', 'lessons/M05-L04.md', 'lessons/M05-L05.md', 'lessons/M05-L06.md'];
 // ============================================
 // Java Learning Path — Interactive Learning Engine
 // ============================================
@@ -1479,21 +1480,34 @@ async function loadLesson(index) {
 
     // Fetch markdown content locally (fast & reliable)
     try {
-        const response = await fetch(lesson.mdFile);
-        if (response.ok) {
-            const md = await response.text();
+        let md = '';
+        const mdCandidate = (typeof LESSON_FILES !== 'undefined' && LESSON_FILES[index]) ? LESSON_FILES[index] : (lesson.mdFile || ('lessons/' + (lesson.slug || '') + '.md'));
+        try {
+            const res = await fetch(mdCandidate);
+            if (res.ok) md = await res.text();
+        } catch (e) {}
+        
+        if (!md && lesson.mdFile) {
+            try {
+                const res = await fetch(lesson.mdFile);
+                if (res.ok) md = await res.text();
+            } catch (e) {}
+        }
+        
+        const rawContent = lesson.content || lesson.content_md || lesson.description || '';
+        if (!md && rawContent) {
+            md = rawContent;
+        }
+        
+        if (md) {
             contentEl.innerHTML = marked.parse(md);
             enhanceCodeBlocks(contentEl);
         } else {
-            contentEl.innerHTML = `<div class="p-6 bg-red-950/40 border border-red-800 rounded-lg text-red-300">
-                Gagal memuat materi dari <code>${lesson.mdFile}</code>.
-            </div>`;
+            contentEl.innerHTML = '<div class="p-6 bg-orange-950/30 border border-orange-800 rounded-lg text-orange-300">Materi sedang disiapkan. Editor tetap aktif.</div>';
         }
     } catch (err) {
         console.error('Failed to load markdown:', err);
-        contentEl.innerHTML = `<div class="p-6 bg-red-950/40 border border-red-800 rounded-lg text-red-300">
-            Terjadi kesalahan jaringan saat memuat materi.
-        </div>`;
+        contentEl.innerHTML = '<div class="p-6 bg-red-950/40 border border-red-800 rounded-lg text-red-300">Terjadi kesalahan saat memuat materi.</div>';
     }
 
     // Setup Code Editor
@@ -1799,7 +1813,7 @@ function renderQuiz(lesson) {
     }
 
     if (quizSec) { quizSec.style.display = 'block'; quizSec.classList.remove('hidden'); }
-    quizContent.innerHTML = lesson.quiz.map((q, qIndex) => `
+    quizContent.innerHTML = (Array.isArray(lesson.quiz) ? lesson.quiz : [lesson.quiz]).map((q, qIndex) => `
         <div class="quiz-question-card" id="quiz-card-${qIndex}">
             <div class="quiz-q-text">${qIndex + 1}. ${escapeHtml(q.question)}</div>
             <div class="quiz-options-group">
@@ -1822,7 +1836,7 @@ function checkQuiz() {
     let correctCount = 0;
     let answeredAll = true;
 
-    lesson.quiz.forEach((q, qIndex) => {
+    (Array.isArray(lesson.quiz) ? lesson.quiz : [lesson.quiz]).forEach((q, qIndex) => {
         const selected = document.querySelector(`input[name="quiz_q_${qIndex}"]:checked`);
         const explainEl = document.getElementById(`quiz-explain-${qIndex}`);
 
