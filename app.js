@@ -6,62 +6,62 @@ const LESSON_FILES = ['lessons/M01-L01.md', 'lessons/M01-L02.md', 'lessons/M01-L
 const MODULES = [
   {
     "id": 1,
-    "title": "Modul 1: Dasar Java & Ekosistem",
-    "desc": "Java 21 LTS",
+    "title": "Dasar-Dasar Java",
+    "desc": "Pengenalan Java, instalasi JDK dan IDE, struktur program, variabel, tipe data, serta input/output dasar.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 2,
-    "title": "Modul 2: Variabel dan Tipe Data",
-    "desc": "Java 21 LTS",
+    "title": "Tipe Data & Operators",
+    "desc": "Eksplorasi tipe data primitif, wrapper classes, array, enum, casting, dan type inference.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 3,
-    "title": "Modul 3: Control Flow (Percabangan & Perulangan)",
-    "desc": "Java 21 LTS",
+    "title": "Kontrol Alur",
+    "desc": "Kontrol alur program: if-else, switch, loops (for, while, do-while), break, continue, exceptions, dan try-catch.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 4,
-    "title": "Modul 4: Object-Oriented Programming (OOP) Dasar",
-    "desc": "Java 21 LTS",
+    "title": "Object-OrientedProgramming",
+    "desc": "Konsep OOP: class, object, access modifiers, inheritance, abstract classes, interfaces, polymorphism.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 5,
-    "title": "Modul 5: OOP Lanjutan (Inheritance & Polymorphism)",
-    "desc": "Java 21 LTS",
+    "title": "Collections Framework",
+    "desc": "Pengenalan Collections, List, Set, Map, Queue, dan Stream API dasar.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 6,
-    "title": "Modul 6: Java Collections Framework",
-    "desc": "Java 21 LTS",
+    "title": "Java Modern Features (Java 17 - 21 LTS)",
+    "desc": "Records, Sealed Classes, Pattern Matching, Text Blocks, dan Virtual Threads.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 7,
-    "title": "Modul 7: Error Handling & Exceptions",
-    "desc": "Java 21 LTS",
+    "title": "Concurrency & Multithreading",
+    "desc": "Threads, Runnable, synchronized, ExecutorService, CompletableFuture, dan Structured Concurrency.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 8,
-    "title": "Modul 8: Modern Java (Functional & Streams)",
-    "desc": "Java 21 LTS",
+    "title": "I/O, Networking & File Operations",
+    "desc": "Java I/O Streams, NIO.2 Files/Path, Serialisasi Objek, HTTP Client API, dan Logging SLF4J.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 9,
-    "title": "Modul 9: Fitur Baru Java (Java 14 - 21)",
-    "desc": "Java 21 LTS",
+    "title": "Database, JDBC & JPA / Hibernate",
+    "desc": "JDBC Connection, PreparedStatement, HikariCP, ORM JPA, Entitas, dan Transaksi ACID.",
     "icon": "fa-solid fa-code"
   },
   {
     "id": 10,
-    "title": "Modul 10: Concurrency Modern & Virtual Threads",
-    "desc": "Java 21 LTS",
+    "title": "Spring Boot, Testing & Microservices",
+    "desc": "Spring Boot Core IoC/DI, RESTful API Controllers, Spring Data JPA, Unit Test JUnit 5/Mockito, dan Docker.",
     "icon": "fa-solid fa-code"
   }
 ];
