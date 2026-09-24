@@ -1,4 +1,4 @@
-const LESSON_FILES = ['lessons/M01-L01.md', 'lessons/M01-L02.md', 'lessons/M01-L03.md', 'lessons/M01-L04.md', 'lessons/M01-L05.md', 'lessons/M01-L06.md', 'lessons/M02-L01.md', 'lessons/M02-L02.md', 'lessons/M02-L03.md', 'lessons/M02-L04.md', 'lessons/M02-L05.md', 'lessons/M02-L06.md', 'lessons/M03-L01.md', 'lessons/M03-L02.md', 'lessons/M03-L03.md', 'lessons/M03-L04.md', 'lessons/M03-L05.md', 'lessons/M03-L06.md', 'lessons/M04-L01.md', 'lessons/M04-L02.md', 'lessons/M04-L03.md', 'lessons/M04-L04.md', 'lessons/M04-L05.md', 'lessons/M04-L06.md', 'lessons/M05-L01.md', 'lessons/M05-L02.md', 'lessons/M05-L03.md', 'lessons/M05-L04.md', 'lessons/M05-L05.md', 'lessons/M05-L06.md'];
+const LESSON_FILES = ["lessons/M01-L01.md","lessons/M01-L02.md","lessons/M01-L03.md","lessons/M01-L04.md","lessons/M01-L05.md","lessons/M01-L06.md","lessons/M02-L01.md","lessons/M02-L02.md","lessons/M02-L03.md","lessons/M02-L04.md","lessons/M02-L05.md","lessons/M02-L06.md","lessons/M03-L01.md","lessons/M03-L02.md","lessons/M03-L03.md","lessons/M03-L04.md","lessons/M03-L05.md","lessons/M03-L06.md","lessons/M04-L01.md","lessons/M04-L02.md","lessons/M04-L03.md","lessons/M04-L04.md","lessons/M04-L05.md","lessons/M04-L06.md","lessons/M05-L01.md","lessons/M05-L02.md","lessons/M05-L03.md","lessons/M05-L04.md","lessons/M05-L05.md","lessons/M05-L06.md","lessons/M06-L01.md","lessons/M06-L02.md","lessons/M06-L03.md","lessons/M06-L04.md","lessons/M06-L05.md","lessons/M06-L06.md","lessons/M07-L01.md","lessons/M07-L02.md","lessons/M07-L03.md","lessons/M07-L04.md","lessons/M07-L05.md","lessons/M07-L06.md","lessons/M08-L01.md","lessons/M08-L02.md","lessons/M08-L03.md","lessons/M08-L04.md","lessons/M08-L05.md","lessons/M08-L06.md","lessons/M09-L01.md","lessons/M09-L02.md","lessons/M09-L03.md","lessons/M09-L04.md","lessons/M09-L05.md","lessons/M09-L06.md","lessons/M10-L01.md","lessons/M10-L02.md","lessons/M10-L03.md","lessons/M10-L04.md","lessons/M10-L05.md","lessons/M10-L06.md"];
 // ============================================
 // Java Learning Path — Interactive Learning Engine
 // ============================================
@@ -1481,38 +1481,45 @@ async function loadLesson(index) {
     // Fetch markdown content locally (fast & reliable)
     try {
         let md = '';
-        const mdCandidate = (typeof LESSON_FILES !== 'undefined' && LESSON_FILES[index]) ? LESSON_FILES[index] : (lesson.mdFile || ('lessons/' + (lesson.slug || '') + '.md'));
-        try {
-            const res = await fetch(mdCandidate);
-            if (res.ok) md = await res.text();
-        } catch (e) {}
-        
-        if (!md && lesson.mdFile) {
+        const slug = lesson.slug || ('M' + String(lesson.moduleId || 1).padStart(2, '0') + '-L' + String(lesson.lesson || 1).padStart(2, '0'));
+        const candidates = [
+            (typeof LESSON_FILES !== 'undefined' && LESSON_FILES[index]) ? LESSON_FILES[index] : null,
+            lesson.mdFile,
+            'lessons/' + slug + '.md',
+            './lessons/' + slug + '.md'
+        ].filter(Boolean);
+
+        for (const candidate of candidates) {
             try {
-                const res = await fetch(lesson.mdFile);
-                if (res.ok) md = await res.text();
-            } catch (e) {}
+                const res = await fetch(candidate);
+                if (res.ok) {
+                    md = await res.text();
+                    if (md && md.trim().length > 0) break;
+                }
+            } catch(e) {}
         }
-        
+
         const rawContent = lesson.content || lesson.content_md || lesson.description || '';
         if (!md && rawContent) {
             md = rawContent;
         }
-        
-        if (md) {
+
+        if (md && typeof marked !== 'undefined') {
             contentEl.innerHTML = marked.parse(md);
             enhanceCodeBlocks(contentEl);
+        } else if (md) {
+            contentEl.innerHTML = '<div class="prose max-w-none">' + md + '</div>';
         } else {
-            contentEl.innerHTML = '<div class="p-6 bg-orange-950/30 border border-orange-800 rounded-lg text-orange-300">Materi sedang disiapkan. Editor tetap aktif.</div>';
+            contentEl.innerHTML = '<div class="p-6 bg-orange-950/30 border border-orange-800 rounded-lg text-orange-300">Materi ' + (lesson.title || 'pelajaran') + ' sedang disiapkan. Editor tetap aktif.</div>';
         }
     } catch (err) {
         console.error('Failed to load markdown:', err);
-        contentEl.innerHTML = '<div class="p-6 bg-red-950/40 border border-red-800 rounded-lg text-red-300">Terjadi kesalahan saat memuat materi.</div>';
+        contentEl.innerHTML = '<div class="p-6 bg-red-950/40 border border-red-800 rounded-lg text-red-300">Gagal memuat materi: ' + (err.message || 'Terjadi kesalahan') + '</div>';
     }
 
     // Setup Code Editor
     const editor = document.getElementById('code-editor');
-    editor.value = lesson.defaultCode;
+    editor.value = lesson.defaultCode || lesson.code || ("// " + lesson.title + "\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Halo dari " + lesson.title + "\");\n    }\n}");
     setTimeout(updateGutter, 30);
     const output = document.getElementById('output');
     output.innerHTML = '<span class="text-slate-500">// Output akan muncul di sini saat tombol Run ditekan</span>';
